@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: hocgin
+    druid:
+      validation-query: select '1'
+  redis:
+    host: 127.0.0.1
+  flyway:
+    enabled: true
+    baseline-on-migrate: false
+mybatis-plus:
+  global-config:
+    refresh-mapper: true
+
+logging:
+  level:
+    org.springframework: debug
