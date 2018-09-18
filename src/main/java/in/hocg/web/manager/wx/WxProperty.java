@@ -1,4 +1,4 @@
-package in.hocg.web.support.wx;
+package in.hocg.web.manager.wx;
 
 import lombok.Data;
 import lombok.ToString;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Data
 @ToString
 @Component
-@ConfigurationProperties(value = "wx")
+@ConfigurationProperties(value = "wechat")
 public class WxProperty {
     private String appid;
     private String secret;

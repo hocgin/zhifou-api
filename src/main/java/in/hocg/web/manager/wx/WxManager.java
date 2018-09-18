@@ -1,4 +1,4 @@
-package in.hocg.web.support.wx;
+package in.hocg.web.manager.wx;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import in.hocg.web.util.AES;

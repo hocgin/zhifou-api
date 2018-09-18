@@ -1,4 +1,4 @@
-package in.hocg.web.support.wx.body;
+package in.hocg.web.manager.wx.body;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

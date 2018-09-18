@@ -1,4 +1,4 @@
-package in.hocg.web.support.wx;
+package in.hocg.web.manager.wx;
 
 import in.hocg.web.pojo.domain.Wxer;
 import lombok.Data;
