@@ -1,0 +1,12 @@
+### 查看所有
+POST {{host}}/all
+Content-Type: application/json
+
+{
+}
+
+### 文件(夹)详情
+POST {{host}}/detail?path=today/ID-activity-timestamp.json
+
+###
+

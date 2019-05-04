@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -38,7 +37,7 @@ public class IndexService {
             if (file.isDirectory()) {
                 try {
                     jsonArray.add(projectService.traversingDirToJSON(file.toPath()));
-                } catch (IOException | JSONException e) {
+                } catch (JSONException e) {
                     jsonArray.add(new JSONObject());
                 }
             }

@@ -37,10 +37,9 @@ public class ProjectService {
      *
      * @param path
      * @return
-     * @throws IOException
      * @throws JSONException
      */
-    public JSONObject traversingDirToJSON(Path path) throws IOException, JSONException {
+    public JSONObject traversingDirToJSON(Path path) {
         File file = path.toFile();
         JSONObject dirJSON = getJSONDetail(path);
         File[] files = file.listFiles(JSON_FILE_FILTER);
