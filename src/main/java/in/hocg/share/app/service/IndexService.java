@@ -3,8 +3,9 @@ package in.hocg.share.app.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import in.hocg.share.app.config.ProjectProperties;
-import in.hocg.share.app.config.ProjectService;
+import in.hocg.share.app.config.project.ProjectProperties;
+import in.hocg.share.app.config.project.ProjectService;
+import in.hocg.share.app.config.redis.RedisService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,11 @@ import java.nio.file.Paths;
 public class IndexService {
     private final ProjectProperties properties;
     private final ProjectService projectService;
+    private final RedisService redisService;
     
     /**
      * 所有
+     *
      * @return
      */
     public JSONArray all() {
@@ -46,7 +49,6 @@ public class IndexService {
     }
     
     
-    
     /**
      * 详细描述信息(文件或文件夹)
      *
@@ -59,6 +61,9 @@ public class IndexService {
         if (!file.exists()) {
             throw new RuntimeException(String.format("路径不存在 %s", path.toString()));
         }
-        return projectService.getJSONDetail(path);
+        JSONObject jsonDetail = projectService.getJSONDetail(path);
+        String id = jsonDetail.getString("id");
+        redisService.increasePageviews(id);
+        return jsonDetail;
     }
 }

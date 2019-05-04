@@ -1,10 +1,12 @@
-package in.hocg.share.app.config;
+package in.hocg.share.app.config.project;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import in.hocg.share.app.config.redis.RedisService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -19,8 +21,11 @@ import java.nio.file.Path;
  * @author hocgin
  */
 @Slf4j
+@Service
 @AllArgsConstructor
 public class ProjectService {
+    private final RedisService redisService;
+    
     private final static String INFO_FILE_NAME = ".INFO.json";
     
     /**
@@ -75,6 +80,14 @@ public class ProjectService {
         }
         json.fluentPut("isDirectory", isDirectory);
         json.fluentPut("id", id);
+        
+        // 补充操作
+        if (file.isFile()) {
+            Long pageviews = redisService.getPageviewsCount(id);
+            json.fluentPut("pageviews", pageviews);
+        }
+        
+        
         return json;
     }
     

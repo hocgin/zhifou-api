@@ -1,10 +1,9 @@
-package in.hocg.share.app.config;
+package in.hocg.share.app.config.project;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
@@ -21,11 +20,6 @@ import org.springframework.context.annotation.PropertySource;
 @EnableConfigurationProperties(ProjectProperties.class)
 public class ProjectAutoConfiguration implements InitializingBean {
     private final ProjectProperties properties;
-    
-    @Bean
-    ProjectService service() {
-        return new ProjectService();
-    }
     
     @Override
     public void afterPropertiesSet() {
