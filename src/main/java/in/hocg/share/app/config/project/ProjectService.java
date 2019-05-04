@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static in.hocg.share.app.config.project.FileNameConstant.INFO_FILE_NAME;
+
 /**
  * Created by hocgin on 2019/5/4.
  * email: hocgin@gmail.com
@@ -25,8 +27,6 @@ import java.nio.file.Path;
 @AllArgsConstructor
 public class ProjectService {
     private final RedisService redisService;
-    
-    private final static String INFO_FILE_NAME = ".INFO.json";
     
     /**
      * 仅匹配 非.开头并且为.json结尾的文件

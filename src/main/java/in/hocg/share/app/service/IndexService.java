@@ -3,6 +3,7 @@ package in.hocg.share.app.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import in.hocg.share.app.config.project.FileNameConstant;
 import in.hocg.share.app.config.project.ProjectProperties;
 import in.hocg.share.app.config.project.ProjectService;
 import in.hocg.share.app.config.redis.RedisService;
@@ -65,5 +66,14 @@ public class IndexService {
         String id = jsonDetail.getString("id");
         redisService.increasePageviews(id);
         return jsonDetail;
+    }
+    
+    /**
+     * 获取轮播图信息
+     * @return
+     */
+    public JSONObject getCarousel() {
+        Path path = Paths.get(properties.getPath(), FileNameConstant.CAROUSEL_FILE_NAME);
+        return projectService.getJSONDetail(path);
     }
 }

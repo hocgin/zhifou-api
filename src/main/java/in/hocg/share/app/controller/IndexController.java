@@ -27,10 +27,15 @@ public class IndexController {
         return Result.success(result).asResponseEntity();
     }
     
-    
     @GetMapping(value = "detail")
     public ResponseEntity detail(@RequestParam("path") String path) {
         JSONObject result = indexService.getDetail(path);
+        return Result.success(result).asResponseEntity();
+    }
+    
+    @GetMapping(value = "carousel")
+    public ResponseEntity carousel() {
+        JSONObject result = indexService.getCarousel();
         return Result.success(result).asResponseEntity();
     }
     
