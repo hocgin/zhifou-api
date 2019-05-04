@@ -16,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 @Slf4j
 @Configuration
 @AllArgsConstructor
-@PropertySource("classpath:config/project-${projectEnv:dev}.properties")
+@PropertySource("classpath:config/project-${spring.profiles.active:dev}.properties")
 @EnableConfigurationProperties(ProjectProperties.class)
 public class ProjectAutoConfiguration implements InitializingBean {
     private final ProjectProperties properties;
