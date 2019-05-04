@@ -72,8 +72,8 @@ public class IndexService {
      * 获取轮播图信息
      * @return
      */
-    public JSONObject getCarousel() {
+    public JSONArray getCarousel() {
         Path path = Paths.get(properties.getPath(), FileNameConstant.CAROUSEL_FILE_NAME);
-        return projectService.getJSONDetail(path);
+        return projectService.parsePath(path);
     }
 }

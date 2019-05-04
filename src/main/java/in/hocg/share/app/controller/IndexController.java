@@ -35,7 +35,7 @@ public class IndexController {
     
     @GetMapping(value = "carousel")
     public ResponseEntity carousel() {
-        JSONObject result = indexService.getCarousel();
+        JSONArray result = indexService.getCarousel();
         return Result.success(result).asResponseEntity();
     }
     

@@ -87,8 +87,20 @@ public class ProjectService {
             json.fluentPut("pageviews", pageviews);
         }
         
-        
         return json;
+    }
+    
+    /**
+     * 读取文件
+     * @param path
+     * @return
+     */
+    public JSONArray parsePath(Path path) {
+        try {
+            return JSONArray.parseArray(new String(Files.readAllBytes(path)));
+        } catch (IOException e) {
+            return new JSONArray();
+        }
     }
     
 }
