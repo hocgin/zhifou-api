@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextListener;
 
@@ -13,7 +12,6 @@ import org.springframework.web.context.request.RequestContextListener;
  * @author hocgin
  */
 @SpringBootApplication
-@EnableTransactionManagement
 public class Application {
     
     public static void main(String[] args) {
