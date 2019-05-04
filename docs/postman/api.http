@@ -8,5 +8,8 @@ Content-Type: application/json
 ### 文件(夹)详情
 POST {{host}}/detail?path=today/ID-activity-timestamp.json
 
+### 获取轮播图
+GET {{host}}/carousel
+
 ###
 

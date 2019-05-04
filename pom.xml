@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>share-app</name>
+    <name>share-api</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -119,15 +119,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
 
