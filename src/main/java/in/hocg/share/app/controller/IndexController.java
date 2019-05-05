@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  */
 @RestController
-@RequestMapping
+@RequestMapping("api")
 @AllArgsConstructor
 public class IndexController {
     private final IndexService indexService;

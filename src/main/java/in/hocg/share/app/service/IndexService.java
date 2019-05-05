@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2019/5/4.
@@ -37,6 +38,9 @@ public class IndexService {
         Path dir = Paths.get(path);
         File[] files = dir.toFile().listFiles();
         JSONArray jsonArray = new JSONArray();
+        if (Objects.isNull(files)) {
+            return jsonArray;
+        }
         for (File file : files) {
             if (file.isDirectory()) {
                 try {

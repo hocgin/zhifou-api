@@ -1,0 +1,24 @@
+{
+    "title": "文件的标题",
+    "icon": "https://ph-files.imgix.net/4bb79a58-baab-4434-af76-985ca67ed467?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=80&h=80&fit=crop",
+    "tags": [
+        "网站",
+        "微信小程序"
+    ],
+    "images": [
+        "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+    ],
+    "desc": "125字描述",
+    "createdAt": 1557058663892,
+    "content": "<p>完整描述</p>",
+    "url": "/post?v=/sd/sd",
+    "author": {
+        "avator": "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        "username": "hocgin"
+    },
+
+    "id": "会被覆盖",
+    "isLiked": false,
+    "pageviews": 0,
+    "isCollected": false
+}
