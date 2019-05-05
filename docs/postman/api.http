@@ -11,5 +11,8 @@ POST {{host}}/detail?path=today/ID-activity-timestamp.json
 ### 获取轮播图
 GET {{host}}/carousel
 
+### 获取推荐
+GET {{host}}/recommend
+
 ###
 
