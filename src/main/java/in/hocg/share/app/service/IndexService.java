@@ -76,4 +76,9 @@ public class IndexService {
         Path path = Paths.get(properties.getPath(), FileNameConstant.CAROUSEL_FILE_NAME);
         return projectService.parsePath(path);
     }
+    
+    public JSONObject getRecommend() {
+        Path path = Paths.get(properties.getPath(), FileNameConstant.RECOMMEND_FILE_NAME);
+        return projectService.getJSONDetail(path);
+    }
 }

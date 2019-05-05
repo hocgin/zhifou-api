@@ -39,4 +39,10 @@ public class IndexController {
         return Result.success(result).asResponseEntity();
     }
     
+    @GetMapping(value = "recommend")
+    public ResponseEntity recommend() {
+        JSONObject result = indexService.getRecommend();
+        return Result.success(result).asResponseEntity();
+    }
+    
 }
