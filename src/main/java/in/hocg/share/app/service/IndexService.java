@@ -7,10 +7,13 @@ import in.hocg.share.app.config.project.FileNameConstant;
 import in.hocg.share.app.config.project.ProjectProperties;
 import in.hocg.share.app.config.project.ProjectService;
 import in.hocg.share.app.config.redis.RedisService;
+import in.hocg.share.app.controller.param.AddPostParam;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -84,5 +87,26 @@ public class IndexService {
     public JSONObject getRecommend() {
         Path path = Paths.get(properties.getPath(), FileNameConstant.RECOMMEND_FILE_NAME);
         return projectService.getJSONDetail(path);
+    }
+    
+    public void addPost(AddPostParam param) {
+        JSONObject jsonObject = param.asFileJSONObject();
+        Path keepDir = Paths.get(properties.getKeep());
+        keepDir.toFile().mkdirs();
+    
+    
+        Path path = keepDir.resolve(String.format("%s.json", jsonObject.getString("id")));
+        File file = path.toFile();
+        if (file.exists()) {
+            throw new RuntimeException("文件已经存在");
+        }
+        try {
+            if (file.createNewFile()) {
+                Files.write(path, jsonObject.toJSONString().getBytes());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("系统繁忙");
+        }
+    
     }
 }
