@@ -1,9 +1,13 @@
 [
   {
+    "image": "http://cdn.hocgin.top/sshare.png",
+    "href": "/how-share",
+    "title": "分享计划"
+  },
+  {
     "image": "https://wht.im/assets/img/works/index/thumb-2.jpg?v=v6ro80",
     "href": "https://wht.im/",
-    "title": "万花筒",
-    "desc": "纯色、简单的导航方式"
+    "title": "万花筒"
   },
   {
     "image": "https://wht.im/assets/img/works/index/thumb-1.jpg?v=v6ro80",
