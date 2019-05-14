@@ -5,6 +5,7 @@ import in.hocg.share.app.controller.param.SignInParam;
 import in.hocg.share.app.controller.param.SignUpParam;
 import in.hocg.share.app.entity.User;
 import in.hocg.share.app.repository.UserRepository;
+import in.hocg.share.app.support.BaseService;
 import in.hocg.share.app.util.ApiException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,8 +28,8 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
-    private final UserRepository repository;
+public class UserServiceImpl extends BaseService<User, UserRepository>
+        implements UserService {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
@@ -71,11 +72,16 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent()) {
             throw new ApiException("用户已经存在");
         }
-        User user = param.toUser();
+        User user = param.asUser();
         
         String passwordEncode = passwordEncoder.encode(password);
         user.setPassword(passwordEncode);
         
         repository.save(user);
+    }
+    
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 }

@@ -2,6 +2,7 @@ package in.hocg;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.context.request.RequestContextListener;
 /**
  * @author hocgin
  */
+@EnableCaching
 @SpringBootApplication
 public class Application {
     

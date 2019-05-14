@@ -20,7 +20,7 @@ public class SignUpParam {
     private String password;
     
     
-    public User toUser() {
+    public User asUser() {
         User entity = new User();
         entity.setUsername(username);
         entity.setPassword(password);

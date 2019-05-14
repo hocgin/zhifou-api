@@ -72,12 +72,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 针对 fetch 对跨域请求发送 OPTIONS 请求的处理
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/error").permitAll()
+                
+                // 账号相关
                 .antMatchers(HttpMethod.POST, "/api/v1/account/sign-in").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/account/sign-up").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/account/sign-out").permitAll()
                 
                 // 需要登陆
-                .antMatchers("/api/v1/**").hasAnyRole("ROLE_USER")
+                .antMatchers("/api/v1/**").hasRole("USER")
         ;
         
     

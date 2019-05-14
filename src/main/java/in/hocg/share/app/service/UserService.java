@@ -6,6 +6,7 @@ import in.hocg.share.app.controller.param.SignUpParam;
 import in.hocg.share.app.entity.User;
 
 import java.security.Principal;
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2019/5/14.
@@ -32,4 +33,19 @@ public interface UserService {
      * @param param
      */
     void signUp(SignUpParam param);
+    
+    /**
+     * 查找用户信息
+     * @param username
+     * @return
+     */
+    Optional<User> findByUsername(String username);
+    
+    /**
+     * 查找用户信息
+     * @param id
+     * @return
+     */
+    Optional<User> findById(Long id);
+    
 }
