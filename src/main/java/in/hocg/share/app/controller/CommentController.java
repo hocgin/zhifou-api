@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2019/5/14.
@@ -42,9 +43,12 @@ public class CommentController {
                                   Principal principal,
                                   @Validated @RequestBody CommentParam param) {
         
+        boolean paramError = Objects.isNull(param)
+                || (param.getParentId() == null && param.getRootId() != null)
+                || (param.getParentId() != null && param.getRootId() == null);
+        
         // parent_id && root_id 只能同时为 null 或 均不为 null
-        if (param.getParentId() == null && param.getRootId() != null
-                || param.getParentId() != null && param.getRootId() == null) {
+        if (paramError) {
             throw new ApiException("错误操作");
         }
         
