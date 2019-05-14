@@ -2,6 +2,15 @@ server:
   port: 9090
 
 spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    druid:
+      validation-query: select '1'
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
   redis:
     host: 127.0.0.1
     port: 6379

@@ -1,4 +1,4 @@
-package in.hocg.share.app.config.redis;
+package in.hocg.share.app.support.redis;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

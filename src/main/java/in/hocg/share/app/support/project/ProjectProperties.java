@@ -1,4 +1,4 @@
-package in.hocg.share.app.config.project;
+package in.hocg.share.app.support.project;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

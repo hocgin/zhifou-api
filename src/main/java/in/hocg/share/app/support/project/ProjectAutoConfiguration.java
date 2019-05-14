@@ -1,4 +1,4 @@
-package in.hocg.share.app.config.project;
+package in.hocg.share.app.support.project;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

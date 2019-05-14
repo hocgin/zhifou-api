@@ -1,9 +1,9 @@
-package in.hocg.share.app.config.project;
+package in.hocg.share.app.support.project;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import in.hocg.share.app.config.redis.RedisService;
+import in.hocg.share.app.support.redis.RedisService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static in.hocg.share.app.config.project.FileNameConstant.INFO_FILE_NAME;
+import static in.hocg.share.app.support.project.FileNameConstant.INFO_FILE_NAME;
 
 /**
  * Created by hocgin on 2019/5/4.
