@@ -25,7 +25,8 @@ public class Comment {
     @Column
     private String content;
     /**
-     * 评论目标
+     * 评论目标 唯一标识
+     * - 用字符串替代, 全局唯一标识来自于分配
      */
     @Column(nullable = false)
     private String targetId;
