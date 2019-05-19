@@ -10,12 +10,12 @@ import in.hocg.share.app.util.ApiException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -33,7 +33,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
     
     @Override
     public void comment(Principal principal,
-                        Long targetId,
+                        String targetId,
                         CommentParam param) {
         
         String username = principal.getName();
@@ -48,13 +48,12 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
     }
     
     @Override
-    public Page<CommentResponse> queryRootComment(Long targetId,
+    public Page<CommentResponse> queryRootComment(String targetId,
                                                   Pageable pageable) {
         
         Page<Comment> comments = repository.findAllByTargetIdAndRootId(targetId, null, pageable);
         CommentResponse body;
         ArrayList<CommentResponse> result = new ArrayList<>(comments.getContent().size());
-        PageRequest childPageable = PageRequest.of(0, 10);
         Optional<User> userOptional;
         
         // 填充信息
@@ -66,8 +65,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
             body = new CommentResponse(comment);
             body.setCommenter(new CommentResponse.Commenter(userOptional.get()));
             
-            // 查询子评论
-            body.setChildren(this.queryChildrenComment(targetId, comment.getId(), childPageable));
+            body.setCommentCount(repository.countAllByRootId(comment.getId()));
             result.add(body);
         }
         
@@ -76,7 +74,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
     
     
     @Override
-    public Page<CommentResponse> queryChildrenComment(Long targetId,
+    public Page<CommentResponse> queryChildrenComment(String targetId,
                                                       Long rootId,
                                                       Pageable pageable) {
         
@@ -99,12 +97,14 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
             
             // 填充父评论
             Long parentId = comment.getParentId();
-            Optional<Comment> pCommentOptional = repository.findById(parentId);
-            if (pCommentOptional.isPresent()) {
-                Comment pComment = pCommentOptional.get();
-                Optional<User> pCommenter = userService.findById(pComment.getUserId());
-                if (pCommenter.isPresent()) {
-                    body.setPCommenter(new CommentResponse.Commenter(pCommenter.get()));
+            if (!Objects.equals(parentId, rootId)) {
+                Optional<Comment> pCommentOptional = repository.findById(parentId);
+                if (pCommentOptional.isPresent()) {
+                    Comment pComment = pCommentOptional.get();
+                    Optional<User> pCommenter = userService.findById(pComment.getUserId());
+                    if (pCommenter.isPresent()) {
+                        body.setPCommenter(new CommentResponse.Commenter(pCommenter.get()));
+                    }
                 }
             }
             

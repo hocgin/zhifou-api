@@ -4,7 +4,8 @@ import in.hocg.share.app.entity.Comment;
 import in.hocg.share.app.entity.User;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by hocgin on 2019/5/14.
@@ -52,15 +53,23 @@ public class CommentResponse {
     private Commenter pCommenter;
     
     /**
-     * 子评论
+     * 子评论数量
      */
-    private Page<CommentResponse> children;
+    private Long commentCount;
+    
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createdAt;
     
     @Data
     public static class Commenter {
         private String username;
+        private String avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
+        private Long id;
         
         public Commenter(User user) {
+            this.id = user.getId();
             this.username = user.getUsername();
         }
     }

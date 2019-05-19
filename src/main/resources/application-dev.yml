@@ -3,8 +3,13 @@ spring:
     url: jdbc:mariadb://mysql.localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
     username: root
     password: hocgin
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
 logging:
   level:
     org.springframework: debug
     in.hocg: debug
+
 security.token.filter.secret: YourSecretNeedsToBeAtLeast256BitsLong

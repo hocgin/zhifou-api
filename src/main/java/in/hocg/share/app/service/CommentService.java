@@ -21,7 +21,9 @@ public interface CommentService {
      * @param targetId
      * @param param
      */
-    void comment(Principal principal, Long targetId, CommentParam param);
+    void comment(Principal principal,
+                 String targetId,
+                 CommentParam param);
     
     /**
      * 顶级评论
@@ -30,19 +32,19 @@ public interface CommentService {
      * @param pageable
      * @return
      */
-    Page<CommentResponse> queryRootComment(Long targetId,
+    Page<CommentResponse> queryRootComment(String targetId,
                                            Pageable pageable);
     
     /**
      * 子级评论
-     *
      *
      * @param targetId
      * @param rootId
      * @param pageable
      * @return
      */
-    Page<CommentResponse> queryChildrenComment(Long targetId, Long rootId,
+    Page<CommentResponse> queryChildrenComment(String targetId,
+                                               Long rootId,
                                                Pageable pageable);
     
 }

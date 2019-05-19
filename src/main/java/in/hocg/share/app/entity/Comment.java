@@ -28,7 +28,7 @@ public class Comment {
      * 评论目标
      */
     @Column(nullable = false)
-    private Long targetId;
+    private String targetId;
     /**
      * 评论者
      */

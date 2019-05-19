@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,16 +41,16 @@ public class CommentController {
      * @return
      */
     @PostMapping
-    public ResponseEntity comment(@PathVariable("target") Long targetId,
+    public ResponseEntity comment(@PathVariable("target") String targetId,
                                   Principal principal,
                                   @Validated @RequestBody CommentParam param) {
         
-        boolean paramError = Objects.isNull(param)
+        boolean hasParamError = Objects.isNull(param)
                 || (param.getParentId() == null && param.getRootId() != null)
                 || (param.getParentId() != null && param.getRootId() == null);
         
         // parent_id && root_id 只能同时为 null 或 均不为 null
-        if (paramError) {
+        if (hasParamError) {
             throw new ApiException("错误操作");
         }
         
@@ -65,8 +67,8 @@ public class CommentController {
      * @return
      */
     @PostMapping("_search")
-    public ResponseEntity searchRootComment(@PathVariable("target") Long targetId,
-                                            Pageable pageable) {
+    public ResponseEntity searchRootComment(@PathVariable("target") String targetId,
+                                            @PageableDefault(value = 8, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<CommentResponse> result = commentService.queryRootComment(targetId, pageable);
         return Result.success(result)
                 .asResponseEntity();
@@ -81,9 +83,9 @@ public class CommentController {
      * @return
      */
     @PostMapping("{rootId}/_search")
-    public ResponseEntity searchChildComment(@PathVariable("target") Long targetId,
+    public ResponseEntity searchChildComment(@PathVariable("target") String targetId,
                                              @PathVariable("rootId") Long rootId,
-                                             Pageable pageable) {
+                                             @PageableDefault(value = 5, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<CommentResponse> result = commentService.queryChildrenComment(targetId, rootId, pageable);
         return Result.success(result)
                 .asResponseEntity();
