@@ -1,5 +1,6 @@
 package in.hocg.zhifou.controller;
 
+import in.hocg.zhifou.config.security.NeedLogin;
 import in.hocg.zhifou.controller.param.CommentParam;
 import in.hocg.zhifou.controller.param.CommentResponse;
 import in.hocg.zhifou.service.CommentService;
@@ -40,6 +41,7 @@ public class CommentController {
      * @param param
      * @return
      */
+    @NeedLogin
     @PostMapping
     public ResponseEntity comment(@PathVariable("target") String targetId,
                                   Principal principal,

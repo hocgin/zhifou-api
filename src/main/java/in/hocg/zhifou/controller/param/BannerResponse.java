@@ -1,6 +1,7 @@
 package in.hocg.zhifou.controller.param;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.zhifou.support.LocalDateTimeSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -32,6 +33,6 @@ public class BannerResponse {
     /**
      * 创建时间
      */
-    @JsonFormat
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
 }

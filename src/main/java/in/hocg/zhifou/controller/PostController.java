@@ -37,8 +37,8 @@ public class PostController {
      * @param param
      * @return
      */
-    @PostMapping
     @NeedLogin
+    @PostMapping
     public ResponseEntity published(@Validated @RequestBody PublishedPostParam param,
                                     Principal principal) {
         service.published(param, principal);

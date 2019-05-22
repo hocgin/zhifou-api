@@ -1,7 +1,9 @@
 package in.hocg.zhifou.controller.param;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.zhifou.controller.param.lang.UserResponse;
 import in.hocg.zhifou.entity.Comment;
+import in.hocg.zhifou.support.LocalDateTimeSerializer;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -60,5 +62,6 @@ public class CommentResponse {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
 }

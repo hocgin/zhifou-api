@@ -1,6 +1,8 @@
 package in.hocg.zhifou.controller.param;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.zhifou.controller.param.lang.UserResponse;
+import in.hocg.zhifou.support.LocalDateTimeSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -19,7 +21,9 @@ public class SearchPostResponse {
     private Collection<String> tags;
     private Collection<String> banner;
     private String desc;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime updatedAt;
     private String classify;
     private UserResponse author;
