@@ -2,7 +2,6 @@ package in.hocg.share.app.config.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -68,19 +67,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          URL 授权管理
         */
         http.authorizeRequests()
+                .antMatchers("/**").permitAll()
                 
                 // 针对 fetch 对跨域请求发送 OPTIONS 请求的处理
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/error").permitAll()
-        
-                .antMatchers(HttpMethod.POST, "/api/v1/*/comment/_search").permitAll()
-                
-                // 账号相关
-                .antMatchers(HttpMethod.POST, "/api/v1/account/sign-in").anonymous()
-                .antMatchers(HttpMethod.POST, "/api/v1/account/sign-up").anonymous()
-                
-                // 需要登陆
-                .antMatchers("/api/v1/**").hasRole("USER")
+//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/error").permitAll()
+//
+//                .antMatchers(HttpMethod.POST, "/api/v1/*/comment/_search").permitAll()
+//
+//                // 账号相关
+//                .antMatchers(HttpMethod.POST, "/api/v1/account/sign-in").anonymous()
+//                .antMatchers(HttpMethod.POST, "/api/v1/account/sign-up").anonymous()
+//
+//                // 需要登陆
+//                .antMatchers("/api/v1/**").hasRole("USER")
         ;
         
     

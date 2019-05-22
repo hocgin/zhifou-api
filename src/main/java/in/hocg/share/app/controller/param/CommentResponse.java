@@ -1,7 +1,7 @@
 package in.hocg.share.app.controller.param;
 
+import in.hocg.share.app.controller.param.lang.UserResponse;
 import in.hocg.share.app.entity.Comment;
-import in.hocg.share.app.entity.User;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -45,12 +45,12 @@ public class CommentResponse {
     /**
      * 评论者
      */
-    private Commenter commenter;
+    private UserResponse commenter;
     
     /**
      * 被评论者
      */
-    private Commenter pCommenter;
+    private UserResponse pCommenter;
     
     /**
      * 子评论数量
@@ -61,16 +61,4 @@ public class CommentResponse {
      * 创建时间
      */
     private LocalDateTime createdAt;
-    
-    @Data
-    public static class Commenter {
-        private String username;
-        private String avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
-        private Long id;
-        
-        public Commenter(User user) {
-            this.id = user.getId();
-            this.username = user.getUsername();
-        }
-    }
 }

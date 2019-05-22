@@ -2,6 +2,7 @@ package in.hocg.share.app.service;
 
 import in.hocg.share.app.controller.param.CommentParam;
 import in.hocg.share.app.controller.param.CommentResponse;
+import in.hocg.share.app.controller.param.lang.UserResponse;
 import in.hocg.share.app.entity.Comment;
 import in.hocg.share.app.entity.User;
 import in.hocg.share.app.repository.CommentRepository;
@@ -63,7 +64,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
                 continue;
             }
             body = new CommentResponse(comment);
-            body.setCommenter(new CommentResponse.Commenter(userOptional.get()));
+            body.setCommenter(new UserResponse(userOptional.get()));
             
             body.setCommentCount(repository.countAllByRootId(comment.getId()));
             result.add(body);
@@ -93,7 +94,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
             }
             
             body = new CommentResponse(comment);
-            body.setCommenter(new CommentResponse.Commenter(userOptional.get()));
+            body.setCommenter(new UserResponse(userOptional.get()));
             
             // 填充父评论
             Long parentId = comment.getParentId();
@@ -103,7 +104,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
                     Comment pComment = pCommentOptional.get();
                     Optional<User> pCommenter = userService.findById(pComment.getUserId());
                     if (pCommenter.isPresent()) {
-                        body.setPCommenter(new CommentResponse.Commenter(pCommenter.get()));
+                        body.setPCommenter(new UserResponse(pCommenter.get()));
                     }
                 }
             }

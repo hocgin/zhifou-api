@@ -6,45 +6,42 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Created by hocgin on 2019/5/14.
+ * Created by hocgin on 2019/5/22.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @Entity
-@Table(name = "t_comment")
-public class Comment {
+@Table(name = "t_banner")
+public class Banner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     /**
-     * 评论内容
-     */
-    @Column
-    private String content;
-    /**
-     * 评论目标 唯一标识
-     * - 用字符串替代, 全局唯一标识来自于分配
+     * 展示图片
      */
     @Column(nullable = false)
-    private String targetId;
+    private String image;
+    
     /**
-     * 评论者
-     */
-    @Column(nullable = false)
-    private Long userId;
-    /**
-     * 根评论
+     * 跳转路径
      */
     @Column
-    private Long rootId;
+    private String url;
+    
     /**
-     * 父评论
+     * 标题
      */
     @Column
-    private Long parentId;
+    private String title;
+    
+    /**
+     * 状态
+     * 0 关闭, 1 开启
+     */
+    private Integer status;
     
     /**
      * 创建时间
@@ -63,4 +60,5 @@ public class Comment {
      */
     @Column
     private LocalDateTime deletedAt;
+    
 }

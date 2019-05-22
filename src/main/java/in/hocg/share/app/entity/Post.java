@@ -6,45 +6,68 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Created by hocgin on 2019/5/14.
+ * Created by hocgin on 2019/5/22.
  * email: hocgin@gmail.com
+ * 文章
  *
  * @author hocgin
  */
 @Data
 @Entity
-@Table(name = "t_comment")
-public class Comment {
+@Table(name = "t_post")
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     /**
-     * 评论内容
+     * 标题图
      */
     @Column
+    private String banner;
+    
+    /**
+     * 标题
+     */
+    @Column(nullable = false)
+    private String title;
+    
+    /**
+     * HTML 文本
+     */
+    @Column(nullable = false)
     private String content;
+    
     /**
-     * 评论目标 唯一标识
-     * - 用字符串替代, 全局唯一标识来自于分配
+     * 标签
+     * eg: xx,xx,xx
      */
     @Column(nullable = false)
-    private String targetId;
+    private String tags;
+    
     /**
-     * 评论者
+     * 作者ID
      */
     @Column(nullable = false)
-    private Long userId;
+    private Long authorId;
+    
     /**
-     * 根评论
+     * 类别ID
      */
-    @Column
-    private Long rootId;
+    @Column(nullable = false)
+    private Long classifyId;
+    
     /**
-     * 父评论
+     * 点赞数
      */
-    @Column
-    private Long parentId;
+    @Column(nullable = false)
+    private Long liked = 0L;
+    
+    /**
+     * 是否允许评论
+     */
+    @Column(nullable = false)
+    private boolean hasCommend = true;
     
     /**
      * 创建时间
