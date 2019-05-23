@@ -42,7 +42,7 @@ public class Post {
      * 标签
      * eg: xx,xx,xx
      */
-    @Column(nullable = false)
+    @Column
     private String tags;
     
     /**

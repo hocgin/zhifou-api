@@ -1,11 +1,11 @@
 version: "2"
 services:
-  #  redis:
-  #    image: redis
-  #    restart: always
-  #    container_name: redis
-  #    ports:
-  #      - "6379:6379"
+  redis:
+    image: redis
+    restart: always
+    container_name: redis
+    ports:
+    - "6379:6379"
 
   mariadb:
     image: mariadb:latest
@@ -27,5 +27,6 @@ services:
   dbdata:
     image: alpine:latest
     container_name: share-dbdata
+    restart: always
     volumes:
     - /var/lib/mysql

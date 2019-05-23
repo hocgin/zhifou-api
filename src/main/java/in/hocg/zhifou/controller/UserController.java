@@ -1,6 +1,7 @@
 package in.hocg.zhifou.controller;
 
 import in.hocg.zhifou.config.security.JwtToken;
+import in.hocg.zhifou.config.security.NeedLogin;
 import in.hocg.zhifou.controller.param.SignInParam;
 import in.hocg.zhifou.controller.param.SignUpParam;
 import in.hocg.zhifou.entity.User;
@@ -33,6 +34,7 @@ public class UserController {
     private final UserService userService;
     
     @GetMapping
+    @NeedLogin
     public ResponseEntity getUserInfo(Principal principal) {
         User user = userService.getCurrentUserInfo(principal);
         return Result.success(user)

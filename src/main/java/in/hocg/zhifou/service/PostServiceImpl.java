@@ -13,6 +13,7 @@ import in.hocg.zhifou.support.BaseService;
 import in.hocg.zhifou.support.redis.RedisService;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.Vid;
+import in.hocg.zhifou.util.lang.StringKit;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -69,12 +71,20 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
                     classifyOptional.ifPresent(classify -> response.setClassify(classify.getName()));
                     
                     // 文章简介
-                    response.setDesc(post.getContent().substring(0, 255));
+                    String content = post.getContent();
+                    response.setDesc(StringKit.desc(content, 255));
                     
                     response.setV(Vid.encode(post.getId()));
                     
-                    response.setTags(Sets.newHashSet(post.getTags().split(",")));
-                    response.setBanner(Sets.newHashSet(post.getBanner().split(",")));
+                    String tags = post.getTags();
+                    if (Objects.nonNull(tags)) {
+                        response.setTags(Sets.newHashSet(tags.split(",")));
+                    }
+                    
+                    String banner = post.getBanner();
+                    if (Objects.nonNull(banner)) {
+                        response.setBanner(Sets.newHashSet(banner.split(",")));
+                    }
                     
                     return response;
                 });
@@ -105,9 +115,16 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
         // 分类
         Optional<Classify> classifyOptional = classifyService.findById(post.getClassifyId());
         classifyOptional.ifPresent(classify -> result.setClassify(classify.getName()));
-        
-        result.setTags(Sets.newHashSet(post.getTags().split(",")));
-        result.setBanner(Sets.newHashSet(post.getBanner().split(",")));
+    
+        String tags = post.getTags();
+        if (Objects.nonNull(tags)) {
+            result.setTags(Sets.newHashSet(tags.split(",")));
+        }
+    
+        String banner = post.getBanner();
+        if (Objects.nonNull(banner)) {
+            result.setBanner(Sets.newHashSet(banner.split(",")));
+        }
         
         return result;
     }

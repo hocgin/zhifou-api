@@ -16,7 +16,7 @@ import java.util.Collection;
  */
 @Data
 public class PostDetailResponse {
-    private String id;
+    private Long id;
     private String title;
     private Collection<String> tags;
     private Collection<String> banner;
