@@ -24,6 +24,7 @@ public abstract class DefaultModel<T extends Model<?>> extends SupperModel<T> {
      * 创建时间
      */
     @TableField("created_at")
+    
     private LocalDateTime createdAt = LocalDateTime.now();
     
     /**

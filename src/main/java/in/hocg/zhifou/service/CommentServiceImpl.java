@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Comment;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.mapper.CommentMapper;
-import in.hocg.zhifou.pojo.ro.CommentRo;
+import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.pojo.vo.UserVo;
 import in.hocg.zhifou.support.base.PageQuery;
@@ -38,7 +38,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     @Override
     public void comment(Principal principal,
                         String targetId,
-                        CommentRo param) {
+                        AddCommentRo param) {
         
         String username = principal.getName();
         User user = userService.findByUsername(username);

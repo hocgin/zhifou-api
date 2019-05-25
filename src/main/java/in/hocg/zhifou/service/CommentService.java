@@ -3,7 +3,7 @@ package in.hocg.zhifou.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.zhifou.domain.Comment;
-import in.hocg.zhifou.pojo.ro.CommentRo;
+import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.support.base.PageQuery;
 
@@ -25,7 +25,7 @@ public interface CommentService extends IService<Comment> {
      */
     void comment(Principal principal,
                  String targetId,
-                 CommentRo param);
+                 AddCommentRo param);
     
     /**
      * 顶级评论

@@ -1,7 +1,7 @@
 package in.hocg.zhifou.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import in.hocg.zhifou.config.security.NeedLogin;
+import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;

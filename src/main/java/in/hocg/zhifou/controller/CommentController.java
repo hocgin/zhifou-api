@@ -1,8 +1,8 @@
 package in.hocg.zhifou.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.zhifou.config.security.NeedLogin;
-import in.hocg.zhifou.pojo.ro.CommentRo;
+import in.hocg.zhifou.support.security.NeedLogin;
+import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.service.CommentService;
 import in.hocg.zhifou.support.base.PageQuery;
@@ -44,7 +44,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity comment(@PathVariable("target") String targetId,
                                   Principal principal,
-                                  @Validated @RequestBody CommentRo param) {
+                                  @Validated @RequestBody AddCommentRo param) {
         
         boolean hasParamError = Objects.isNull(param)
                 || (param.getParentId() == null && param.getRootId() != null)

@@ -6,8 +6,6 @@ import in.hocg.zhifou.support.mybatis.DefaultModel;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
-
 /**
  * Created by hocgin on 2019/5/22.
  * email: hocgin@gmail.com
@@ -17,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@Builder
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,70 +24,49 @@ public class Post extends DefaultModel<Post> {
     /**
      * 标题图
      */
-    @TableField
+    @TableField("banner")
     private String banner;
     
     /**
      * 标题
      */
-    @TableField
+    @TableField("title")
     private String title;
     
     /**
      * HTML 文本
      */
-    @TableField
+    @TableField("content")
     private String content;
     
     /**
      * 标签
      * eg: xx,xx,xx
      */
-    @TableField
+    @TableField("tags")
     private String tags;
     
     /**
      * 作者ID
      */
-    @TableField
+    @TableField("author_id")
     private Long authorId;
     
     /**
      * 类别ID
      */
-    @TableField
+    @TableField("classify_id")
     private Long classifyId;
     
     /**
      * 点赞数
      */
-    @TableField
-    @Builder.Default
+    @TableField("liked")
     private Long liked = 0L;
     
     /**
      * 是否允许评论
      */
-    @TableField
-    @Builder.Default
-    private boolean hasCommend = true;
-    
-    /**
-     * 创建时间
-     */
-    @TableField
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
-    
-    /**
-     * 更新时间
-     */
-    @TableField
-    private LocalDateTime updatedAt;
-    
-    /**
-     * 删除时间
-     */
-    @TableField
-    private LocalDateTime deletedAt;
+    @TableField("allow_commend")
+    private boolean allowCommend = true;
 }

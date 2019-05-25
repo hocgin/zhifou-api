@@ -1,4 +1,4 @@
-package in.hocg.zhifou.config.security;
+package in.hocg.zhifou.support.security;
 
 
 import org.springframework.security.access.prepost.PreAuthorize;

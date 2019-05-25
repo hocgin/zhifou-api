@@ -1,7 +1,7 @@
 package in.hocg.zhifou.controller;
 
-import in.hocg.zhifou.config.security.JwtToken;
-import in.hocg.zhifou.config.security.NeedLogin;
+import in.hocg.zhifou.support.security.JwtToken;
+import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.pojo.ro.SignInRo;
 import in.hocg.zhifou.pojo.ro.SignUpRo;
 import in.hocg.zhifou.domain.User;

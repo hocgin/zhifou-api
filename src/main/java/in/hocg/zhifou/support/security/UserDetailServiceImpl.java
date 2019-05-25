@@ -1,4 +1,4 @@
-package in.hocg.zhifou.config.security;
+package in.hocg.zhifou.support.security;
 
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.util.ApiException;

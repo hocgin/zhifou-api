@@ -1,4 +1,4 @@
-package in.hocg.zhifou.config.security;
+package in.hocg.zhifou.support.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

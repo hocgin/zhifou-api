@@ -1,4 +1,4 @@
-package in.hocg.zhifou.config.security;
+package in.hocg.zhifou.support.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.GenericFilterBean;

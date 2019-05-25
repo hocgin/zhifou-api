@@ -1,7 +1,7 @@
 package in.hocg.zhifou.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.zhifou.config.security.JwtToken;
+import in.hocg.zhifou.support.security.JwtToken;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.pojo.ro.SignInRo;
 import in.hocg.zhifou.pojo.ro.SignUpRo;

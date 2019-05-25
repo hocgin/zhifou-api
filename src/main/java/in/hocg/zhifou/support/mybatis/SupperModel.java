@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Created by hocgin on 2019/5/25.
@@ -13,9 +14,10 @@ import lombok.experimental.Accessors;
  *
  * @author hocgin
  */
-@Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
+@Data
+
+@Accessors(chain = true)
 public abstract class SupperModel<T extends Model<?>> extends Model<T> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

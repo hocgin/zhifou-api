@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
  * @author hocgin
  */
 @Data
-public class CommentRo {
+public class AddCommentRo {
     private Long rootId;
     private Long parentId;
     @NotEmpty(message = "评论内容不能为空")
