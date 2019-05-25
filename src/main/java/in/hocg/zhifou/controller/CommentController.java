@@ -9,6 +9,8 @@ import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.http.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,9 @@ public class CommentController {
      */
     @NeedLogin
     @PostMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "target", value = "目标ID", required = true, paramType = "path"),
+    })
     @ApiOperation(value = "评论", notes = "需要登陆")
     public Result<Object> comment(@PathVariable("target") String targetId,
                                   Principal principal,
@@ -70,6 +75,9 @@ public class CommentController {
      * @return
      */
     @PostMapping("_search")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "target", value = "目标ID", required = true, paramType = "path"),
+    })
     @ApiOperation(value = "根评论搜索")
     public Result<IPage<CommentVo>> searchRootComment(@PathVariable("target") String targetId,
                                                       @RequestBody PageQuery<Void> pageable) {
@@ -85,14 +93,18 @@ public class CommentController {
      * @param pageable
      * @return
      */
-    @PostMapping("{rootId}/_search")
+    @PostMapping("{root}/_search")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "target", value = "目标ID", required = true, paramType = "path"),
+            @ApiImplicitParam(name = "root", value = "根评论ID", required = true, paramType = "path"),
+    })
     @ApiOperation(value = "子评论搜索")
     public Result<IPage<CommentVo>> searchChildComment(@PathVariable("target") String targetId,
-                                                       @PathVariable("rootId") Long rootId,
+                                                       @PathVariable("root") Long rootId,
                                                        @RequestBody PageQuery<Void> pageable) {
         Assert.notNull(targetId, "系统错误");
         Assert.notNull(rootId, "系统错误");
-    
+        
         IPage<CommentVo> result = commentService.queryChildrenComment(targetId, rootId, pageable);
         return Result.success(result);
     }
