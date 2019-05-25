@@ -2,9 +2,9 @@ package in.hocg.zhifou.service;
 
 import in.hocg.zhifou.pojo.ro.CommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
-import in.hocg.zhifou.pojo.vo.lang.UserResponse;
 import in.hocg.zhifou.domain.Comment;
 import in.hocg.zhifou.domain.User;
+import in.hocg.zhifou.pojo.vo.UserVo;
 import in.hocg.zhifou.repository.CommentRepository;
 import in.hocg.zhifou.support.BaseService;
 import in.hocg.zhifou.util.ApiException;
@@ -64,7 +64,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
                 continue;
             }
             body = new CommentVo(comment);
-            body.setCommenter(new UserResponse(userOptional.get()));
+            body.setCommenter(new UserVo(userOptional.get()));
             
             body.setCommentCount(repository.countAllByRootId(comment.getId()));
             result.add(body);
@@ -94,7 +94,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
             }
             
             body = new CommentVo(comment);
-            body.setCommenter(new UserResponse(userOptional.get()));
+            body.setCommenter(new UserVo(userOptional.get()));
             
             // 填充父评论
             Long parentId = comment.getParentId();
@@ -104,7 +104,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
                     Comment pComment = pCommentOptional.get();
                     Optional<User> pCommenter = userService.findById(pComment.getUserId());
                     if (pCommenter.isPresent()) {
-                        body.setPCommenter(new UserResponse(pCommenter.get()));
+                        body.setPCommenter(new UserVo(pCommenter.get()));
                     }
                 }
             }
