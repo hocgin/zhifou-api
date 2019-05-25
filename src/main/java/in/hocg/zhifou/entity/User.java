@@ -20,5 +20,13 @@ public class User {
     @Column
     private String username;
     @Column
+    private String email;
+    @Column
     private String password;
+    
+    /**
+     * 邮箱验证状态 [未验证, 已验证]
+     */
+    @Column
+    private Integer emailVerify = 0;
 }

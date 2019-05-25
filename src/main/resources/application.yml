@@ -5,7 +5,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     druid:
-      validation-query: select '1'
+      validation-query: SELECT 1
+      test-while-idle: true
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   redis:

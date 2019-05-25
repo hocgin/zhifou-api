@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 public class SignUpParam {
     @NotBlank(message = "用户名不能为空")
     private String username;
+    @NotBlank(message = "邮箱不能为空")
+    private String email;
     @NotBlank(message = "密码不能为空")
     private String password;
     
@@ -23,6 +25,7 @@ public class SignUpParam {
     public User asUser() {
         User entity = new User();
         entity.setUsername(username);
+        entity.setEmail(email);
         entity.setPassword(password);
         return entity;
     }
