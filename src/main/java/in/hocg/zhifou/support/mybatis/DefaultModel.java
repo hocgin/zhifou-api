@@ -41,7 +41,7 @@ public abstract class DefaultModel<T extends Model<?>> extends SupperModel<T> {
     /**
      * 更新者
      */
-    @TableField(value = "updater", update = "now()", fill = FieldFill.UPDATE)
+    @TableField(value = "updater", update = "NOW()", fill = FieldFill.UPDATE)
     private Long updater;
     
     /**
