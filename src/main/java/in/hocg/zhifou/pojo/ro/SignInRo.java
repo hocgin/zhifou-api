@@ -12,8 +12,8 @@ import javax.validation.constraints.NotBlank;
  *
  * @author hocgin
  */
-@ApiModel("登陆实体")
 @Data
+@ApiModel("登陆")
 public class SignInRo {
     @ApiModelProperty(value = "密码", required = true)
     @NotBlank(message = "用户名不能为空")

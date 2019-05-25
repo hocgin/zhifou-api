@@ -1,6 +1,7 @@
 package in.hocg.zhifou.pojo.ro;
 
 import in.hocg.zhifou.domain.Post;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
  * @author hocgin
  */
 @Data
+@ApiModel("发布文章")
 public class PublishedPostRo {
     
     @ApiModelProperty(value = "标题图", required = true)

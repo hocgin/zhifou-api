@@ -1,6 +1,7 @@
 package in.hocg.zhifou.pojo.ro;
 
 import in.hocg.zhifou.domain.Comment;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -8,11 +9,12 @@ import javax.validation.constraints.NotEmpty;
 
 /**
  * Created by hocgin on 2019/5/14.
- * email: hocgin@gmail.com
+ * email:cgin@gmail.com
  *
  * @author hocgin
  */
 @Data
+@ApiModel("评论")
 public class AddCommentRo {
     
     @ApiModelProperty(value = "根评论ID", required = true)

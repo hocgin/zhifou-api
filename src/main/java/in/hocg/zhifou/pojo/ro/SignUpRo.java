@@ -1,6 +1,7 @@
 package in.hocg.zhifou.pojo.ro;
 
 import in.hocg.zhifou.domain.User;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotBlank;
  * @author hocgin
  */
 @Data
+@ApiModel("注册")
 public class SignUpRo {
     @NotBlank(message = "用户名不能为空")
     @ApiModelProperty(value = "用户名", required = true)
