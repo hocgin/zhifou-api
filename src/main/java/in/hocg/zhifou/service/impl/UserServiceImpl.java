@@ -1,7 +1,8 @@
-package in.hocg.zhifou.service;
+package in.hocg.zhifou.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import in.hocg.zhifou.support.security.JwtToken;
+import in.hocg.zhifou.service.UserService;
+import in.hocg.zhifou.pojo.vo.TokenVo;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.mapper.UserMapper;
 import in.hocg.zhifou.pojo.ro.SignInRo;
@@ -35,7 +36,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private final PasswordEncoder passwordEncoder;
     
     @Override
-    public JwtToken signIn(SignInRo param) {
+    public TokenVo signIn(SignInRo param) {
         String username = param.getUsername();
         String password = param.getPassword();
         
@@ -46,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         String token = tokenService.generateToken(authentication);
-        return new JwtToken(token);
+        return new TokenVo(token);
     }
     
     @Override

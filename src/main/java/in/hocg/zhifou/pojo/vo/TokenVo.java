@@ -1,5 +1,7 @@
-package in.hocg.zhifou.support.security;
+package in.hocg.zhifou.pojo.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -13,8 +15,10 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor
-public class JwtToken {
+@ApiModel("Token 实体")
+public class TokenVo {
     
+    @ApiModelProperty(value = "token 内容", required = true)
     private String token;
     
 }

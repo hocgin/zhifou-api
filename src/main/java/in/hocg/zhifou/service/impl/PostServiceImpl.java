@@ -1,4 +1,4 @@
-package in.hocg.zhifou.service;
+package in.hocg.zhifou.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -13,6 +13,9 @@ import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.pojo.vo.UserVo;
+import in.hocg.zhifou.service.ClassifyService;
+import in.hocg.zhifou.service.PostService;
+import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.PageQuery;
 import in.hocg.zhifou.support.mybatis.MybatisPlusKit;
 import in.hocg.zhifou.support.redis.RedisService;
@@ -77,7 +80,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                     // 浏览量
                     response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
                     
-                    // 分类
+                    // 类别
                     Classify classify = classifyService.getById(post.getClassifyId());
                     if (Objects.nonNull(classify)) {
                         response.setClassify(classify.getName());
@@ -128,7 +131,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         // 浏览量
         result.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
         
-        // 分类
+        // 类别
         Classify classify = classifyService.getById(post.getClassifyId());
         if (Objects.nonNull(classify)) {
             result.setClassify(classify.getName());

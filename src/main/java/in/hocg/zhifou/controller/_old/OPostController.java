@@ -1,8 +1,9 @@
 package in.hocg.zhifou.controller._old;
 
 import in.hocg.zhifou.pojo.ro.AddPostRo;
-import in.hocg.zhifou.service.IndexService;
+import in.hocg.zhifou.service.impl.IndexService;
 import in.hocg.zhifou.util.http.Result;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
+@Api(tags = "@废弃 旧文章接口")
 @RestController
 @RequestMapping("/api/post")
 @AllArgsConstructor

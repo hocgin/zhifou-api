@@ -35,7 +35,7 @@ public interface CommentService extends IService<Comment> {
      * @return
      */
     IPage<CommentVo> queryRootComment(String targetId,
-                                     PageQuery<Void> pageable);
+                                      PageQuery<Void> pageable);
     
     /**
      * 子级评论
@@ -46,8 +46,8 @@ public interface CommentService extends IService<Comment> {
      * @return
      */
     IPage<CommentVo> queryChildrenComment(String targetId,
-                                         Long rootId,
-                                         PageQuery<Void> pageable);
+                                          Long rootId,
+                                          PageQuery<Void> pageable);
     
     
     /**

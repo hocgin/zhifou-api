@@ -2,6 +2,8 @@ package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.zhifou.support.base.LocalDateTimeSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,26 +15,19 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@ApiModel("轮播图信息")
 public class BannerVo {
     
-    /**
-     * 展示图片
-     */
+    @ApiModelProperty(value = "展示图片 URL", required = true)
     private String image;
     
-    /**
-     * 跳转路径
-     */
+    @ApiModelProperty(value = "跳转地址 URL")
     private String url;
     
-    /**
-     * 标题
-     */
+    @ApiModelProperty(value = "标题")
     private String title;
     
-    /**
-     * 创建时间
-     */
     @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createdAt;
 }

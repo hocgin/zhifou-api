@@ -1,7 +1,7 @@
 package in.hocg.zhifou.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import in.hocg.zhifou.support.security.JwtToken;
+import in.hocg.zhifou.pojo.vo.TokenVo;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.pojo.ro.SignInRo;
 import in.hocg.zhifou.pojo.ro.SignUpRo;
@@ -21,7 +21,7 @@ public interface UserService extends IService<User> {
      * @param param
      * @return
      */
-    JwtToken signIn(SignInRo param);
+    TokenVo signIn(SignInRo param);
     
     /**
      * 获取当前用户信息

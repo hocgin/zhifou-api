@@ -1,4 +1,4 @@
-package in.hocg.zhifou.service;
+package in.hocg.zhifou.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,6 +10,8 @@ import in.hocg.zhifou.mapper.CommentMapper;
 import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.pojo.vo.UserVo;
+import in.hocg.zhifou.service.CommentService;
+import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.PageQuery;
 import in.hocg.zhifou.support.mybatis.MybatisPlusKit;
 import in.hocg.zhifou.util.ApiException;
@@ -53,8 +55,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     }
     
     @Override
-    public Page<CommentVo> queryRootComment(String targetId,
-                                            PageQuery<Void> query) {
+    public IPage<CommentVo> queryRootComment(String targetId,
+                                             PageQuery<Void> query) {
         Page page = query.page();
         QueryWrapper wrapper = query.wrapper();
         
@@ -84,9 +86,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     
     
     @Override
-    public Page<CommentVo> queryChildrenComment(String targetId,
-                                                Long rootId,
-                                                PageQuery<Void> pageable) {
+    public IPage<CommentVo> queryChildrenComment(String targetId,
+                                                 Long rootId,
+                                                 PageQuery<Void> pageable) {
         Page page = pageable.page();
         IPage<Comment> paging = findAllByTargetIdAndRootId(targetId, rootId, page);
         
@@ -131,11 +133,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     public IPage<Comment> findAllByTargetIdAndRootId(String targetId, Long rootId,
                                                      IPage<Comment> pageable) {
         Assert.notNull(targetId, "关联的目标不能为空");
-        
-        return baseMapper.selectPage(pageable, lambdaQuery()
+    
+        IPage<Comment> commentIPage = baseMapper.selectPage(pageable, lambdaQuery()
                 .eq(Comment::getTargetId, targetId)
                 .eq(Objects.nonNull(rootId), Comment::getRootId, rootId)
                 .isNull(Objects.isNull(rootId), Comment::getRootId)
         );
+        return commentIPage;
     }
 }

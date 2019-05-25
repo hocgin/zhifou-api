@@ -1,9 +1,10 @@
-package in.hocg.zhifou.service;
+package in.hocg.zhifou.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Banner;
 import in.hocg.zhifou.mapper.BannerMapper;
 import in.hocg.zhifou.pojo.vo.BannerVo;
+import in.hocg.zhifou.service.BannerService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

@@ -1,21 +1,18 @@
 package in.hocg.zhifou.controller;
 
-import in.hocg.zhifou.support.security.JwtToken;
-import in.hocg.zhifou.support.security.NeedLogin;
+import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.pojo.ro.SignInRo;
 import in.hocg.zhifou.pojo.ro.SignUpRo;
-import in.hocg.zhifou.domain.User;
+import in.hocg.zhifou.pojo.vo.TokenVo;
 import in.hocg.zhifou.service.UserService;
+import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.util.http.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -26,45 +23,34 @@ import java.security.Principal;
  * @author hocgin
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/api/v1/account")
 @AllArgsConstructor
+@Api(tags = "账号相关接口")
 public class UserController {
     
     private final UserService userService;
     
-    @GetMapping
     @NeedLogin
-    public ResponseEntity getUserInfo(Principal principal) {
+    @GetMapping
+    @ApiOperation(value = "获取用户信息", notes = "需要登陆")
+    public Result<User> getUserInfo(Principal principal) {
         User user = userService.getCurrentUserInfo(principal);
-        return Result.success(user)
-                .asResponseEntity();
+        return Result.success(user);
     }
     
-    /**
-     * POST /account/sign-in
-     * 登陆
-     *
-     * @return
-     */
-    @PostMapping(value = "/sign-in")
-    public ResponseEntity signIn(@Validated @RequestBody SignInRo param) {
-        JwtToken token = userService.signIn(param);
-        return Result.success(token)
-                .asResponseEntity();
+    @PostMapping(value = "/sign")
+    @ApiOperation(value = "登陆")
+    public Result<TokenVo> signIn(@Validated @RequestBody SignInRo param) {
+        TokenVo token = userService.signIn(param);
+        return Result.success(token);
     }
     
-    /**
-     * POST /account/sign-up
-     * 注册
-     *
-     * @return
-     */
     @PostMapping(value = "/sign-up")
-    public ResponseEntity signUp(@Validated @RequestBody SignUpRo param) {
+    @ApiOperation(value = "注册")
+    public Result<Object> signUp(@Validated @RequestBody SignUpRo param) {
         userService.signUp(param);
-        return Result.success()
-                .asResponseEntity();
+        return Result.success();
     }
     
     

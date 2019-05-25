@@ -1,6 +1,6 @@
 package in.hocg.zhifou.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
@@ -30,7 +30,7 @@ public interface PostService extends IService<Post> {
      * @param query
      * @return
      */
-    Page<SearchPostVo> search(PageQuery<Void> query);
+    IPage<SearchPostVo> search(PageQuery<Void> query);
     
     /**
      * 文章详情

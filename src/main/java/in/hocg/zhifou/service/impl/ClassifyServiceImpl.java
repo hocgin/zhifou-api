@@ -1,8 +1,9 @@
-package in.hocg.zhifou.service;
+package in.hocg.zhifou.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Classify;
 import in.hocg.zhifou.mapper.ClassifyMapper;
+import in.hocg.zhifou.service.ClassifyService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
 package in.hocg.zhifou.pojo.ro;
 
 import in.hocg.zhifou.domain.Post;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -16,32 +17,22 @@ import javax.validation.constraints.NotNull;
 @Data
 public class PublishedPostRo {
     
-    /**
-     * 标题图
-     */
+    @ApiModelProperty(value = "标题图", required = true)
     private String banner;
     
-    /**
-     * 标题
-     */
+    @ApiModelProperty(value = "标题", required = true)
     @NotBlank(message = "请填写标题")
     private String title;
     
-    /**
-     * HTML 文本
-     */
+    @ApiModelProperty(value = "HTML 文本", required = true)
     @NotBlank(message = "请填写文章")
     private String content;
     
-    /**
-     * 标签
-     */
+    @ApiModelProperty(value = "标签")
     private String tags;
     
-    /**
-     * 类别
-     */
     @NotNull(message = "请选择类别")
+    @ApiModelProperty(value = "类别", required = true)
     private Long classifyId;
     
     public Post asPost() {

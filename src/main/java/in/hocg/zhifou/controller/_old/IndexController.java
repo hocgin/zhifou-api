@@ -2,8 +2,9 @@ package in.hocg.zhifou.controller._old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import in.hocg.zhifou.service.IndexService;
+import in.hocg.zhifou.service.impl.IndexService;
 import in.hocg.zhifou.util.http.Result;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author hocgin
  */
+@Api(tags = "@废弃 基础接口")
 @RestController
 @RequestMapping("api")
 @AllArgsConstructor

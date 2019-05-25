@@ -1,16 +1,17 @@
 package in.hocg.zhifou.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.service.CommentService;
 import in.hocg.zhifou.support.base.PageQuery;
+import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.http.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.Objects;
  *
  * @author hocgin
  */
+@Api(tags = "评价相关接口")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/{target}/comment")
@@ -42,7 +44,8 @@ public class CommentController {
      */
     @NeedLogin
     @PostMapping
-    public ResponseEntity comment(@PathVariable("target") String targetId,
+    @ApiOperation(value = "评论", notes = "需要登陆")
+    public Result<Object> comment(@PathVariable("target") String targetId,
                                   Principal principal,
                                   @Validated @RequestBody AddCommentRo param) {
         
@@ -56,8 +59,7 @@ public class CommentController {
         }
         
         commentService.comment(principal, targetId, param);
-        return Result.success("评论成功")
-                .asResponseEntity();
+        return Result.success();
     }
     
     /**
@@ -68,11 +70,11 @@ public class CommentController {
      * @return
      */
     @PostMapping("_search")
-    public ResponseEntity searchRootComment(@PathVariable("target") String targetId,
-                                            @RequestBody PageQuery<Void> pageable) {
+    @ApiOperation(value = "根评论搜索")
+    public Result<IPage<CommentVo>> searchRootComment(@PathVariable("target") String targetId,
+                                                      @RequestBody PageQuery<Void> pageable) {
         IPage<CommentVo> result = commentService.queryRootComment(targetId, pageable);
-        return Result.success(result)
-                .asResponseEntity();
+        return Result.success(result);
     }
     
     /**
@@ -84,14 +86,14 @@ public class CommentController {
      * @return
      */
     @PostMapping("{rootId}/_search")
-    public ResponseEntity searchChildComment(@PathVariable("target") String targetId,
-                                             @PathVariable("rootId") Long rootId,
-                                             @RequestBody PageQuery<Void> pageable) {
+    @ApiOperation(value = "子评论搜索")
+    public Result<IPage<CommentVo>> searchChildComment(@PathVariable("target") String targetId,
+                                                       @PathVariable("rootId") Long rootId,
+                                                       @RequestBody PageQuery<Void> pageable) {
         Assert.notNull(targetId, "系统错误");
         Assert.notNull(rootId, "系统错误");
-        
+    
         IPage<CommentVo> result = commentService.queryChildrenComment(targetId, rootId, pageable);
-        return Result.success(result)
-                .asResponseEntity();
+        return Result.success(result);
     }
 }

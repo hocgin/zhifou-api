@@ -1,6 +1,7 @@
 package in.hocg.zhifou.pojo.vo;
 
 import in.hocg.zhifou.domain.User;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -11,9 +12,15 @@ import lombok.Data;
  */
 @Data
 public class UserVo {
-    private String username;
-    private String avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
+    @ApiModelProperty(value = "ID", required = true)
     private Long id;
+    
+    @ApiModelProperty(value = "用户名", required = true)
+    private String username;
+    
+    @ApiModelProperty(value = "头像", required = true)
+    private String avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
+    
     
     public UserVo(User user) {
         this.id = user.getId();

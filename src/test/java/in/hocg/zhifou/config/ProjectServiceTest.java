@@ -1,6 +1,6 @@
 package in.hocg.zhifou.config;
 
-import in.hocg.zhifou.service.IndexService;
+import in.hocg.zhifou.service.impl.IndexService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
