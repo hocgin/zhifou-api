@@ -2,6 +2,7 @@ package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.zhifou.support.base.LocalDateTimeSerializer;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import java.util.Collection;
  * @author hocgin
  */
 @Data
+@ApiModel("文章信息")
 public class PostDetailVo {
     @ApiModelProperty(value = "ID", required = true)
     private Long id;

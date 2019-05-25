@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,9 +23,12 @@ import java.util.Optional;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ApiModel("查询对象")
 public class PageQuery<C> extends AbstractPageQuery {
     @Valid
+    @ApiModelProperty("条件")
     protected C condition;
+    @ApiModelProperty("排序")
     private Map<String, String> sort = Maps.newHashMap();
     
     

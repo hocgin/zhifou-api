@@ -1,6 +1,7 @@
 package in.hocg.zhifou.pojo.vo;
 
 import in.hocg.zhifou.domain.User;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
+@ApiModel("用户信息")
 public class UserVo {
     @ApiModelProperty(value = "ID", required = true)
     private Long id;
