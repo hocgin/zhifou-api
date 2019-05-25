@@ -1,13 +1,13 @@
 package in.hocg.zhifou.service;
 
 import com.google.common.collect.Sets;
-import in.hocg.zhifou.controller.param.PostDetailResponse;
-import in.hocg.zhifou.controller.param.PublishedPostParam;
-import in.hocg.zhifou.controller.param.SearchPostResponse;
-import in.hocg.zhifou.controller.param.lang.UserResponse;
-import in.hocg.zhifou.entity.Classify;
-import in.hocg.zhifou.entity.Post;
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.pojo.vo.PostDetailVo;
+import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.vo.SearchPostVo;
+import in.hocg.zhifou.pojo.vo.lang.UserResponse;
+import in.hocg.zhifou.domain.Classify;
+import in.hocg.zhifou.domain.Post;
+import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.repository.PostRepository;
 import in.hocg.zhifou.support.BaseService;
 import in.hocg.zhifou.support.redis.RedisService;
@@ -41,7 +41,7 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
     
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void published(PublishedPostParam param, Principal principal) {
+    public void published(PublishedPostRo param, Principal principal) {
         String username = principal.getName();
         Optional<User> userOptional = userService.findByUsername(username);
         userOptional.orElseThrow(() -> new ApiException("请先进行登陆"));
@@ -53,10 +53,10 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
     }
     
     @Override
-    public Page<SearchPostResponse> search(Pageable pageable) {
-        Page<SearchPostResponse> result = repository.findAll(pageable)
+    public Page<SearchPostVo> search(Pageable pageable) {
+        Page<SearchPostVo> result = repository.findAll(pageable)
                 .map((post) -> {
-                    SearchPostResponse response = new SearchPostResponse();
+                    SearchPostVo response = new SearchPostVo();
                     BeanUtils.copyProperties(post, response);
                     
                     // 作者
@@ -93,7 +93,7 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
     }
     
     @Override
-    public PostDetailResponse getPostDetail(String v) {
+    public PostDetailVo getPostDetail(String v) {
         Long id = Vid.decode(v);
         Optional<Post> postOptional = repository.findById(id);
         if (!postOptional.isPresent()) {
@@ -101,7 +101,7 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
         }
         
         Post post = postOptional.get();
-        PostDetailResponse result = new PostDetailResponse();
+        PostDetailVo result = new PostDetailVo();
         
         BeanUtils.copyProperties(post, result);
         

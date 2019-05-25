@@ -1,8 +1,8 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.controller.param.PostDetailResponse;
-import in.hocg.zhifou.controller.param.PublishedPostParam;
-import in.hocg.zhifou.controller.param.SearchPostResponse;
+import in.hocg.zhifou.pojo.vo.PostDetailVo;
+import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,19 +21,19 @@ public interface PostService {
      * @param param
      * @param principal
      */
-    void published(PublishedPostParam param, Principal principal);
+    void published(PublishedPostRo param, Principal principal);
     
     /**
      * 查询文章列表
      * @param pageable
      * @return
      */
-    Page<SearchPostResponse> search(Pageable pageable);
+    Page<SearchPostVo> search(Pageable pageable);
     
     /**
      * 文章详情
      * @param v
      * @return
      */
-    PostDetailResponse getPostDetail(String v);
+    PostDetailVo getPostDetail(String v);
 }

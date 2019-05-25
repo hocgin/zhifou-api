@@ -1,7 +1,6 @@
-package in.hocg.zhifou.controller.param;
+package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.zhifou.controller.param.lang.UserResponse;
 import in.hocg.zhifou.support.LocalDateTimeSerializer;
 import lombok.Data;
 
@@ -15,7 +14,7 @@ import java.util.Collection;
  * @author hocgin
  */
 @Data
-public class PostDetailResponse {
+public class PostDetailVo {
     private Long id;
     private String title;
     private Collection<String> tags;
@@ -26,7 +25,7 @@ public class PostDetailResponse {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime updatedAt;
     private String classify;
-    private UserResponse author;
+    private UserVo author;
     private Long liked;
     private boolean isLiked = false;
     private boolean isCollected = false;

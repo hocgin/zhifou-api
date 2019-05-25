@@ -1,6 +1,6 @@
 package in.hocg.zhifou.controller._old;
 
-import in.hocg.zhifou.controller.param.AddPostParam;
+import in.hocg.zhifou.pojo.ro.AddPostRo;
 import in.hocg.zhifou.service.IndexService;
 import in.hocg.zhifou.util.http.Result;
 import lombok.AllArgsConstructor;
@@ -31,7 +31,7 @@ public class OPostController {
      * @return
      */
     @PostMapping
-    public ResponseEntity add(@Validated @RequestBody AddPostParam param) {
+    public ResponseEntity add(@Validated @RequestBody AddPostRo param) {
         indexService.addPost(param);
         return Result.success()
                 .asResponseEntity();

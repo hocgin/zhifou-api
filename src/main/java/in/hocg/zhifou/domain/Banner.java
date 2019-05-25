@@ -1,4 +1,4 @@
-package in.hocg.zhifou.entity;
+package in.hocg.zhifou.domain;
 
 import lombok.Data;
 
@@ -13,17 +13,35 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-@Table(name = "t_classify")
-public class Classify {
+@Table(name = "t_banner")
+public class Banner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     /**
-     * 类别名称
+     * 展示图片
      */
     @Column(nullable = false)
-    private String name;
+    private String image;
+    
+    /**
+     * 跳转路径
+     */
+    @Column
+    private String url;
+    
+    /**
+     * 标题
+     */
+    @Column
+    private String title;
+    
+    /**
+     * 状态
+     * 0 关闭, 1 开启
+     */
+    private Integer status;
     
     /**
      * 创建时间

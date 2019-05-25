@@ -1,7 +1,7 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.controller.param.CommentParam;
-import in.hocg.zhifou.controller.param.CommentResponse;
+import in.hocg.zhifou.pojo.ro.CommentRo;
+import in.hocg.zhifou.pojo.vo.CommentVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -23,7 +23,7 @@ public interface CommentService {
      */
     void comment(Principal principal,
                  String targetId,
-                 CommentParam param);
+                 CommentRo param);
     
     /**
      * 顶级评论
@@ -32,8 +32,8 @@ public interface CommentService {
      * @param pageable
      * @return
      */
-    Page<CommentResponse> queryRootComment(String targetId,
-                                           Pageable pageable);
+    Page<CommentVo> queryRootComment(String targetId,
+                                     Pageable pageable);
     
     /**
      * 子级评论
@@ -43,8 +43,8 @@ public interface CommentService {
      * @param pageable
      * @return
      */
-    Page<CommentResponse> queryChildrenComment(String targetId,
-                                               Long rootId,
-                                               Pageable pageable);
+    Page<CommentVo> queryChildrenComment(String targetId,
+                                         Long rootId,
+                                         Pageable pageable);
     
 }

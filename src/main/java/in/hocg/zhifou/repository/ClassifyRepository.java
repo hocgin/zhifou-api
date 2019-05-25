@@ -1,6 +1,6 @@
 package in.hocg.zhifou.repository;
 
-import in.hocg.zhifou.entity.Classify;
+import in.hocg.zhifou.domain.Classify;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

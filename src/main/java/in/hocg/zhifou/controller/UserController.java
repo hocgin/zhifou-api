@@ -2,9 +2,9 @@ package in.hocg.zhifou.controller;
 
 import in.hocg.zhifou.config.security.JwtToken;
 import in.hocg.zhifou.config.security.NeedLogin;
-import in.hocg.zhifou.controller.param.SignInParam;
-import in.hocg.zhifou.controller.param.SignUpParam;
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.pojo.ro.SignInRo;
+import in.hocg.zhifou.pojo.ro.SignUpRo;
+import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.util.http.Result;
 import lombok.AllArgsConstructor;
@@ -48,7 +48,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/sign-in")
-    public ResponseEntity signIn(@Validated @RequestBody SignInParam param) {
+    public ResponseEntity signIn(@Validated @RequestBody SignInRo param) {
         JwtToken token = userService.signIn(param);
         return Result.success(token)
                 .asResponseEntity();
@@ -61,7 +61,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/sign-up")
-    public ResponseEntity signUp(@Validated @RequestBody SignUpParam param) {
+    public ResponseEntity signUp(@Validated @RequestBody SignUpRo param) {
         userService.signUp(param);
         return Result.success()
                 .asResponseEntity();

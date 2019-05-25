@@ -26,11 +26,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<in.hocg.zhifou.entity.User> userOptional = repository.findByUsername(username);
+        Optional<in.hocg.zhifou.domain.User> userOptional = repository.findByUsername(username);
         if (!userOptional.isPresent()) {
             throw new ApiException("用户账号或密码错误");
         }
-        in.hocg.zhifou.entity.User user = userOptional.get();
+        in.hocg.zhifou.domain.User user = userOptional.get();
         
         return new User(user.getUsername(),
                 user.getPassword(),

@@ -1,6 +1,6 @@
 package in.hocg.zhifou.repository;
 
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

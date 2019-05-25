@@ -1,6 +1,6 @@
-package in.hocg.zhifou.controller.param;
+package in.hocg.zhifou.pojo.ro;
 
-import in.hocg.zhifou.entity.Post;
+import in.hocg.zhifou.domain.Post;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @author hocgin
  */
 @Data
-public class PublishedPostParam {
+public class PublishedPostRo {
     
     /**
      * 标题图

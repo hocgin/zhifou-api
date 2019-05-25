@@ -1,6 +1,6 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.entity.Classify;
+import in.hocg.zhifou.domain.Classify;
 import in.hocg.zhifou.repository.ClassifyRepository;
 import in.hocg.zhifou.support.BaseService;
 import lombok.AllArgsConstructor;

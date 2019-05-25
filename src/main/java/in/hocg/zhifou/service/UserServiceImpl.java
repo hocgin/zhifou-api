@@ -1,9 +1,9 @@
 package in.hocg.zhifou.service;
 
 import in.hocg.zhifou.config.security.JwtToken;
-import in.hocg.zhifou.controller.param.SignInParam;
-import in.hocg.zhifou.controller.param.SignUpParam;
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.pojo.ro.SignInRo;
+import in.hocg.zhifou.pojo.ro.SignUpRo;
+import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.repository.UserRepository;
 import in.hocg.zhifou.support.BaseService;
 import in.hocg.zhifou.util.ApiException;
@@ -35,7 +35,7 @@ public class UserServiceImpl extends BaseService<User, UserRepository>
     private final PasswordEncoder passwordEncoder;
     
     @Override
-    public JwtToken signIn(SignInParam param) {
+    public JwtToken signIn(SignInRo param) {
         String username = param.getUsername();
         String password = param.getPassword();
         
@@ -65,7 +65,7 @@ public class UserServiceImpl extends BaseService<User, UserRepository>
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void signUp(SignUpParam param) {
+    public void signUp(SignUpRo param) {
         String username = param.getUsername();
         String password = param.getPassword();
         Optional<User> userOptional = repository.findByUsername(username);

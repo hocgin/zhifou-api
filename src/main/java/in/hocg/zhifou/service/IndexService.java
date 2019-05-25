@@ -3,7 +3,7 @@ package in.hocg.zhifou.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import in.hocg.zhifou.controller.param.AddPostParam;
+import in.hocg.zhifou.pojo.ro.AddPostRo;
 import in.hocg.zhifou.support.project.FileNameConstant;
 import in.hocg.zhifou.support.project.ProjectProperties;
 import in.hocg.zhifou.support.project.ProjectService;
@@ -89,7 +89,7 @@ public class IndexService {
         return projectService.getJSONDetail(path);
     }
     
-    public void addPost(AddPostParam param) {
+    public void addPost(AddPostRo param) {
         JSONObject jsonObject = param.asFileJSONObject();
         Path keepDir = Paths.get(properties.getKeep());
         keepDir.toFile().mkdirs();

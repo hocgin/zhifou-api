@@ -1,6 +1,6 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.controller.param.BannerResponse;
+import in.hocg.zhifou.pojo.vo.BannerVo;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public interface BannerService {
      * 获取所有的 Banner
      * @return
      */
-    List<BannerResponse> getAll();
+    List<BannerVo> getAll();
 }

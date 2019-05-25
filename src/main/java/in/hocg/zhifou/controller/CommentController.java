@@ -1,8 +1,8 @@
 package in.hocg.zhifou.controller;
 
 import in.hocg.zhifou.config.security.NeedLogin;
-import in.hocg.zhifou.controller.param.CommentParam;
-import in.hocg.zhifou.controller.param.CommentResponse;
+import in.hocg.zhifou.pojo.ro.CommentRo;
+import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.service.CommentService;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.http.Result;
@@ -45,7 +45,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity comment(@PathVariable("target") String targetId,
                                   Principal principal,
-                                  @Validated @RequestBody CommentParam param) {
+                                  @Validated @RequestBody CommentRo param) {
         
         boolean hasParamError = Objects.isNull(param)
                 || (param.getParentId() == null && param.getRootId() != null)
@@ -71,7 +71,7 @@ public class CommentController {
     @PostMapping("_search")
     public ResponseEntity searchRootComment(@PathVariable("target") String targetId,
                                             @PageableDefault(value = 8, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<CommentResponse> result = commentService.queryRootComment(targetId, pageable);
+        Page<CommentVo> result = commentService.queryRootComment(targetId, pageable);
         return Result.success(result)
                 .asResponseEntity();
     }
@@ -88,7 +88,7 @@ public class CommentController {
     public ResponseEntity searchChildComment(@PathVariable("target") String targetId,
                                              @PathVariable("rootId") Long rootId,
                                              @PageableDefault(value = 5, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<CommentResponse> result = commentService.queryChildrenComment(targetId, rootId, pageable);
+        Page<CommentVo> result = commentService.queryChildrenComment(targetId, rootId, pageable);
         return Result.success(result)
                 .asResponseEntity();
     }

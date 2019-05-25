@@ -1,4 +1,4 @@
-package in.hocg.zhifou.controller.param;
+package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.zhifou.support.LocalDateTimeSerializer;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
-public class BannerResponse {
+public class BannerVo {
     
     /**
      * 展示图片

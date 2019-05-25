@@ -1,10 +1,10 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.controller.param.CommentParam;
-import in.hocg.zhifou.controller.param.CommentResponse;
-import in.hocg.zhifou.controller.param.lang.UserResponse;
-import in.hocg.zhifou.entity.Comment;
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.pojo.ro.CommentRo;
+import in.hocg.zhifou.pojo.vo.CommentVo;
+import in.hocg.zhifou.pojo.vo.lang.UserResponse;
+import in.hocg.zhifou.domain.Comment;
+import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.repository.CommentRepository;
 import in.hocg.zhifou.support.BaseService;
 import in.hocg.zhifou.util.ApiException;
@@ -35,7 +35,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
     @Override
     public void comment(Principal principal,
                         String targetId,
-                        CommentParam param) {
+                        CommentRo param) {
         
         String username = principal.getName();
         Optional<User> userOptional = userService.findByUsername(username);
@@ -49,12 +49,12 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
     }
     
     @Override
-    public Page<CommentResponse> queryRootComment(String targetId,
-                                                  Pageable pageable) {
+    public Page<CommentVo> queryRootComment(String targetId,
+                                            Pageable pageable) {
         
         Page<Comment> comments = repository.findAllByTargetIdAndRootId(targetId, null, pageable);
-        CommentResponse body;
-        ArrayList<CommentResponse> result = new ArrayList<>(comments.getContent().size());
+        CommentVo body;
+        ArrayList<CommentVo> result = new ArrayList<>(comments.getContent().size());
         Optional<User> userOptional;
         
         // 填充信息
@@ -63,7 +63,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
             if (!userOptional.isPresent()) {
                 continue;
             }
-            body = new CommentResponse(comment);
+            body = new CommentVo(comment);
             body.setCommenter(new UserResponse(userOptional.get()));
             
             body.setCommentCount(repository.countAllByRootId(comment.getId()));
@@ -75,15 +75,15 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
     
     
     @Override
-    public Page<CommentResponse> queryChildrenComment(String targetId,
-                                                      Long rootId,
-                                                      Pageable pageable) {
+    public Page<CommentVo> queryChildrenComment(String targetId,
+                                                Long rootId,
+                                                Pageable pageable) {
         
         
         Page<Comment> comments = repository.findAllByTargetIdAndRootId(targetId, rootId, pageable);
         
-        CommentResponse body;
-        ArrayList<CommentResponse> result = new ArrayList<>(comments.getContent().size());
+        CommentVo body;
+        ArrayList<CommentVo> result = new ArrayList<>(comments.getContent().size());
         Optional<User> userOptional;
         
         // 填充信息
@@ -93,7 +93,7 @@ public class CommentServiceImpl extends BaseService<Comment, CommentRepository>
                 continue;
             }
             
-            body = new CommentResponse(comment);
+            body = new CommentVo(comment);
             body.setCommenter(new UserResponse(userOptional.get()));
             
             // 填充父评论

@@ -1,6 +1,6 @@
-package in.hocg.zhifou.controller.param;
+package in.hocg.zhifou.pojo.ro;
 
-import in.hocg.zhifou.entity.Comment;
+import in.hocg.zhifou.domain.Comment;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
  * @author hocgin
  */
 @Data
-public class CommentParam {
+public class CommentRo {
     private Long rootId;
     private Long parentId;
     @NotEmpty(message = "评论内容不能为空")

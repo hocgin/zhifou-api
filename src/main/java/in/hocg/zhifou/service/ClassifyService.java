@@ -1,6 +1,6 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.entity.Classify;
+import in.hocg.zhifou.domain.Classify;
 
 import java.util.Optional;
 

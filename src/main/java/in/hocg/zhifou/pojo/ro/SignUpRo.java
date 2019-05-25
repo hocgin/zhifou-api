@@ -1,6 +1,6 @@
-package in.hocg.zhifou.controller.param;
+package in.hocg.zhifou.pojo.ro;
 
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.domain.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  * @author hocgin
  */
 @Data
-public class SignUpParam {
+public class SignUpRo {
     @NotBlank(message = "用户名不能为空")
     private String username;
     @NotBlank(message = "邮箱不能为空")

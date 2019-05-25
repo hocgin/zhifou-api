@@ -1,4 +1,4 @@
-package in.hocg.zhifou.controller.param;
+package in.hocg.zhifou.pojo.ro;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  * @author hocgin
  */
 @Data
-public class AddPostParam {
+public class AddPostRo {
     @NotBlank(message = "标题不能为空")
     private String title;
     private String icon = "http://lorempixel.com/500/500";

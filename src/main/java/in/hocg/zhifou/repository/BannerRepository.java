@@ -1,6 +1,6 @@
 package in.hocg.zhifou.repository;
 
-import in.hocg.zhifou.entity.Banner;
+import in.hocg.zhifou.domain.Banner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

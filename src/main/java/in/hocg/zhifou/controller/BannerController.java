@@ -1,6 +1,6 @@
 package in.hocg.zhifou.controller;
 
-import in.hocg.zhifou.controller.param.BannerResponse;
+import in.hocg.zhifou.pojo.vo.BannerVo;
 import in.hocg.zhifou.service.BannerService;
 import in.hocg.zhifou.util.http.Result;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class BannerController {
     
     @GetMapping
     public ResponseEntity all() {
-        List<BannerResponse> result = service.getAll();
+        List<BannerVo> result = service.getAll();
         return Result.success(result)
                 .asResponseEntity();
     }

@@ -1,4 +1,4 @@
-package in.hocg.zhifou.entity;
+package in.hocg.zhifou.domain;
 
 import lombok.Data;
 

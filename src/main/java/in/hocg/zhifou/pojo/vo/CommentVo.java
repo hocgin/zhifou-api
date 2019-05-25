@@ -1,8 +1,7 @@
-package in.hocg.zhifou.controller.param;
+package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.zhifou.controller.param.lang.UserResponse;
-import in.hocg.zhifou.entity.Comment;
+import in.hocg.zhifou.domain.Comment;
 import in.hocg.zhifou.support.LocalDateTimeSerializer;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -16,9 +15,9 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
-public class CommentResponse {
+public class CommentVo {
     
-    public CommentResponse(Comment comment) {
+    public CommentVo(Comment comment) {
         BeanUtils.copyProperties(comment, this);
     }
     
@@ -47,12 +46,12 @@ public class CommentResponse {
     /**
      * 评论者
      */
-    private UserResponse commenter;
+    private UserVo commenter;
     
     /**
      * 被评论者
      */
-    private UserResponse pCommenter;
+    private UserVo pCommenter;
     
     /**
      * 子评论数量

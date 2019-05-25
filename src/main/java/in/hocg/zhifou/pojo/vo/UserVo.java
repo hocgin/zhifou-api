@@ -1,6 +1,6 @@
-package in.hocg.zhifou.controller.param.lang;
+package in.hocg.zhifou.pojo.vo;
 
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.domain.User;
 import lombok.Data;
 
 /**
@@ -10,12 +10,12 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class UserResponse {
+public class UserVo {
     private String username;
     private String avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
     private Long id;
     
-    public UserResponse(User user) {
+    public UserVo(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
     }

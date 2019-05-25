@@ -1,7 +1,7 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.controller.param.BannerResponse;
-import in.hocg.zhifou.entity.Banner;
+import in.hocg.zhifou.pojo.vo.BannerVo;
+import in.hocg.zhifou.domain.Banner;
 import in.hocg.zhifou.repository.BannerRepository;
 import in.hocg.zhifou.support.BaseService;
 import lombok.AllArgsConstructor;
@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 public class BannerServiceImpl extends BaseService<Banner, BannerRepository>
         implements BannerService {
     @Override
-    public List<BannerResponse> getAll() {
+    public List<BannerVo> getAll() {
         return repository.findAllByStatus(1).stream().map(banner -> {
-            BannerResponse result = new BannerResponse();
+            BannerVo result = new BannerVo();
             BeanUtils.copyProperties(banner, result);
             return result;
         }).collect(Collectors.toList());

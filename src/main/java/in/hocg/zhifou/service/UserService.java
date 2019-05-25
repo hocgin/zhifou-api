@@ -1,9 +1,9 @@
 package in.hocg.zhifou.service;
 
 import in.hocg.zhifou.config.security.JwtToken;
-import in.hocg.zhifou.controller.param.SignInParam;
-import in.hocg.zhifou.controller.param.SignUpParam;
-import in.hocg.zhifou.entity.User;
+import in.hocg.zhifou.pojo.ro.SignInRo;
+import in.hocg.zhifou.pojo.ro.SignUpRo;
+import in.hocg.zhifou.domain.User;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -19,7 +19,7 @@ public interface UserService {
      * 登陆
      * @param param
      */
-    JwtToken signIn(SignInParam param);
+    JwtToken signIn(SignInRo param);
     
     /**
      * 获取当前用户信息
@@ -32,7 +32,7 @@ public interface UserService {
      * 注册
      * @param param
      */
-    void signUp(SignUpParam param);
+    void signUp(SignUpRo param);
     
     /**
      * 查找用户信息
