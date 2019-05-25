@@ -1,7 +1,7 @@
 package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.zhifou.support.LocalDateTimeSerializer;
+import in.hocg.zhifou.support.base.LocalDateTimeSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -3,14 +3,6 @@ spring:
     url: jdbc:mariadb://mysql.localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
     username: root
     password: hocgin
-  jpa:
-    show-sql: true
-    hibernate:
-      # none - 不改变数据库结构
-      # update - 根据实体结构更改数据库
-      # create -
-      # create-drop - 重新创建
-      ddl-auto: update
 logging:
   level:
     org.springframework: debug

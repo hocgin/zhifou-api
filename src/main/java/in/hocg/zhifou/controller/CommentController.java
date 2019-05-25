@@ -1,18 +1,17 @@
 package in.hocg.zhifou.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.zhifou.config.security.NeedLogin;
 import in.hocg.zhifou.pojo.ro.CommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.service.CommentService;
+import in.hocg.zhifou.support.base.PageQuery;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.http.Result;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +52,7 @@ public class CommentController {
         
         // parent_id && root_id 只能同时为 null 或 均不为 null
         if (hasParamError) {
-            throw new ApiException("错误操作");
+            throw ApiException.newInstance("错误操作");
         }
         
         commentService.comment(principal, targetId, param);
@@ -70,8 +69,8 @@ public class CommentController {
      */
     @PostMapping("_search")
     public ResponseEntity searchRootComment(@PathVariable("target") String targetId,
-                                            @PageableDefault(value = 8, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<CommentVo> result = commentService.queryRootComment(targetId, pageable);
+                                            @RequestBody PageQuery<Void> pageable) {
+        IPage<CommentVo> result = commentService.queryRootComment(targetId, pageable);
         return Result.success(result)
                 .asResponseEntity();
     }
@@ -87,8 +86,11 @@ public class CommentController {
     @PostMapping("{rootId}/_search")
     public ResponseEntity searchChildComment(@PathVariable("target") String targetId,
                                              @PathVariable("rootId") Long rootId,
-                                             @PageableDefault(value = 5, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<CommentVo> result = commentService.queryChildrenComment(targetId, rootId, pageable);
+                                             @RequestBody PageQuery<Void> pageable) {
+        Assert.notNull(targetId, "系统错误");
+        Assert.notNull(rootId, "系统错误");
+        
+        IPage<CommentVo> result = commentService.queryChildrenComment(targetId, rootId, pageable);
         return Result.success(result)
                 .asResponseEntity();
     }

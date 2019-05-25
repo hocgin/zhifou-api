@@ -4,13 +4,18 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
+    schema:
+    - classpath:db/schema-maria.sql
+    data:
+    - classpath:db/data-maria.sql
     druid:
       validation-query: SELECT 1
       test-while-idle: true
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   redis:
     host: 127.0.0.1
     port: 6379
   profiles:
     active: dev
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml

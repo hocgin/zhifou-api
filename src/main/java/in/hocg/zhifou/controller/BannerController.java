@@ -24,7 +24,7 @@ public class BannerController {
     private final BannerService service;
     
     @GetMapping
-    public ResponseEntity all() {
+    public ResponseEntity list() {
         List<BannerVo> result = service.getAll();
         return Result.success(result)
                 .asResponseEntity();

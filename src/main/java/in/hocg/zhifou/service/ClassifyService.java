@@ -1,8 +1,7 @@
 package in.hocg.zhifou.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.zhifou.domain.Classify;
-
-import java.util.Optional;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -10,6 +9,5 @@ import java.util.Optional;
  *
  * @author hocgin
  */
-public interface ClassifyService {
-    Optional<Classify> findById(Long id);
+public interface ClassifyService extends IService<Classify> {
 }

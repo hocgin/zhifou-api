@@ -1,10 +1,12 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.pojo.vo.PostDetailVo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import in.hocg.zhifou.support.base.PageQuery;
 
 import java.security.Principal;
 
@@ -14,7 +16,7 @@ import java.security.Principal;
  *
  * @author hocgin
  */
-public interface PostService {
+public interface PostService extends IService<Post> {
     
     /**
      * 发布文章
@@ -25,10 +27,10 @@ public interface PostService {
     
     /**
      * 查询文章列表
-     * @param pageable
+     * @param query
      * @return
      */
-    Page<SearchPostVo> search(Pageable pageable);
+    Page<SearchPostVo> search(PageQuery<Void> query);
     
     /**
      * 文章详情

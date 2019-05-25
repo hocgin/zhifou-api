@@ -1,8 +1,11 @@
 package in.hocg.zhifou.domain;
 
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.zhifou.support.mybatis.DefaultModel;
+import lombok.*;
+import lombok.experimental.Accessors;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -12,60 +15,38 @@ import java.time.LocalDateTime;
  *
  * @author hocgin
  */
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@Builder
 @Data
-@Entity
-@Table(name = "t_pending_mailbox")
-public class PendingMailbox {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("t_pending_mailbox")
+public class PendingMailbox extends DefaultModel<PendingMailbox> {
     
     /**
      * 随机码
      */
-    @Column(nullable = false)
+    @TableField
     private String code;
     
     /**
      * 用户
      */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @TableField
+    private Long userId;
     
     /**
      * 过期时间
      */
-    @Column(nullable = false)
+    @TableField
     private LocalDateTime expiredAt;
-    
-    /**
-     * 创建时间
-     */
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
     
     /**
      * 状态 [禁用, 已使用, 未使用]
      */
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.disable;
-    
-    enum Status {
-        /**
-         * 禁用
-         */
-        disable,
-        /**
-         * 已使用
-         */
-        used,
-        /**
-         * 未使用
-         */
-        unused
-    }
+    @TableField
+    @Builder.Default
+    private Integer status = 0;
     
 }

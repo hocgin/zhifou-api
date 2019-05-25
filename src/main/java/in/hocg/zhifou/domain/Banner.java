@@ -1,9 +1,9 @@
 package in.hocg.zhifou.domain;
 
-import lombok.Data;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.zhifou.support.mybatis.DefaultModel;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -12,29 +12,27 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
-@Entity
-@Table(name = "t_banner")
-public class Banner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("t_banner")
+public class Banner extends DefaultModel<Banner> {
     
     /**
      * 展示图片
      */
-    @Column(nullable = false)
     private String image;
     
     /**
      * 跳转路径
      */
-    @Column
     private String url;
     
     /**
      * 标题
      */
-    @Column
     private String title;
     
     /**
@@ -42,23 +40,5 @@ public class Banner {
      * 0 关闭, 1 开启
      */
     private Integer status;
-    
-    /**
-     * 创建时间
-     */
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-    
-    /**
-     * 更新时间
-     */
-    @Column
-    private LocalDateTime updatedAt;
-    
-    /**
-     * 删除时间
-     */
-    @Column
-    private LocalDateTime deletedAt;
     
 }

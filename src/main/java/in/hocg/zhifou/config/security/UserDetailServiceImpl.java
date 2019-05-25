@@ -1,6 +1,6 @@
 package in.hocg.zhifou.config.security;
 
-import in.hocg.zhifou.repository.UserRepository;
+import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.util.ApiException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2018/10/19.
@@ -21,16 +21,15 @@ import java.util.Optional;
 @Component
 @AllArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {
-    private final UserRepository repository;
+    private final UserService service;
     
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<in.hocg.zhifou.domain.User> userOptional = repository.findByUsername(username);
-        if (!userOptional.isPresent()) {
-            throw new ApiException("用户账号或密码错误");
+        in.hocg.zhifou.domain.User user = service.findByUsername(username);
+        if (Objects.isNull(user)) {
+            throw ApiException.newInstance("用户账号或密码错误");
         }
-        in.hocg.zhifou.domain.User user = userOptional.get();
         
         return new User(user.getUsername(),
                 user.getPassword(),

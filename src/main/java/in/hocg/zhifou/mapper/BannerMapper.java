@@ -1,8 +1,8 @@
-package in.hocg.zhifou.repository;
+package in.hocg.zhifou.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.zhifou.domain.Banner;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -12,11 +12,12 @@ import java.util.List;
  *
  * @author hocgin
  */
-@Repository
-public interface BannerRepository extends JpaRepository<Banner, Long> {
+@Mapper
+public interface BannerMapper extends BaseMapper<Banner> {
     
     /**
      * 查询指定状态的 banner
+     *
      * @param status
      * @return
      */

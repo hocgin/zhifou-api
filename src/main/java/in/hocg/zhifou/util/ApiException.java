@@ -20,4 +20,8 @@ public class ApiException extends RuntimeException {
         super(message);
         this.code = code;
     }
+    
+    public static ApiException newInstance(String message) {
+        return ApiException.newInstance(message);
+    }
 }

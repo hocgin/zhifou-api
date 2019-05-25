@@ -1,9 +1,9 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.pojo.vo.BannerVo;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Banner;
-import in.hocg.zhifou.repository.BannerRepository;
-import in.hocg.zhifou.support.BaseService;
+import in.hocg.zhifou.mapper.BannerMapper;
+import in.hocg.zhifou.pojo.vo.BannerVo;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,15 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
-public class BannerServiceImpl extends BaseService<Banner, BannerRepository>
+public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
         implements BannerService {
     @Override
     public List<BannerVo> getAll() {
-        return repository.findAllByStatus(1).stream().map(banner -> {
-            BannerVo result = new BannerVo();
-            BeanUtils.copyProperties(banner, result);
-            return result;
+        List<Banner> result = baseMapper.selectList(lambdaQuery().eq(Banner::getStatus, 1));
+        return result.stream().map(banner -> {
+            BannerVo entity = new BannerVo();
+            BeanUtils.copyProperties(banner, entity);
+            return entity;
         }).collect(Collectors.toList());
     }
 }

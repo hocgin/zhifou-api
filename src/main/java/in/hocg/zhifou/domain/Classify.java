@@ -1,8 +1,11 @@
 package in.hocg.zhifou.domain;
 
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.zhifou.support.mybatis.DefaultModel;
+import lombok.*;
+import lombok.experimental.Accessors;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -11,36 +14,38 @@ import java.time.LocalDateTime;
  *
  * @author hocgin
  */
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@Builder
 @Data
-@Entity
-@Table(name = "t_classify")
-public class Classify {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("t_classify")
+public class Classify extends DefaultModel<Classify> {
     
     /**
      * 类别名称
      */
-    @Column(nullable = false)
+    @TableField
     private String name;
     
     /**
      * 创建时间
      */
-    @Column(nullable = false)
+    @TableField
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
     
     /**
      * 更新时间
      */
-    @Column
+    @TableField
     private LocalDateTime updatedAt;
     
     /**
      * 删除时间
      */
-    @Column
+    @TableField
     private LocalDateTime deletedAt;
     
 }

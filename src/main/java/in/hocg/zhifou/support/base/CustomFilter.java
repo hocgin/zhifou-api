@@ -1,4 +1,4 @@
-package in.hocg.zhifou.support;
+package in.hocg.zhifou.support.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;

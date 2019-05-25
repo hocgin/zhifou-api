@@ -1,8 +1,11 @@
 package in.hocg.zhifou.domain;
 
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.zhifou.support.mybatis.DefaultModel;
+import lombok.*;
+import lombok.experimental.Accessors;
 
-import javax.persistence.*;
 
 /**
  * Created by hocgin on 2019/5/14.
@@ -10,23 +13,26 @@ import javax.persistence.*;
  *
  * @author hocgin
  */
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@Builder
 @Data
-@Entity
-@Table(name = "t_user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("t_user")
+public class User extends DefaultModel<Post> {
+    
+    @TableField
     private String username;
-    @Column
+    @TableField
     private String email;
-    @Column
+    @TableField
     private String password;
     
     /**
      * 邮箱验证状态 [未验证, 已验证]
      */
-    @Column
+    @TableField
+    @Builder.Default
     private Integer emailVerify = 0;
 }

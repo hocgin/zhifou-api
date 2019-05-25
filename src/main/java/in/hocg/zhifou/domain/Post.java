@@ -1,8 +1,11 @@
 package in.hocg.zhifou.domain;
 
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.zhifou.support.mybatis.DefaultModel;
+import lombok.*;
+import lombok.experimental.Accessors;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -12,78 +15,81 @@ import java.time.LocalDateTime;
  *
  * @author hocgin
  */
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@Builder
 @Data
-@Entity
-@Table(name = "t_post")
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("t_post")
+public class Post extends DefaultModel<Post> {
     /**
      * 标题图
      */
-    @Column
+    @TableField
     private String banner;
     
     /**
      * 标题
      */
-    @Column(nullable = false)
+    @TableField
     private String title;
     
     /**
      * HTML 文本
      */
-    @Column(nullable = false)
+    @TableField
     private String content;
     
     /**
      * 标签
      * eg: xx,xx,xx
      */
-    @Column
+    @TableField
     private String tags;
     
     /**
      * 作者ID
      */
-    @Column(nullable = false)
+    @TableField
     private Long authorId;
     
     /**
      * 类别ID
      */
-    @Column(nullable = false)
+    @TableField
     private Long classifyId;
     
     /**
      * 点赞数
      */
-    @Column(nullable = false)
+    @TableField
+    @Builder.Default
     private Long liked = 0L;
     
     /**
      * 是否允许评论
      */
-    @Column(nullable = false)
+    @TableField
+    @Builder.Default
     private boolean hasCommend = true;
     
     /**
      * 创建时间
      */
-    @Column(nullable = false)
+    @TableField
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
     
     /**
      * 更新时间
      */
-    @Column
+    @TableField
     private LocalDateTime updatedAt;
     
     /**
      * 删除时间
      */
-    @Column
+    @TableField
     private LocalDateTime deletedAt;
 }

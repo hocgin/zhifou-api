@@ -1,4 +1,4 @@
-package in.hocg.zhifou.support;
+package in.hocg.zhifou.support.base;
 
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.http.Result;

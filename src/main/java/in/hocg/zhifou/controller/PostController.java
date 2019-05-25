@@ -1,16 +1,14 @@
 package in.hocg.zhifou.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.zhifou.config.security.NeedLogin;
-import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.service.PostService;
+import in.hocg.zhifou.support.base.PageQuery;
 import in.hocg.zhifou.util.http.Result;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,12 +47,12 @@ public class PostController {
     /**
      * 检索
      *
-     * @param pageable
+     * @param query
      * @return
      */
     @PostMapping("_search")
-    public ResponseEntity search(@PageableDefault(value = 8, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<SearchPostVo> result = service.search(pageable);
+    public ResponseEntity search(@RequestBody PageQuery<Void> query) {
+        Page<SearchPostVo> result = service.search(query);
         return Result.success(result)
                 .asResponseEntity();
     }
