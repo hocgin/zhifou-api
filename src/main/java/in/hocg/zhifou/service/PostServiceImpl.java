@@ -4,10 +4,10 @@ import com.google.common.collect.Sets;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
-import in.hocg.zhifou.pojo.vo.lang.UserResponse;
 import in.hocg.zhifou.domain.Classify;
 import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.domain.User;
+import in.hocg.zhifou.pojo.vo.UserVo;
 import in.hocg.zhifou.repository.PostRepository;
 import in.hocg.zhifou.support.BaseService;
 import in.hocg.zhifou.support.redis.RedisService;
@@ -61,7 +61,7 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
                     
                     // 作者
                     Optional<User> authorOptional = userService.findById(post.getAuthorId());
-                    authorOptional.ifPresent(user -> response.setAuthor(new UserResponse(user)));
+                    authorOptional.ifPresent(user -> response.setAuthor(new UserVo(user)));
                     
                     // 浏览量
                     response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
@@ -107,7 +107,7 @@ public class PostServiceImpl extends BaseService<Post, PostRepository>
         
         // 作者
         Optional<User> authorOptional = userService.findById(post.getAuthorId());
-        authorOptional.ifPresent(user -> result.setAuthor(new UserResponse(user)));
+        authorOptional.ifPresent(user -> result.setAuthor(new UserVo(user)));
         
         // 浏览量
         result.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
