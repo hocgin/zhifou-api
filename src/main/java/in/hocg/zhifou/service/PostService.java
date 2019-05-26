@@ -20,6 +20,7 @@ public interface PostService extends IService<Post> {
     
     /**
      * 发布文章
+     *
      * @param param
      * @param principal
      */
@@ -27,15 +28,19 @@ public interface PostService extends IService<Post> {
     
     /**
      * 查询文章列表
+     *
+     * @param principal
      * @param query
      * @return
      */
-    IPage<SearchPostVo> search(PageQuery<Void> query);
+    IPage<SearchPostVo> search(Principal principal, PageQuery<Void> query);
     
     /**
      * 文章详情
+     *
+     * @param principal
      * @param v
      * @return
      */
-    PostDetailVo getPostDetail(String v);
+    PostDetailVo getPostDetail(Principal principal, String v);
 }

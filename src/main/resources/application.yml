@@ -8,7 +8,8 @@ spring:
     username: <username/>
     password: <password/>
     schema:
-    - classpath:db/schema-maria.sql
+    - classpath:db/schema/schema-base.sql
+    - classpath:db/schema/schema-user.sql
     data:
     - classpath:db/data-maria.sql
     druid:

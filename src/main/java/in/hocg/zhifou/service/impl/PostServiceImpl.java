@@ -15,6 +15,7 @@ import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.pojo.vo.UserVo;
 import in.hocg.zhifou.service.ClassifyService;
+import in.hocg.zhifou.service.FavoriteService;
 import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.request.PageQuery;
@@ -45,6 +46,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     private final UserService userService;
     private final ClassifyService classifyService;
     private final RedisManager redisService;
+    private final FavoriteService favoriteService;
     
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -60,7 +62,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     }
     
     @Override
-    public Page<SearchPostVo> search(PageQuery<Void> pageQuery) {
+    public Page<SearchPostVo> search(Principal principal, PageQuery<Void> pageQuery) {
         Page page = pageQuery.page();
         QueryWrapper<Post> wrapper = pageQuery.wrapper();
         
@@ -101,6 +103,15 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                     if (Objects.nonNull(banner)) {
                         response.setBanner(Sets.newHashSet(banner.split(",")));
                     }
+    
+    
+    
+                    String username = principal.getName();
+                    if (Objects.nonNull(username)) {
+                        User user = userService.findByUsername(username);
+                        boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
+                        response.setFavorites(alreadyFavorite);
+                    }
                     
                     return response;
                 }).collect(Collectors.toList());
@@ -111,7 +122,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     }
     
     @Override
-    public PostDetailVo getPostDetail(String v) {
+    public PostDetailVo getPostDetail(Principal principal, String v) {
         Long id = Vid.decode(v);
         Post post = baseMapper.selectById(id);
         if (Objects.isNull(post)) {
@@ -146,7 +157,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         if (Objects.nonNull(banner)) {
             result.setBanner(Sets.newHashSet(banner.split(",")));
         }
-        
+    
+        String username = principal.getName();
+        if (Objects.nonNull(username)) {
+            User user = userService.findByUsername(username);
+            boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
+            result.setFavorites(alreadyFavorite);
+        }
+    
         return result;
     }
 }

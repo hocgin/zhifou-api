@@ -19,6 +19,12 @@ import javax.validation.constraints.NotNull;
 @ApiModel("发布文章")
 public class PublishedPostRo {
     
+    public Post asPost() {
+        Post result = new Post();
+        BeanUtils.copyProperties(this, result);
+        return result;
+    }
+    
     @ApiModelProperty(value = "标题图", required = true)
     private String banner;
     
@@ -37,9 +43,4 @@ public class PublishedPostRo {
     @ApiModelProperty(value = "类别", required = true)
     private Long classifyId;
     
-    public Post asPost() {
-        Post result = new Post();
-        BeanUtils.copyProperties(this, result);
-        return result;
-    }
 }

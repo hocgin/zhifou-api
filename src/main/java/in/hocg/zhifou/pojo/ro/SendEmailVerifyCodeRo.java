@@ -15,7 +15,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @ApiModel("发送邮箱验证码")
 public class SendEmailVerifyCodeRo {
+    
     @NotBlank(message = "邮箱不能为空")
     @ApiModelProperty(value = "邮箱", required = true)
     private String email;
+    
 }

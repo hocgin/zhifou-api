@@ -17,6 +17,14 @@ import javax.validation.constraints.NotEmpty;
 @ApiModel("评论")
 public class AddCommentRo {
     
+    public Comment asComment() {
+        Comment entity = new Comment();
+        entity.setRootId(rootId);
+        entity.setParentId(parentId);
+        entity.setContent(content);
+        return entity;
+    }
+    
     @ApiModelProperty(value = "根评论ID", required = true)
     private Long rootId;
     
@@ -27,11 +35,4 @@ public class AddCommentRo {
     @ApiModelProperty(value = "评论内容", required = true)
     private String content;
     
-    public Comment asComment() {
-        Comment entity = new Comment();
-        entity.setRootId(rootId);
-        entity.setParentId(parentId);
-        entity.setContent(content);
-        return entity;
-    }
 }

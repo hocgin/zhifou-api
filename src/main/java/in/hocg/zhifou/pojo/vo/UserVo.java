@@ -14,6 +14,12 @@ import lombok.Data;
 @Data
 @ApiModel("用户信息")
 public class UserVo {
+    
+    public UserVo(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+    }
+    
     @ApiModelProperty(value = "ID", required = true)
     private Long id;
     
@@ -22,11 +28,5 @@ public class UserVo {
     
     @ApiModelProperty(value = "头像", required = true)
     private String avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
-    
-    
-    public UserVo(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-    }
     
 }

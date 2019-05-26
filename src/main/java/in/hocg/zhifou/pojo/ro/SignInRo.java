@@ -15,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @ApiModel("登陆")
 public class SignInRo {
+    
     @ApiModelProperty(value = "密码", required = true)
     @NotBlank(message = "用户名不能为空")
     private String username;
@@ -22,4 +23,5 @@ public class SignInRo {
     @ApiModelProperty(value = "密码", required = true)
     @NotBlank(message = "密码不能为空")
     private String password;
+    
 }

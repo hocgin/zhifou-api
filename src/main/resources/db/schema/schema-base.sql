@@ -1,25 +1,6 @@
 -- auto-generated definition
-DROP TABLE IF EXISTS `t_user`;
-CREATE TABLE `t_user`
-(
-  id           BIGINT AUTO_INCREMENT
-    PRIMARY KEY,
-  password     VARCHAR(255) NULL
-  COMMENT '密码',
-  username     VARCHAR(255) NULL
-  COMMENT '用户名',
-  email        VARCHAR(255) NULL
-  COMMENT '邮箱',
-
-  `created_at` DATETIME(6)  NOT NULL
-  COMMENT '创建时间',
-  `updated_at` DATETIME(6)
-  COMMENT '更新时间'
-);
-
--- auto-generated definition
 DROP TABLE IF EXISTS `t_post`;
-CREATE TABLE t_post
+CREATE TABLE `t_post`
 (
   id            BIGINT AUTO_INCREMENT PRIMARY KEY,
   author_id     BIGINT       NOT NULL
@@ -51,11 +32,14 @@ CREATE TABLE t_post
   COMMENT '删除时间',
   `deleter`     BIGINT
   COMMENT '删除者'
-);
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '[基础模块] 文章表';
 
 -- auto-generated definition
 DROP TABLE IF EXISTS `t_comment`;
-CREATE TABLE t_comment
+CREATE TABLE `t_comment`
 (
   id           BIGINT AUTO_INCREMENT PRIMARY KEY,
   CONTENT      VARCHAR(255) NOT NULL
@@ -81,11 +65,14 @@ CREATE TABLE t_comment
   COMMENT '删除时间',
   `deleter`    BIGINT
   COMMENT '删除者'
-);
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '[基础模块] 评价表';
 
 -- auto-generated definition
 DROP TABLE IF EXISTS `t_classify`;
-CREATE TABLE t_classify
+CREATE TABLE `t_classify`
 (
   id           BIGINT AUTO_INCREMENT PRIMARY KEY,
   name         VARCHAR(255) NOT NULL
@@ -103,11 +90,14 @@ CREATE TABLE t_classify
   COMMENT '删除时间',
   `deleter`    BIGINT
   COMMENT '删除者'
-);
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '[基础模块] 文章类别表';
 
 -- auto-generated definition
 DROP TABLE IF EXISTS `t_banner`;
-create table t_banner
+CREATE TABLE `t_banner`
 (
   id           BIGINT AUTO_INCREMENT PRIMARY KEY,
   image        VARCHAR(255) NOT NULL
@@ -125,6 +115,7 @@ create table t_banner
   COMMENT '更新时间',
   `updater`    BIGINT
   COMMENT '更新者'
-);
-
-
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '[基础模块] 轮播图';

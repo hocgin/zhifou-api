@@ -33,14 +33,6 @@ public class SearchPostVo {
     @ApiModelProperty(value = "简介", required = true)
     private String desc;
     
-    @ApiModelProperty(value = "创建时间", required = true)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime createdAt;
-    
-    @ApiModelProperty(value = "更新时间")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime updatedAt;
-    
     @ApiModelProperty(value = "类别", required = true)
     private String classify;
     
@@ -53,7 +45,18 @@ public class SearchPostVo {
     @ApiModelProperty(value = "当前用户是否喜欢", required = true)
     private boolean isLiked;
     
+    @ApiModelProperty(value = "当前用户是否收藏", required = true)
+    private boolean isFavorites = false;
+    
     @ApiModelProperty(value = "点击数", required = true)
     private Long pageviews;
+    
+    @ApiModelProperty(value = "创建时间", required = true)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createdAt;
+    
+    @ApiModelProperty(value = "更新时间")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime updatedAt;
     
 }

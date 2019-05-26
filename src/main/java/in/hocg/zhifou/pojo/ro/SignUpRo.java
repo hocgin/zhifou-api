@@ -17,6 +17,15 @@ import javax.validation.constraints.NotBlank;
 @Data
 @ApiModel("注册")
 public class SignUpRo {
+    
+    public User asUser() {
+        User entity = new User();
+        entity.setUsername(username);
+        entity.setEmail(email);
+        entity.setPassword(password);
+        return entity;
+    }
+    
     @NotBlank(message = "用户名不能为空")
     @ApiModelProperty(value = "用户名", required = true)
     private String username;
@@ -32,13 +41,4 @@ public class SignUpRo {
     @NotBlank(message = "验证码不能为空")
     @ApiModelProperty(value = "验证码", required = true)
     private String code;
-    
-    
-    public User asUser() {
-        User entity = new User();
-        entity.setUsername(username);
-        entity.setEmail(email);
-        entity.setPassword(password);
-        return entity;
-    }
 }

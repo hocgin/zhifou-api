@@ -33,23 +33,26 @@ public class PostController {
     @NeedLogin
     @PostMapping
     @ApiOperation(value = "发布文章", notes = "需要登陆")
-    public Result<Object> published(@Validated @RequestBody PublishedPostRo param,
-                                    Principal principal) {
+    public Result<Object> published(Principal principal,
+                                    @Validated @RequestBody PublishedPostRo param) {
         service.published(param, principal);
         return Result.success();
     }
     
     @PostMapping("_search")
     @ApiOperation(value = "检索文章")
-    public Result<IPage<SearchPostVo>> search(@RequestBody PageQuery<Void> query) {
-        IPage<SearchPostVo> result = service.search(query);
+    public Result<IPage<SearchPostVo>> search(Principal principal,
+                                              @RequestBody PageQuery<Void> query) {
+        IPage<SearchPostVo> result = service.search(principal,
+                query);
         return Result.success(result);
     }
     
     @GetMapping
     @ApiOperation(value = "获取文章内容")
-    public Result<PostDetailVo> get(@RequestParam("v") String v) {
-        PostDetailVo result = service.getPostDetail(v);
+    public Result<PostDetailVo> get(Principal principal,
+                                    @RequestParam("v") String v) {
+        PostDetailVo result = service.getPostDetail(principal, v);
         return Result.success(result);
     }
 }
