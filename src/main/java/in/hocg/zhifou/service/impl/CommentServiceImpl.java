@@ -1,5 +1,6 @@
 package in.hocg.zhifou.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -89,8 +90,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         if (Objects.isNull(id)) {
             return 0L;
         }
-        
-        return Long.valueOf(baseMapper.selectCount(lambdaQuery().eq(Comment::getRootId, id)));
+    
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        return Long.valueOf(baseMapper.selectCount(queryWrapper.eq(Comment::getRootId, id)));
     }
     
     
@@ -142,9 +144,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     public IPage<Comment> findAllByTargetIdAndRootId(String targetId, Long rootId,
                                                      IPage<Comment> pageable) {
         Assert.notNull(targetId, "关联的目标不能为空");
-    
-        IPage<Comment> commentIPage = baseMapper.selectPage(pageable, lambdaQuery()
-                .eq(Comment::getTargetId, targetId)
+        
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        IPage<Comment> commentIPage = baseMapper.selectPage(pageable, queryWrapper.eq(Comment::getTargetId, targetId)
                 .eq(Objects.nonNull(rootId), Comment::getRootId, rootId)
                 .isNull(Objects.isNull(rootId), Comment::getRootId)
         );

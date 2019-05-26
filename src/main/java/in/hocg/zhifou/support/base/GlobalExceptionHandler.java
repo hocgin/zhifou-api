@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 
 /**
@@ -60,6 +61,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity mailSendException(HttpServletRequest request, MailSendException e) throws Exception {
         log.error("邮件发送异常:", e);
         return Result.error("邮件发送失败")
+                .asResponseEntity();
+    }
+    
+    @ExceptionHandler(value = SQLException.class)
+    @ResponseBody
+    public ResponseEntity SQLException(HttpServletRequest request, SQLException e) throws Exception {
+        log.error("SQL异常:", e);
+        return Result.error("系统异常")
                 .asResponseEntity();
     }
     

@@ -2,7 +2,7 @@ package in.hocg.zhifou.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.zhifou.support.mybatis.DefaultModel;
+import in.hocg.zhifou.support.mybatis.SuperModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("t_banner")
-public class Banner extends DefaultModel<Banner> {
+public class Banner extends SuperModel<Banner> {
     
     /**
      * 展示图片

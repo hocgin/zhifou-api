@@ -39,7 +39,7 @@ public class UserController {
         return Result.success(user);
     }
     
-    @PostMapping(value = "/sign")
+    @PostMapping(value = "/sign-in")
     @ApiOperation(value = "登陆")
     public Result<TokenVo> signIn(@Validated @RequestBody SignInRo param) {
         TokenVo token = userService.signIn(param);

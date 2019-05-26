@@ -1,5 +1,6 @@
 package in.hocg.zhifou.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Banner;
 import in.hocg.zhifou.mapper.BannerMapper;
@@ -24,7 +25,8 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
         implements BannerService {
     @Override
     public List<BannerVo> getAll() {
-        List<Banner> result = baseMapper.selectList(lambdaQuery());
+        LambdaQueryWrapper<Banner> queryWrapper = new LambdaQueryWrapper<>();
+        List<Banner> result = baseMapper.selectList(queryWrapper);
         return result.stream().map(banner -> {
             BannerVo entity = new BannerVo();
             BeanUtils.copyProperties(banner, entity);
