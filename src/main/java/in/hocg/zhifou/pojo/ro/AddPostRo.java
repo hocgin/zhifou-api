@@ -39,7 +39,7 @@ public class AddPostRo {
         String id = String.format("ID-post-%s", String.valueOf(datetime));
         return new JSONObject().fluentPut("id", id)
                 .fluentPut("isLiked", false)
-                .fluentPut("isCollected", false)
+                .fluentPut("isFavorited", false)
                 .fluentPut("createdAt", datetime)
                 .fluentPut("pageviews", 0)
                 

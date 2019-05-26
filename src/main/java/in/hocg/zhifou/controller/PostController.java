@@ -1,17 +1,16 @@
 package in.hocg.zhifou.controller;
 
-import in.hocg.zhifou.config.security.NeedLogin;
-import in.hocg.zhifou.pojo.vo.PostDetailVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.service.PostService;
+import in.hocg.zhifou.support.base.request.PageQuery;
+import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.util.http.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,49 +25,34 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/v1/post")
 @AllArgsConstructor
+@Api(tags = "文章相关接口")
 public class PostController {
     
     private final PostService service;
     
-    
-    /**
-     * 发布
-     *
-     * @param param
-     * @return
-     */
     @NeedLogin
     @PostMapping
-    public ResponseEntity published(@Validated @RequestBody PublishedPostRo param,
-                                    Principal principal) {
+    @ApiOperation(value = "发布文章", notes = "需要登陆")
+    public Result<Object> published(Principal principal,
+                                    @Validated @RequestBody PublishedPostRo param) {
         service.published(param, principal);
-        return Result.success()
-                .asResponseEntity();
+        return Result.success();
     }
     
-    /**
-     * 检索
-     *
-     * @param pageable
-     * @return
-     */
     @PostMapping("_search")
-    public ResponseEntity search(@PageableDefault(value = 8, sort = {"createdAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<SearchPostVo> result = service.search(pageable);
-        return Result.success(result)
-                .asResponseEntity();
+    @ApiOperation(value = "检索文章")
+    public Result<IPage<SearchPostVo>> search(Principal principal,
+                                              @RequestBody PageQuery<Void> query) {
+        IPage<SearchPostVo> result = service.search(principal,
+                query);
+        return Result.success(result);
     }
     
-    
-    /**
-     * 内容
-     *
-     * @return
-     */
     @GetMapping
-    public ResponseEntity get(@RequestParam("v") String v) {
-        PostDetailVo result = service.getPostDetail(v);
-        return Result.success(result)
-                .asResponseEntity();
+    @ApiOperation(value = "获取文章内容")
+    public Result<PostDetailVo> get(Principal principal,
+                                    @RequestParam("v") String v) {
+        PostDetailVo result = service.getPostDetail(principal, v);
+        return Result.success(result);
     }
 }

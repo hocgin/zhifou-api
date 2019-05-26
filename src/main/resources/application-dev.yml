@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://mysql.localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: hocgin
+    initialization-mode: ALWAYS
+  mail:
+    host: smtp.163.com
+    username: 13600747016@163.com
+    # 此处 password 为授权码
+    password: 1232jhjsi34nkds
+    properties:
+      mail.debug: true
+  thymeleaf:
+    cache: false
+logging:
+  level:
+    org.springframework: debug
+    in.hocg: debug
+
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+
+security.token.filter.secret: YourSecretNeedsToBeAtLeast256BitsLong

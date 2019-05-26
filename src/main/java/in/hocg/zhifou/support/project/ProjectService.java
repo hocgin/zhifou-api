@@ -3,7 +3,7 @@ package in.hocg.zhifou.support.project;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import in.hocg.zhifou.support.redis.RedisService;
+import in.hocg.zhifou.manager.RedisManager;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.nio.file.Path;
 @Service
 @AllArgsConstructor
 public class ProjectService {
-    private final RedisService redisService;
+    private final RedisManager redisService;
     
     /**
      * 仅匹配 非.开头并且为.json结尾的文件

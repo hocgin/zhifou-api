@@ -1,8 +1,17 @@
 package in.hocg.zhifou.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.zhifou.support.mybatis.SuperModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import java.time.LocalDateTime;
+
 
 /**
  * Created by hocgin on 2019/5/14.
@@ -10,23 +19,26 @@ import javax.persistence.*;
  *
  * @author hocgin
  */
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 @Data
-@Entity
-@Table(name = "t_user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("t_user")
+public class User extends SuperModel<User> {
+    
+    @TableField("username")
     private String username;
-    @Column
+    
+    @TableField("email")
     private String email;
-    @Column
+    
+    @TableField("password")
     private String password;
     
-    /**
-     * 邮箱验证状态 [未验证, 已验证]
-     */
-    @Column
-    private Integer emailVerify = 0;
+    @TableField("created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+    
+    @TableField(value = "updated_at", update = "NOW()", fill = FieldFill.UPDATE)
+    private LocalDateTime updatedAt;
 }

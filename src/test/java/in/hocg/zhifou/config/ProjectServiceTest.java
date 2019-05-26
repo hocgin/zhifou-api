@@ -1,6 +1,6 @@
 package in.hocg.zhifou.config;
 
-import in.hocg.zhifou.service.IndexService;
+import in.hocg.zhifou.service.impl.O0IndexService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest
 public class ProjectServiceTest {
     @Autowired
-    private IndexService indexService;
+    private O0IndexService indexService;
     
     @Test
     public void print() {

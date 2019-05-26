@@ -2,6 +2,8 @@ package in.hocg.zhifou.util.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
@@ -12,9 +14,13 @@ import java.io.Serializable;
  * email: hocgin@gmail.com
  * 响应结果对象
  */
+@ApiModel("响应")
 public class Result<T> implements Serializable {
+    @ApiModelProperty(value = "状态码", required = true, example = "200")
     private int code;
+    @ApiModelProperty(value = "消息", required = true, example = "ok")
     private String message;
+    @ApiModelProperty(value = "响应", required = true)
     private T data;
     
     private Result() {

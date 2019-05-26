@@ -1,9 +1,11 @@
 package in.hocg.zhifou.service;
 
-import in.hocg.zhifou.pojo.ro.CommentRo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import in.hocg.zhifou.domain.Comment;
+import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import in.hocg.zhifou.support.base.request.PageQuery;
 
 import java.security.Principal;
 
@@ -13,7 +15,7 @@ import java.security.Principal;
  *
  * @author hocgin
  */
-public interface CommentService {
+public interface CommentService extends IService<Comment> {
     /**
      * 评论
      *
@@ -23,7 +25,7 @@ public interface CommentService {
      */
     void comment(Principal principal,
                  String targetId,
-                 CommentRo param);
+                 AddCommentRo param);
     
     /**
      * 顶级评论
@@ -32,8 +34,15 @@ public interface CommentService {
      * @param pageable
      * @return
      */
-    Page<CommentVo> queryRootComment(String targetId,
-                                     Pageable pageable);
+    IPage<CommentVo> queryRootComment(String targetId,
+                                      PageQuery<Void> pageable);
+    
+    /**
+     * 查询父评论的子评论数量
+     * @param id
+     * @return
+     */
+    Long countByRootId(Long id);
     
     /**
      * 子级评论
@@ -43,8 +52,17 @@ public interface CommentService {
      * @param pageable
      * @return
      */
-    Page<CommentVo> queryChildrenComment(String targetId,
-                                         Long rootId,
-                                         Pageable pageable);
+    IPage<CommentVo> queryChildrenComment(String targetId,
+                                          Long rootId,
+                                          PageQuery<Void> pageable);
     
+    
+    /**
+     * 查找评论
+     * @param targetId
+     * @param rootId
+     * @param pageable
+     * @return
+     */
+    IPage<Comment> findAllByTargetIdAndRootId(String targetId, Long rootId, IPage<Comment> pageable);
 }

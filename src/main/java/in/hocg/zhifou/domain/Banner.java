@@ -1,9 +1,13 @@
 package in.hocg.zhifou.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.zhifou.support.mybatis.SuperModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -12,53 +16,29 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
-@Entity
-@Table(name = "t_banner")
-public class Banner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("t_banner")
+public class Banner extends SuperModel<Banner> {
     
     /**
      * 展示图片
      */
-    @Column(nullable = false)
+    @TableField("image")
     private String image;
     
     /**
      * 跳转路径
      */
-    @Column
+    @TableField("url")
     private String url;
     
     /**
      * 标题
      */
-    @Column
+    @TableField("title")
     private String title;
-    
-    /**
-     * 状态
-     * 0 关闭, 1 开启
-     */
-    private Integer status;
-    
-    /**
-     * 创建时间
-     */
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-    
-    /**
-     * 更新时间
-     */
-    @Column
-    private LocalDateTime updatedAt;
-    
-    /**
-     * 删除时间
-     */
-    @Column
-    private LocalDateTime deletedAt;
     
 }
