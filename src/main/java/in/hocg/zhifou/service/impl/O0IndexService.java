@@ -3,11 +3,11 @@ package in.hocg.zhifou.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.pojo.ro.AddPostRo;
 import in.hocg.zhifou.support.project.FileNameConstant;
 import in.hocg.zhifou.support.project.ProjectProperties;
 import in.hocg.zhifou.support.project.ProjectService;
-import in.hocg.zhifou.support.redis.RedisService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +26,10 @@ import java.util.Objects;
  */
 @Service
 @AllArgsConstructor
-public class IndexService {
+public class O0IndexService {
     private final ProjectProperties properties;
     private final ProjectService projectService;
-    private final RedisService redisService;
+    private final RedisManager redisService;
     
     /**
      * 所有

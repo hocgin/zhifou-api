@@ -22,6 +22,6 @@ public class ApiException extends RuntimeException {
     }
     
     public static ApiException newInstance(String message) {
-        return ApiException.newInstance(message);
+        return new ApiException(message);
     }
 }

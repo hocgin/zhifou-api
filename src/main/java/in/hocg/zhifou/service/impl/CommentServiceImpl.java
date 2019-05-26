@@ -75,13 +75,22 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             body = new CommentVo(comment);
             body.setCommenter(new UserVo(user));
             
-            body.setCommentCount(baseMapper.countAllByRootId(comment.getId()));
+            body.setCommentCount(countByRootId(comment.getId()));
             result.add(body);
         }
         
         Page<CommentVo> rtn = MybatisPlusKit.newPage(comments);
         rtn.setRecords(result);
         return rtn;
+    }
+    
+    @Override
+    public Long countByRootId(Long id) {
+        if (Objects.isNull(id)) {
+            return 0L;
+        }
+        
+        return Long.valueOf(baseMapper.selectCount(lambdaQuery().eq(Comment::getRootId, id)));
     }
     
     

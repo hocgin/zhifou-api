@@ -13,11 +13,4 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
     
-    /**
-     * 查询父评论的子评论数量
-     *
-     * @param parentId
-     * @return
-     */
-    long countAllByRootId(Long parentId);
 }

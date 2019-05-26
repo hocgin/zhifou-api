@@ -18,7 +18,11 @@ import java.io.IOException;
 @Slf4j
 public class FixBugFilter extends GenericFilterBean {
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        chain.doFilter(request, response);
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+        try {
+            chain.doFilter(request, response);
+        } catch (IOException | ServletException e) {
+            log.error("", e);
+        }
     }
 }

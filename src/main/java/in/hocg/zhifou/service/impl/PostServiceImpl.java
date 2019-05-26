@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
 import in.hocg.zhifou.domain.Classify;
 import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.domain.User;
+import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.mapper.PostMapper;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
@@ -18,7 +19,6 @@ import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.mybatis.MybatisPlusKit;
-import in.hocg.zhifou.support.redis.RedisService;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.Vid;
 import in.hocg.zhifou.util.lang.StringKit;
@@ -44,7 +44,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         implements PostService {
     private final UserService userService;
     private final ClassifyService classifyService;
-    private final RedisService redisService;
+    private final RedisManager redisService;
     
     @Transactional(rollbackFor = Exception.class)
     @Override

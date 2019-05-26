@@ -2,7 +2,6 @@ package in.hocg.zhifou.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.zhifou.domain.contant.BannerConstant;
 import in.hocg.zhifou.support.mybatis.DefaultModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,12 +40,5 @@ public class Banner extends DefaultModel<Banner> {
      */
     @TableField("title")
     private String title;
-    
-    /**
-     * 状态
-     * 0 关闭, 1 开启
-     */
-    @TableField("status")
-    private Integer status = BannerConstant.STATUS_DISABLE;
     
 }

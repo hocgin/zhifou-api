@@ -18,13 +18,12 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class DefaultModel<T extends Model<?>> extends SupperModel<T> {
+public abstract class DefaultModel<T extends Model<?>> extends SuperModel<T> {
     
     /**
      * 创建时间
      */
     @TableField("created_at")
-    
     private LocalDateTime createdAt = LocalDateTime.now();
     
     /**

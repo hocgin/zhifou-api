@@ -38,6 +38,13 @@ public interface CommentService extends IService<Comment> {
                                       PageQuery<Void> pageable);
     
     /**
+     * 查询父评论的子评论数量
+     * @param id
+     * @return
+     */
+    Long countByRootId(Long id);
+    
+    /**
      * 子级评论
      *
      * @param targetId

@@ -2,7 +2,7 @@ package in.hocg.zhifou.controller._old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import in.hocg.zhifou.service.impl.IndexService;
+import in.hocg.zhifou.service.impl.O0IndexService;
 import in.hocg.zhifou.util.http.Result;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api")
 @AllArgsConstructor
 public class V0IndexController {
-    private final IndexService indexService;
+    private final O0IndexService indexService;
     
     
     @RequestMapping(value = "all", method = {RequestMethod.GET, RequestMethod.POST})

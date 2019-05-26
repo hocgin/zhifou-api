@@ -1,7 +1,7 @@
 package in.hocg.zhifou.controller._old;
 
 import in.hocg.zhifou.pojo.ro.AddPostRo;
-import in.hocg.zhifou.service.impl.IndexService;
+import in.hocg.zhifou.service.impl.O0IndexService;
 import in.hocg.zhifou.util.http.Result;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/post")
 @AllArgsConstructor
 public class OPostController {
-    private final IndexService indexService;
+    private final O0IndexService indexService;
     
     
     /**

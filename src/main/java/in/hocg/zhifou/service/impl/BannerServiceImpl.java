@@ -24,7 +24,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
         implements BannerService {
     @Override
     public List<BannerVo> getAll() {
-        List<Banner> result = baseMapper.selectList(lambdaQuery().eq(Banner::getStatus, 1));
+        List<Banner> result = baseMapper.selectList(lambdaQuery());
         return result.stream().map(banner -> {
             BannerVo entity = new BannerVo();
             BeanUtils.copyProperties(banner, entity);
