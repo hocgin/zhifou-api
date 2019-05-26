@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.zhifou.domain.Comment;
 import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
-import in.hocg.zhifou.support.base.PageQuery;
+import in.hocg.zhifou.support.base.request.PageQuery;
 
 import java.security.Principal;
 

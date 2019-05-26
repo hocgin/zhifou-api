@@ -1,4 +1,4 @@
-package in.hocg.zhifou.support.base;
+package in.hocg.zhifou.support.base.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

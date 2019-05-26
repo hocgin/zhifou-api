@@ -1,4 +1,4 @@
-package in.hocg.zhifou.support.base;
+package in.hocg.zhifou.support.base.request;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

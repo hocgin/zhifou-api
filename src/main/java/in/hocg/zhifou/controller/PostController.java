@@ -5,7 +5,7 @@ import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.service.PostService;
-import in.hocg.zhifou.support.base.PageQuery;
+import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.util.http.Result;
 import io.swagger.annotations.Api;

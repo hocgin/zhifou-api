@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api")
 @AllArgsConstructor
-public class IndexController {
+public class V0IndexController {
     private final IndexService indexService;
     
     

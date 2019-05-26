@@ -16,7 +16,7 @@ import in.hocg.zhifou.pojo.vo.UserVo;
 import in.hocg.zhifou.service.ClassifyService;
 import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.service.UserService;
-import in.hocg.zhifou.support.base.PageQuery;
+import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.mybatis.MybatisPlusKit;
 import in.hocg.zhifou.support.redis.RedisService;
 import in.hocg.zhifou.util.ApiException;

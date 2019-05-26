@@ -1,4 +1,4 @@
-package in.hocg.zhifou.support.base;
+package in.hocg.zhifou.support.base.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

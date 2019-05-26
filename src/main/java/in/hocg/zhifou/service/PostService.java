@@ -6,7 +6,7 @@ import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
-import in.hocg.zhifou.support.base.PageQuery;
+import in.hocg.zhifou.support.base.request.PageQuery;
 
 import java.security.Principal;
 

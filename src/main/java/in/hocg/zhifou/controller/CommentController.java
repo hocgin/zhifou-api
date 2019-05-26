@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.service.CommentService;
-import in.hocg.zhifou.support.base.PageQuery;
+import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.http.Result;

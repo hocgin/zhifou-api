@@ -4,6 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
+    url: <jdbc-url/>
+    username: <username/>
+    password: <password/>
     schema:
     - classpath:db/schema-maria.sql
     data:
@@ -14,8 +17,25 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+  mail:
+    host: smtp.163.com
+    username: <username/>
+    # 此处 password 为授权码
+    password: <password/>
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.debug: false
+  thymeleaf:
+    cache: false
   profiles:
     active: dev
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
+
+security:
+  token:
+    filter:
+      secret: <256字节加密串/>
