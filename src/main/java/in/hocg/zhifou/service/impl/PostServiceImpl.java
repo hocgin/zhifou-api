@@ -11,6 +11,8 @@ import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.mapper.PostMapper;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.ro.SearchPostRo;
+import in.hocg.zhifou.pojo.vo.PagingPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.pojo.vo.UserVo;
@@ -63,15 +65,15 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     }
     
     @Override
-    public Page<SearchPostVo> search(Principal principal, PageQuery<Void> pageQuery) {
+    public Page<PagingPostVo> paging(Principal principal, PageQuery<Void> pageQuery) {
         Page page = pageQuery.page();
         QueryWrapper<Post> wrapper = pageQuery.wrapper();
         
         IPage<Post> result = baseMapper.selectPage(page, wrapper);
         
-        List<SearchPostVo> list = result.getRecords().stream()
+        List<PagingPostVo> list = result.getRecords().stream()
                 .map((post) -> {
-                    SearchPostVo response = new SearchPostVo();
+                    PagingPostVo response = new PagingPostVo();
                     BeanUtils.copyProperties(post, response);
                     
                     // 作者
@@ -116,9 +118,15 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                     return response;
                 }).collect(Collectors.toList());
         
-        Page<SearchPostVo> rtn = MybatisPlusKit.newPage(result);
+        Page<PagingPostVo> rtn = MybatisPlusKit.newPage(result);
         rtn.setRecords(list);
         return rtn;
+    }
+    
+    @Override
+    public List<SearchPostVo> search(Principal principal, SearchPostRo query) {
+        String keyword = query.getKeyword();
+        return baseMapper.search(keyword);
     }
     
     @Override

@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.ro.SearchPostRo;
+import in.hocg.zhifou.pojo.vo.PagingPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.support.base.request.PageQuery;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -27,13 +30,23 @@ public interface PostService extends IService<Post> {
     void published(PublishedPostRo param, Principal principal);
     
     /**
+     * 分页查询文章列表
+     *
+     * @param principal
+     * @param query
+     * @return
+     */
+    IPage<PagingPostVo> paging(Principal principal, PageQuery<Void> query);
+    
+    
+    /**
      * 查询文章列表
      *
      * @param principal
      * @param query
      * @return
      */
-    IPage<SearchPostVo> search(Principal principal, PageQuery<Void> query);
+    List<SearchPostVo> search(Principal principal, SearchPostRo query);
     
     /**
      * 文章详情

@@ -2,6 +2,8 @@ package in.hocg.zhifou.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
+import in.hocg.zhifou.pojo.ro.SearchPostRo;
+import in.hocg.zhifou.pojo.vo.PagingPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.service.PostService;
@@ -15,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -39,12 +42,19 @@ public class PostController {
         return Result.success();
     }
     
+    @PostMapping("_paging")
+    @ApiOperation(value = "分页文章")
+    public Result<IPage<PagingPostVo>> paging(Principal principal,
+                                              @RequestBody PageQuery<Void> query) {
+        IPage<PagingPostVo> result = service.paging(principal, query);
+        return Result.success(result);
+    }
+    
     @PostMapping("_search")
     @ApiOperation(value = "检索文章")
-    public Result<IPage<SearchPostVo>> search(Principal principal,
-                                              @RequestBody PageQuery<Void> query) {
-        IPage<SearchPostVo> result = service.search(principal,
-                query);
+    public Result<List<SearchPostVo>> search(Principal principal,
+                                             @RequestBody SearchPostRo query) {
+        List<SearchPostVo> result = service.search(principal, query);
         return Result.success(result);
     }
     
