@@ -25,6 +25,7 @@ import in.hocg.zhifou.util.Vid;
 import in.hocg.zhifou.util.lang.StringKit;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor_ = {@Lazy})
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         implements PostService {
     private final UserService userService;
@@ -103,9 +104,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                     if (Objects.nonNull(banner)) {
                         response.setBanner(Sets.newHashSet(banner.split(",")));
                     }
-    
-    
-    
+                    
+                    
                     String username = principal.getName();
                     if (Objects.nonNull(username)) {
                         User user = userService.findByUsername(username);
@@ -157,14 +157,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         if (Objects.nonNull(banner)) {
             result.setBanner(Sets.newHashSet(banner.split(",")));
         }
-    
+        
         String username = principal.getName();
         if (Objects.nonNull(username)) {
             User user = userService.findByUsername(username);
             boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
             result.setFavorites(alreadyFavorite);
         }
-    
+        
         return result;
     }
 }

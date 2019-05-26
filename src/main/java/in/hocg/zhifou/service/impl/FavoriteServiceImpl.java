@@ -12,6 +12,7 @@ import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.util.ApiException;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -25,7 +26,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor_ = {@Lazy})
 public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite>
         implements FavoriteService {
     private final UserService userService;
