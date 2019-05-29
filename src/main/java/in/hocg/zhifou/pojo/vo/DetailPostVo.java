@@ -12,12 +12,13 @@ import java.util.Collection;
 /**
  * Created by hocgin on 2019/5/22.
  * email: hocgin@gmail.com
+ * 详细的文章信息
  *
  * @author hocgin
  */
 @Data
 @ApiModel("文章信息")
-public class PagingPostVo {
+public class DetailPostVo {
     @ApiModelProperty(value = "业务ID", required = true)
     private String v;
     

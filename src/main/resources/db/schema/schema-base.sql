@@ -9,7 +9,7 @@ CREATE TABLE `t_post`
   COMMENT '标题图',
   classify_id   BIGINT       NOT NULL
   COMMENT '分类ID',
-  content       VARCHAR(255) NOT NULL
+  content       TEXT         NOT NULL
   COMMENT '文章内容',
   allow_commend BINARY(1)    NOT NULL
   COMMENT '是否允许评论 [不允许, 允许]',

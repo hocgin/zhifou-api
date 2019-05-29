@@ -3,7 +3,8 @@ package in.hocg.zhifou.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
-import in.hocg.zhifou.pojo.vo.PagingPostVo;
+import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
+import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.service.PostService;
@@ -44,9 +45,17 @@ public class PostController {
     
     @PostMapping("_paging")
     @ApiOperation(value = "分页文章")
-    public Result<IPage<PagingPostVo>> paging(Principal principal,
+    public Result<IPage<DetailPostVo>> paging(Principal principal,
                                               @RequestBody PageQuery<Void> query) {
-        IPage<PagingPostVo> result = service.paging(principal, query);
+        IPage<DetailPostVo> result = service.paging(principal, query);
+        return Result.success(result);
+    }
+    
+    @PostMapping("_timeline")
+    @ApiOperation(value = "按时间线获取文章")
+    public Result<List<DetailPostVo>> timeline(Principal principal,
+                                               @RequestBody TimelineQueryPostRo query) {
+        List<DetailPostVo> result = service.findAllByTimeline(principal, query);
         return Result.success(result);
     }
     

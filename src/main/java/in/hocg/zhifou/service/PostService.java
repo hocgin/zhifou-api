@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
-import in.hocg.zhifou.pojo.vo.PagingPostVo;
+import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
+import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.support.base.request.PageQuery;
@@ -36,7 +37,7 @@ public interface PostService extends IService<Post> {
      * @param query
      * @return
      */
-    IPage<PagingPostVo> paging(Principal principal, PageQuery<Void> query);
+    IPage<DetailPostVo> paging(Principal principal, PageQuery<Void> query);
     
     
     /**
@@ -56,4 +57,12 @@ public interface PostService extends IService<Post> {
      * @return
      */
     PostDetailVo getPostDetail(Principal principal, String v);
+    
+    /**
+     * 按时间线来获取文章
+     * @param principal
+     * @param query
+     * @return
+     */
+    List<DetailPostVo> findAllByTimeline(Principal principal, TimelineQueryPostRo query);
 }

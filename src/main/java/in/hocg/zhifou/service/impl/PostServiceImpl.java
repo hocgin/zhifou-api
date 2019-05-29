@@ -12,7 +12,8 @@ import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.mapper.PostMapper;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
-import in.hocg.zhifou.pojo.vo.PagingPostVo;
+import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
+import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import in.hocg.zhifou.pojo.vo.UserVo;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -65,15 +67,15 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     }
     
     @Override
-    public Page<PagingPostVo> paging(Principal principal, PageQuery<Void> pageQuery) {
+    public Page<DetailPostVo> paging(Principal principal, PageQuery<Void> pageQuery) {
         Page page = pageQuery.page();
         QueryWrapper<Post> wrapper = pageQuery.wrapper();
         
         IPage<Post> result = baseMapper.selectPage(page, wrapper);
         
-        List<PagingPostVo> list = result.getRecords().stream()
+        List<DetailPostVo> list = result.getRecords().stream()
                 .map((post) -> {
-                    PagingPostVo response = new PagingPostVo();
+                    DetailPostVo response = new DetailPostVo();
                     BeanUtils.copyProperties(post, response);
                     
                     // 作者
@@ -107,9 +109,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                         response.setBanner(Sets.newHashSet(banner.split(",")));
                     }
                     
-                    
-                    String username = principal.getName();
-                    if (Objects.nonNull(username)) {
+                    if (Objects.nonNull(principal)) {
+                        String username = principal.getName();
                         User user = userService.findByUsername(username);
                         boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
                         response.setFavorites(alreadyFavorite);
@@ -118,7 +119,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                     return response;
                 }).collect(Collectors.toList());
         
-        Page<PagingPostVo> rtn = MybatisPlusKit.newPage(result);
+        Page<DetailPostVo> rtn = MybatisPlusKit.newPage(result);
         rtn.setRecords(list);
         return rtn;
     }
@@ -174,5 +175,56 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         }
         
         return result;
+    }
+    
+    @Override
+    public List<DetailPostVo> findAllByTimeline(Principal principal, TimelineQueryPostRo query) {
+        LocalDate localDate = LocalDate.now().minusDays(query.getCursor());
+        List<Post> result = baseMapper.findAllByCreatedDay(localDate);
+        return result.stream()
+                .map((post) -> {
+                    DetailPostVo response = new DetailPostVo();
+                    BeanUtils.copyProperties(post, response);
+                
+                    // 作者
+                    User author = userService.getById(post.getAuthorId());
+                    if (Objects.nonNull(author)) {
+                        response.setAuthor(new UserVo(author));
+                    }
+                
+                    // 浏览量
+                    response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
+                
+                    // 类别
+                    Classify classify = classifyService.getById(post.getClassifyId());
+                    if (Objects.nonNull(classify)) {
+                        response.setClassify(classify.getName());
+                    }
+                
+                    // 文章简介
+                    String content = post.getContent();
+                    response.setDesc(StringKit.desc(content, 255));
+                
+                    response.setV(Vid.encode(post.getId()));
+                
+                    String tags = post.getTags();
+                    if (Objects.nonNull(tags)) {
+                        response.setTags(Sets.newHashSet(tags.split(",")));
+                    }
+                
+                    String banner = post.getBanner();
+                    if (Objects.nonNull(banner)) {
+                        response.setBanner(Sets.newHashSet(banner.split(",")));
+                    }
+                
+                    if (Objects.nonNull(principal)) {
+                        String username = principal.getName();
+                        User user = userService.findByUsername(username);
+                        boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
+                        response.setFavorites(alreadyFavorite);
+                    }
+                
+                    return response;
+                }).collect(Collectors.toList());
     }
 }

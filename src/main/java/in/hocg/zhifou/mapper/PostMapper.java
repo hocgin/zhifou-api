@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -22,4 +24,11 @@ public interface PostMapper extends BaseMapper<Post> {
      * @return
      */
     List<SearchPostVo> search(String keyword);
+    
+    /**
+     * 获取某天创建的所有文章
+     * @param day
+     * @return
+     */
+    List<Post> findAllByCreatedDay(@Param("day") LocalDate day);
 }
