@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -53,9 +54,9 @@ public class PostController {
     
     @PostMapping("_timeline")
     @ApiOperation(value = "按时间线获取文章")
-    public Result<List<DetailPostVo>> timeline(Principal principal,
+    public Result<Map<Integer, List<DetailPostVo>>> timeline(Principal principal,
                                                @RequestBody TimelineQueryPostRo query) {
-        List<DetailPostVo> result = service.findAllByTimeline(principal, query);
+        Map<Integer, List<DetailPostVo>> result = service.findAllByTimeline(principal, query);
         return Result.success(result);
     }
     

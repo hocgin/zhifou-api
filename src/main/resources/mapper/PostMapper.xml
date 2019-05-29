@@ -22,7 +22,22 @@
         </include>
         FROM t_post tp
         <where>
-            TO_DAYS(created_at) = TO_DAYS(#{day});
+            <![CDATA[
+                TO_DAYS(created_at) = TO_DAYS(#{day});
+            ]]>
         </where>
     </select>
+
+    <!--<select id="findAllByCreatedDay" resultType="in.hocg.zhifou.domain.Post">-->
+        <!--SELECT-->
+        <!--<include refid="columns">-->
+            <!--<property name="alias" value="tp"/>-->
+        <!--</include>-->
+        <!--FROM t_post tp-->
+        <!--<where>-->
+            <!--<![CDATA[-->
+                <!--TO_DAYS(created_at) <= TO_DAYS(#{day});-->
+            <!--]]>-->
+        <!--</where>-->
+    <!--</select>-->
 </mapper>

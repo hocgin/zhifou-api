@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import in.hocg.zhifou.domain.Classify;
 import in.hocg.zhifou.domain.Post;
@@ -35,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -178,53 +180,59 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     }
     
     @Override
-    public List<DetailPostVo> findAllByTimeline(Principal principal, TimelineQueryPostRo query) {
-        LocalDate localDate = LocalDate.now().minusDays(query.getCursor());
-        List<Post> result = baseMapper.findAllByCreatedDay(localDate);
-        return result.stream()
-                .map((post) -> {
-                    DetailPostVo response = new DetailPostVo();
-                    BeanUtils.copyProperties(post, response);
-                
-                    // 作者
-                    User author = userService.getById(post.getAuthorId());
-                    if (Objects.nonNull(author)) {
-                        response.setAuthor(new UserVo(author));
-                    }
-                
-                    // 浏览量
-                    response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
-                
-                    // 类别
-                    Classify classify = classifyService.getById(post.getClassifyId());
-                    if (Objects.nonNull(classify)) {
-                        response.setClassify(classify.getName());
-                    }
-                
-                    // 文章简介
-                    String content = post.getContent();
-                    response.setDesc(StringKit.desc(content, 255));
-                
-                    response.setV(Vid.encode(post.getId()));
-                
-                    String tags = post.getTags();
-                    if (Objects.nonNull(tags)) {
-                        response.setTags(Sets.newHashSet(tags.split(",")));
-                    }
-                
-                    String banner = post.getBanner();
-                    if (Objects.nonNull(banner)) {
-                        response.setBanner(Sets.newHashSet(banner.split(",")));
-                    }
-                
-                    if (Objects.nonNull(principal)) {
-                        String username = principal.getName();
-                        User user = userService.findByUsername(username);
-                        boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
-                        response.setFavorites(alreadyFavorite);
-                    }
-                
-                    return response;
-                }).collect(Collectors.toList());
+    public Map<Integer, List<DetailPostVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query) {
+        Map<Integer, List<DetailPostVo>> result = Maps.newHashMap();
+        List<DetailPostVo> item;
+        for (Integer i = 0; i <= query.getCursor(); i++) {
+            item = baseMapper.findAllByCreatedDay(LocalDate.now().minusDays(i))
+                    .stream()
+                    .map((post) -> {
+                DetailPostVo response = new DetailPostVo();
+                BeanUtils.copyProperties(post, response);
+    
+                // 作者
+                User author = userService.getById(post.getAuthorId());
+                if (Objects.nonNull(author)) {
+                    response.setAuthor(new UserVo(author));
+                }
+    
+                // 浏览量
+                response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
+    
+                // 类别
+                Classify classify = classifyService.getById(post.getClassifyId());
+                if (Objects.nonNull(classify)) {
+                    response.setClassify(classify.getName());
+                }
+    
+                // 文章简介
+                String content = post.getContent();
+                response.setDesc(StringKit.desc(content, 255));
+    
+                response.setV(Vid.encode(post.getId()));
+    
+                String tags = post.getTags();
+                if (Objects.nonNull(tags)) {
+                    response.setTags(Sets.newHashSet(tags.split(",")));
+                }
+    
+                String banner = post.getBanner();
+                if (Objects.nonNull(banner)) {
+                    response.setBanner(Sets.newHashSet(banner.split(",")));
+                }
+    
+                if (Objects.nonNull(principal)) {
+                    String username = principal.getName();
+                    User user = userService.findByUsername(username);
+                    boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
+                    response.setFavorites(alreadyFavorite);
+                }
+    
+                return response;
+            })
+                    .collect(Collectors.toList());
+            result.put(i, item);
+        }
+        return result;
     }
 }

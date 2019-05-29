@@ -13,6 +13,7 @@ import in.hocg.zhifou.support.base.request.PageQuery;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -64,5 +65,5 @@ public interface PostService extends IService<Post> {
      * @param query
      * @return
      */
-    List<DetailPostVo> findAllByTimeline(Principal principal, TimelineQueryPostRo query);
+    Map<Integer, List<DetailPostVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query);
 }
