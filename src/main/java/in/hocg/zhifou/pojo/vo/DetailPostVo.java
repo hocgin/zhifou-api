@@ -22,6 +22,9 @@ public class DetailPostVo {
     @ApiModelProperty(value = "业务ID", required = true)
     private String v;
     
+    @ApiModelProperty(value = "文章路径", required = true)
+    private String uri;
+    
     @ApiModelProperty(value = "标题", required = true)
     private String title;
     

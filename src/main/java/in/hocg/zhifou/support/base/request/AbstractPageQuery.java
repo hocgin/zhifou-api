@@ -15,7 +15,7 @@ import java.util.Map;
 @Data
 public abstract class AbstractPageQuery implements Serializable {
     @ApiModelProperty("数量")
-    protected int limit = 10;
+    protected int size = 10;
     @ApiModelProperty("页码")
     protected int page = 1;
     

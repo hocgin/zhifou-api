@@ -7,6 +7,7 @@ import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
 import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
+import in.hocg.zhifou.pojo.vo.TimelinePostVo;
 import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.security.NeedLogin;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -54,9 +54,9 @@ public class PostController {
     
     @PostMapping("_timeline")
     @ApiOperation(value = "按时间线获取文章")
-    public Result<Map<Integer, List<DetailPostVo>>> timeline(Principal principal,
+    public Result<TimelinePostVo> timeline(Principal principal,
                                                @RequestBody TimelineQueryPostRo query) {
-        Map<Integer, List<DetailPostVo>> result = service.findAllByTimeline(principal, query);
+        TimelinePostVo result = service.findPostsByTimeline(principal, query);
         return Result.success(result);
     }
     

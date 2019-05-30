@@ -9,6 +9,7 @@ import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
 import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.SearchPostVo;
+import in.hocg.zhifou.pojo.vo.TimelinePostVo;
 import in.hocg.zhifou.support.base.request.PageQuery;
 
 import java.security.Principal;
@@ -65,5 +66,14 @@ public interface PostService extends IService<Post> {
      * @param query
      * @return
      */
+    @Deprecated
     Map<Integer, List<DetailPostVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query);
+    
+    /**
+     * 按时间线来获取文章
+     * @param principal
+     * @param query
+     * @return
+     */
+    TimelinePostVo findPostsByTimeline(Principal principal, TimelineQueryPostRo query);
 }

@@ -40,7 +40,7 @@ public class PageQuery<C> extends AbstractPageQuery {
     
     @JsonIgnore
     public Page page() {
-        return new Page<>(page, limit);
+        return new Page<>(page, size);
     }
     
     @JsonIgnore

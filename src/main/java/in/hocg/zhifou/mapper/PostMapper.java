@@ -31,4 +31,12 @@ public interface PostMapper extends BaseMapper<Post> {
      * @return
      */
     List<Post> findAllByCreatedDay(@Param("day") LocalDate day);
+    
+    /**
+     * 查询是否有某天创建的文章
+     *
+     * @param day
+     * @return
+     */
+    boolean hasPostByCreatedDay(@Param("day") LocalDate day);
 }

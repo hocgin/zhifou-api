@@ -13,6 +13,7 @@ import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.mapper.PostMapper;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
+import in.hocg.zhifou.pojo.vo.TimelinePostVo;
 import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
 import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
@@ -168,12 +169,13 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         if (Objects.nonNull(banner)) {
             result.setBanner(Sets.newHashSet(banner.split(",")));
         }
-        
-        String username = principal.getName();
-        if (Objects.nonNull(username)) {
+    
+        if (Objects.nonNull(principal)) {
+            String username = principal.getName();
             User user = userService.findByUsername(username);
             boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
             result.setFavorites(alreadyFavorite);
+            
         }
         
         return result;
@@ -234,5 +236,68 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             result.put(i, item);
         }
         return result;
+    }
+    
+    @Override
+    public TimelinePostVo findPostsByTimeline(Principal principal, TimelineQueryPostRo query) {
+        
+        Integer cursor = query.getCursor();
+        LocalDate localDate = LocalDate.now().minusDays(cursor);
+        List<DetailPostVo> posts = baseMapper.findAllByCreatedDay(localDate)
+                .stream()
+                .map((post) -> {
+                    DetailPostVo response = new DetailPostVo();
+                    BeanUtils.copyProperties(post, response);
+                
+                    // 作者
+                    User author = userService.getById(post.getAuthorId());
+                    if (Objects.nonNull(author)) {
+                        response.setAuthor(new UserVo(author));
+                    }
+                
+                    // 浏览量
+                    response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
+                
+                    // 类别
+                    Classify classify = classifyService.getById(post.getClassifyId());
+                    if (Objects.nonNull(classify)) {
+                        response.setClassify(classify.getName());
+                    }
+                
+                    // 文章简介
+                    String content = post.getContent();
+                    response.setDesc(StringKit.desc(content, 255));
+    
+                    String vid = Vid.encode(post.getId());
+                    response.setV(vid);
+                    response.setUri(String.format("/post?v=%s", vid));
+                
+                    String tags = post.getTags();
+                    if (Objects.nonNull(tags)) {
+                        response.setTags(Sets.newHashSet(tags.split(",")));
+                    }
+                
+                    String banner = post.getBanner();
+                    if (Objects.nonNull(banner)) {
+                        response.setBanner(Sets.newHashSet(banner.split(",")));
+                    }
+                
+                    if (Objects.nonNull(principal)) {
+                        String username = principal.getName();
+                        User user = userService.findByUsername(username);
+                        boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
+                        response.setFavorites(alreadyFavorite);
+                    }
+                
+                    return response;
+                })
+                .collect(Collectors.toList());
+    
+        boolean hasData = baseMapper.hasPostByCreatedDay(localDate.minusDays(1));
+    
+        return new TimelinePostVo()
+                .setDate(localDate)
+                .setHasNextPage(hasData)
+                .setPosts(posts);
     }
 }
