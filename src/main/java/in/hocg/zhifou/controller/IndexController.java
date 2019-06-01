@@ -1,5 +1,6 @@
 package in.hocg.zhifou.controller;
 
+import com.google.common.collect.Maps;
 import in.hocg.zhifou.pojo.ro.SendEmailVerifyCodeRo;
 import in.hocg.zhifou.service.IndexService;
 import in.hocg.zhifou.util.http.Result;
@@ -7,10 +8,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
 
 /**
  * Created by hocgin on 2019/5/26.
@@ -34,7 +35,16 @@ public class IndexController {
     
     @PostMapping("upload")
     @ApiOperation(value = "上传文件")
-    public Result uploadFile() {
-        return Result.success();
+    public Result uploadFile(@RequestParam("file") MultipartFile file) {
+        String id = indexService.upload(file);
+        return Result.success(id);
+    }
+    
+    @GetMapping("configs")
+    @ApiOperation(value = "获取基础配置")
+    public Result getConfigs() {
+        HashMap<String, Object> configs = Maps.newHashMap();
+        configs.put("ossServer", "https://daigou-test.oss-cn-beijing.aliyuncs.com");
+        return Result.success(configs);
     }
 }
