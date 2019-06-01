@@ -119,3 +119,29 @@ CREATE TABLE `t_banner`
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COMMENT = '[基础模块] 轮播图';
+
+
+-- auto-generated definition
+DROP TABLE IF EXISTS `t_tag`;
+CREATE TABLE `t_tag`
+(
+  id           INT(11) AUTO_INCREMENT PRIMARY KEY,
+  name         VARCHAR(255) NOT NULL UNIQUE
+  COMMENT '标签名称',
+
+  `created_at` DATETIME(6)  NOT NULL
+  COMMENT '创建时间',
+  `creator`    INT(11)
+  COMMENT '创建者',
+  `updated_at` DATETIME(6)
+  COMMENT '更新时间',
+  `updater`    INT(11)
+  COMMENT '更新者',
+  `deleted_at` DATETIME(6)
+  COMMENT '删除时间',
+  `deleter`    INT(11)
+  COMMENT '删除者'
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '[基础模块] 文章标签表';

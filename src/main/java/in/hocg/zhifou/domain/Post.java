@@ -15,7 +15,6 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
