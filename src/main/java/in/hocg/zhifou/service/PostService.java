@@ -6,9 +6,8 @@ import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
 import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
-import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
-import in.hocg.zhifou.pojo.vo.SearchPostVo;
+import in.hocg.zhifou.pojo.vo.PostSummaryVo;
 import in.hocg.zhifou.pojo.vo.TimelinePostVo;
 import in.hocg.zhifou.support.base.request.PageQuery;
 
@@ -39,7 +38,7 @@ public interface PostService extends IService<Post> {
      * @param query
      * @return
      */
-    IPage<DetailPostVo> paging(Principal principal, PageQuery<Void> query);
+    IPage<PostSummaryVo> paging(Principal principal, PageQuery<Void> query);
     
     
     /**
@@ -49,7 +48,7 @@ public interface PostService extends IService<Post> {
      * @param query
      * @return
      */
-    List<SearchPostVo> search(Principal principal, SearchPostRo query);
+    List<PostSummaryVo> search(Principal principal, SearchPostRo query);
     
     /**
      * 文章详情
@@ -61,13 +60,29 @@ public interface PostService extends IService<Post> {
     PostDetailVo getPostDetail(Principal principal, String v);
     
     /**
+     * 填充文章详情
+     * @param userId
+     * @param post
+     * @return
+     */
+    PostDetailVo fillPostDetail(Long userId, Post post);
+    
+    /**
+     * 填充文章概要
+     * @param userId 可选, 关联用户的 ID
+     * @param post 文章
+     * @return
+     */
+    PostSummaryVo fillPostSummary(Long userId, Post post);
+    
+    /**
      * 按时间线来获取文章
      * @param principal
      * @param query
      * @return
      */
     @Deprecated
-    Map<Integer, List<DetailPostVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query);
+    Map<Integer, List<PostSummaryVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query);
     
     /**
      * 按时间线来获取文章

@@ -66,65 +66,32 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     }
     
     @Override
-    public Page<DetailPostVo> paging(Principal principal, PageQuery<Void> pageQuery) {
+    public Page<PostSummaryVo> paging(Principal principal, PageQuery<Void> pageQuery) {
+        User user;
+        Long userId = null;
+        if (Objects.nonNull(principal)) {
+            String username = principal.getName();
+            user = userService.findByUsername(username);
+            userId = user.getId();
+        }
+        Long finalUserId = userId;
+        
         Page page = pageQuery.page();
         QueryWrapper<Post> wrapper = pageQuery.wrapper();
         
         IPage<Post> result = baseMapper.selectPage(page, wrapper);
         
-        List<DetailPostVo> list = result.getRecords().stream()
-                .map((post) -> {
-                    DetailPostVo response = new DetailPostVo();
-                    BeanUtils.copyProperties(post, response);
-                    
-                    // 作者
-                    User author = userService.getById(post.getAuthorId());
-                    if (Objects.nonNull(author)) {
-                        response.setAuthor(new UserVo(author));
-                    }
-                    
-                    // 浏览量
-                    response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
-                    
-                    // 类别
-                    Classify classify = classifyService.getById(post.getClassifyId());
-                    if (Objects.nonNull(classify)) {
-                        response.setClassify(classify.getName());
-                    }
-                    
-                    // 文章简介
-                    String content = post.getContent();
-                    response.setDesc(StringKit.desc(content, 255));
-                    
-                    response.setV(Vid.encode(post.getId()));
-                    
-                    String tags = post.getTags();
-                    if (Objects.nonNull(tags)) {
-                        response.setTags(Sets.newHashSet(tags.split(",")));
-                    }
-                    
-                    String banner = post.getBanner();
-                    if (Objects.nonNull(banner)) {
-                        response.setBanner(Sets.newHashSet(banner.split(",")));
-                    }
-                    
-                    if (Objects.nonNull(principal)) {
-                        String username = principal.getName();
-                        User user = userService.findByUsername(username);
-                        boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
-                        response.setFavorites(alreadyFavorite);
-                    }
-                    
-                    return response;
-                }).collect(Collectors.toList());
+        List<PostSummaryVo> list = result.getRecords().stream()
+                .map((post) -> fillPostSummary(finalUserId, post))
+                .collect(Collectors.toList());
         
-        Page<DetailPostVo> rtn = MybatisPlusKit.newPage(result);
+        Page<PostSummaryVo> rtn = MybatisPlusKit.newPage(result);
         rtn.setRecords(list);
         return rtn;
     }
     
     @Override
-    public List<SearchPostVo> search(Principal principal, SearchPostRo query) {
+    public List<PostSummaryVo> search(Principal principal, SearchPostRo query) {
         String keyword = query.getKeyword();
         return baseMapper.search(keyword);
     }
@@ -137,14 +104,25 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             throw ApiException.newInstance("文章不存在");
         }
         
-        PostDetailVo result = new PostDetailVo();
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
         
+        return fillPostDetail(user.getId(), post);
+    }
+    
+    @Override
+    public PostDetailVo fillPostDetail(Long userId, Post post) {
+        if (Objects.isNull(post)) {
+            return null;
+        }
+        
+        PostDetailVo result = new PostDetailVo();
         BeanUtils.copyProperties(post, result);
         
         // 作者
         User author = userService.getById(post.getAuthorId());
         if (Objects.nonNull(author)) {
-            result.setAuthor(new UserVo(author));
+            result.setAuthor(new UserSummaryVo(author));
         }
         
         // 浏览量
@@ -156,78 +134,104 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             result.setClassify(classify.getName());
         }
         
+        String vid = Vid.encode(post.getId());
+        result.setV(vid);
+        
+        // 设置相对路径
+        result.setUri(String.format("/post?v=%s", vid));
+        
+        // 标签
         String tags = post.getTags();
         if (Objects.nonNull(tags)) {
             result.setTags(Sets.newHashSet(tags.split(",")));
         }
         
+        // 图片
         String banner = post.getBanner();
         if (Objects.nonNull(banner)) {
             result.setBanner(Sets.newHashSet(banner.split(",")));
         }
-    
-        if (Objects.nonNull(principal)) {
-            String username = principal.getName();
-            User user = userService.findByUsername(username);
-            boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
-            result.setFavorites(alreadyFavorite);
-            
+        
+        // 关联用户详情
+        if (Objects.nonNull(userId)) {
+            boolean alreadyFavorite = favoriteService.alreadyFavorite(userId, post.getId());
+            result.setIsFavorites(alreadyFavorite);
         }
         
         return result;
     }
     
     @Override
-    public Map<Integer, List<DetailPostVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query) {
-        Map<Integer, List<DetailPostVo>> result = Maps.newHashMap();
-        List<DetailPostVo> item;
+    public PostSummaryVo fillPostSummary(Long userId, Post post) {
+        if (Objects.isNull(post)) {
+            return null;
+        }
+        PostSummaryVo result = new PostSummaryVo();
+        BeanUtils.copyProperties(post, result);
+        
+        // 作者
+        User author = userService.getById(post.getAuthorId());
+        if (Objects.nonNull(author)) {
+            result.setAuthor(new UserSummaryVo(author));
+        }
+        
+        // 浏览量
+        result.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
+        
+        // 类别
+        Classify classify = classifyService.getById(post.getClassifyId());
+        if (Objects.nonNull(classify)) {
+            result.setClassify(classify.getName());
+        }
+        
+        // 文章简介
+        String content = post.getContent();
+        result.setDesc(StringKit.desc(content, 255));
+        
+        // 业务ID
+        String vid = Vid.encode(post.getId());
+        result.setV(vid);
+        
+        // 文章路径
+        result.setUri(String.format("/post?v=%s", vid));
+        
+        // 标签
+        String tags = post.getTags();
+        if (Objects.nonNull(tags)) {
+            result.setTags(Sets.newHashSet(tags.split(",")));
+        }
+        
+        // 图片
+        String banner = post.getBanner();
+        if (Objects.nonNull(banner)) {
+            result.setBanner(Sets.newHashSet(banner.split(",")));
+        }
+        
+        // 关联用户信息
+        if (Objects.nonNull(userId)) {
+            boolean alreadyFavorite = favoriteService.alreadyFavorite(userId, post.getId());
+            result.setFavorites(alreadyFavorite);
+        }
+        return result;
+    }
+    
+    @Override
+    public Map<Integer, List<PostSummaryVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query) {
+        User user;
+        Long userId = null;
+        if (Objects.nonNull(principal)) {
+            String username = principal.getName();
+            user = userService.findByUsername(username);
+            userId = user.getId();
+        }
+        Long finalUserId = userId;
+        
+        Map<Integer, List<PostSummaryVo>> result = Maps.newHashMap();
+        List<PostSummaryVo> item;
         for (Integer i = 0; i <= query.getCursor(); i++) {
             item = baseMapper.findAllByCreatedDay(LocalDate.now().minusDays(i))
                     .stream()
-                    .map((post) -> {
-                DetailPostVo response = new DetailPostVo();
-                BeanUtils.copyProperties(post, response);
-    
-                // 作者
-                User author = userService.getById(post.getAuthorId());
-                if (Objects.nonNull(author)) {
-                    response.setAuthor(new UserVo(author));
-                }
-    
-                // 浏览量
-                response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
-    
-                // 类别
-                Classify classify = classifyService.getById(post.getClassifyId());
-                if (Objects.nonNull(classify)) {
-                    response.setClassify(classify.getName());
-                }
-    
-                // 文章简介
-                String content = post.getContent();
-                response.setDesc(StringKit.desc(content, 255));
-    
-                response.setV(Vid.encode(post.getId()));
-    
-                String tags = post.getTags();
-                if (Objects.nonNull(tags)) {
-                    response.setTags(Sets.newHashSet(tags.split(",")));
-                }
-    
-                String banner = post.getBanner();
-                if (Objects.nonNull(banner)) {
-                    response.setBanner(Sets.newHashSet(banner.split(",")));
-                }
-    
-                if (Objects.nonNull(principal)) {
-                    String username = principal.getName();
-                    User user = userService.findByUsername(username);
-                    boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
-                    response.setFavorites(alreadyFavorite);
-                }
-    
-                return response;
-            })
+                    .map((post) -> fillPostSummary(finalUserId, post))
                     .collect(Collectors.toList());
             result.put(i, item);
         }
@@ -236,61 +240,24 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     
     @Override
     public TimelinePostVo findPostsByTimeline(Principal principal, TimelineQueryPostRo query) {
+        User user;
+        Long userId = null;
+        if (Objects.nonNull(principal)) {
+            String username = principal.getName();
+            user = userService.findByUsername(username);
+            userId = user.getId();
+        }
         
         Integer cursor = query.getCursor();
         LocalDate localDate = baseMapper.findTimelineByCursor(cursor);
-        List<DetailPostVo> posts = baseMapper.findAllByCreatedDay(localDate)
+        Long finalUserId = userId;
+        List<PostSummaryVo> posts = baseMapper.findAllByCreatedDay(localDate)
                 .stream()
-                .map((post) -> {
-                    DetailPostVo response = new DetailPostVo();
-                    BeanUtils.copyProperties(post, response);
-                
-                    // 作者
-                    User author = userService.getById(post.getAuthorId());
-                    if (Objects.nonNull(author)) {
-                        response.setAuthor(new UserVo(author));
-                    }
-                
-                    // 浏览量
-                    response.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
-                
-                    // 类别
-                    Classify classify = classifyService.getById(post.getClassifyId());
-                    if (Objects.nonNull(classify)) {
-                        response.setClassify(classify.getName());
-                    }
-                
-                    // 文章简介
-                    String content = post.getContent();
-                    response.setDesc(StringKit.desc(content, 255));
-    
-                    String vid = Vid.encode(post.getId());
-                    response.setV(vid);
-                    response.setUri(String.format("/post?v=%s", vid));
-                
-                    String tags = post.getTags();
-                    if (Objects.nonNull(tags)) {
-                        response.setTags(Sets.newHashSet(tags.split(",")));
-                    }
-                
-                    String banner = post.getBanner();
-                    if (Objects.nonNull(banner)) {
-                        response.setBanner(Sets.newHashSet(banner.split(",")));
-                    }
-                
-                    if (Objects.nonNull(principal)) {
-                        String username = principal.getName();
-                        User user = userService.findByUsername(username);
-                        boolean alreadyFavorite = favoriteService.alreadyFavorite(user.getId(), post.getId());
-                        response.setFavorites(alreadyFavorite);
-                    }
-                
-                    return response;
-                })
+                .map((post) -> fillPostSummary(finalUserId, post))
                 .collect(Collectors.toList());
-    
+        
         boolean hasData = baseMapper.existsPostByLtCreatedDay(localDate);
-    
+        
         return new TimelinePostVo()
                 .setDate(localDate)
                 .setHasNextPage(hasData)

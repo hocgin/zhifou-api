@@ -3,6 +3,7 @@ package in.hocg.zhifou.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Favorite;
+import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.mapper.FavoriteMapper;
 import in.hocg.zhifou.pojo.ro.AddFavoriteRo;
@@ -11,9 +12,11 @@ import in.hocg.zhifou.service.FavoriteService;
 import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.util.ApiException;
+import in.hocg.zhifou.util.Vid;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.security.Principal;
@@ -33,36 +36,40 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite>
     private final PostService postService;
     
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void favorite(Principal principal, AddFavoriteRo param) {
         String username = principal.getName();
-        Long postId = param.getPostId();
-        User user = userService.findByUsername(username);
-        if (Objects.isNull(user)) {
-            throw ApiException.newInstance("请先进行登陆");
-        }
-        
-        if (Objects.isNull(postService.getById(postId))) {
+        String v = param.getV();
+        Long id = Vid.decode(v);
+        Post post = postService.getById(id);
+        if (Objects.isNull(post)) {
             throw ApiException.newInstance("文章不存在");
         }
         
-        if (alreadyFavorite(user.getId(), postId)) {
-            throw ApiException.newInstance("您已经收藏过了");
+        User user = userService.findByUsername(username);
+        if (alreadyFavorite(user.getId(), post.getId())) {
+            return;
         }
-    
-        Favorite favorite = param.asFavorite();
+        
+        Favorite favorite = new Favorite();
+        favorite.setPostId(post.getId());
         favorite.setUserId(user.getId());
         baseMapper.insert(favorite);
     }
     
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void unFavorite(Principal principal, UnFavoriteRo param) {
+        String v = param.getV();
+        Long id = Vid.decode(v);
+        Post post = postService.getById(id);
+        if (Objects.isNull(post)) {
+            throw ApiException.newInstance("文章不存在");
+        }
+        
         String username = principal.getName();
         User user = userService.findByUsername(username);
-        if (Objects.isNull(user)) {
-            throw ApiException.newInstance("请先进行登陆");
-        }
-    
-        Long postId = param.getPostId();
+        Long postId = post.getId();
         Long userId = user.getId();
         if (alreadyFavorite(userId, postId)) {
             LambdaQueryWrapper<Favorite> queryWrapper = new LambdaQueryWrapper<>();

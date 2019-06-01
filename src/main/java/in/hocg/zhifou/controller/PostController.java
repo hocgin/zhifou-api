@@ -4,9 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
 import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
-import in.hocg.zhifou.pojo.vo.DetailPostVo;
 import in.hocg.zhifou.pojo.vo.PostDetailVo;
-import in.hocg.zhifou.pojo.vo.SearchPostVo;
+import in.hocg.zhifou.pojo.vo.PostSummaryVo;
 import in.hocg.zhifou.pojo.vo.TimelinePostVo;
 import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.support.base.request.PageQuery;
@@ -46,9 +45,9 @@ public class PostController {
     
     @PostMapping("_paging")
     @ApiOperation(value = "分页文章")
-    public Result<IPage<DetailPostVo>> paging(Principal principal,
+    public Result<IPage<PostSummaryVo>> paging(Principal principal,
                                               @RequestBody PageQuery<Void> query) {
-        IPage<DetailPostVo> result = service.paging(principal, query);
+        IPage<PostSummaryVo> result = service.paging(principal, query);
         return Result.success(result);
     }
     
@@ -62,9 +61,9 @@ public class PostController {
     
     @PostMapping("_search")
     @ApiOperation(value = "检索文章")
-    public Result<List<SearchPostVo>> search(Principal principal,
-                                             @RequestBody SearchPostRo query) {
-        List<SearchPostVo> result = service.search(principal, query);
+    public Result<List<PostSummaryVo>> search(Principal principal,
+                                              @RequestBody SearchPostRo query) {
+        List<PostSummaryVo> result = service.search(principal, query);
         return Result.success(result);
     }
     

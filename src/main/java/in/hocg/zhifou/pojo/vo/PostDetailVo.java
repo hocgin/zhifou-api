@@ -16,13 +16,19 @@ import java.util.Collection;
  * @author hocgin
  */
 @Data
-@ApiModel("文章信息")
+@ApiModel("文章详细信息")
 public class PostDetailVo {
+    @ApiModelProperty(value = "业务ID", required = true)
+    private String v;
+    
     @ApiModelProperty(value = "ID", required = true)
     private Long id;
     
     @ApiModelProperty(value = "标题", required = true)
     private String title;
+    
+    @ApiModelProperty(value = "文章路径", required = true)
+    private String uri;
     
     @ApiModelProperty(value = "标签")
     private Collection<String> tags;
@@ -37,16 +43,16 @@ public class PostDetailVo {
     private String classify;
     
     @ApiModelProperty(value = "作者", required = true)
-    private UserVo author;
+    private UserSummaryVo author;
     
     @ApiModelProperty(value = "喜欢数量", required = true)
     private Long liked;
     
     @ApiModelProperty(value = "当前用户是否喜欢", required = true)
-    private boolean isLiked = false;
+    private Boolean isLiked = false;
     
     @ApiModelProperty(value = "当前用户是否收藏", required = true)
-    private boolean isFavorites = false;
+    private Boolean isFavorites = false;
     
     @ApiModelProperty(value = "点击数", required = true)
     private Long pageviews;

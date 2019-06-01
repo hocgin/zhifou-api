@@ -12,10 +12,10 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-@ApiModel("用户信息")
-public class UserVo {
+@ApiModel("用户概要信息")
+public class UserSummaryVo {
     
-    public UserVo(User user) {
+    public UserSummaryVo(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
     }

@@ -21,7 +21,7 @@ import java.util.List;
 public class TimelinePostVo {
     
     @ApiModelProperty(value = "文章列表", required = true)
-    private List<DetailPostVo> posts = Collections.emptyList();
+    private List<PostSummaryVo> posts = Collections.emptyList();
     
     @ApiModelProperty(value = "是否有下一页", required = true)
     private boolean hasNextPage = false;

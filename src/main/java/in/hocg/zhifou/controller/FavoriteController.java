@@ -32,7 +32,7 @@ public class FavoriteController {
     @PostMapping
     @NeedLogin
     @ApiOperation(value = "收藏")
-    public Result favorite(Principal principal,
+    public Result addFavorite(Principal principal,
                            @Validated @RequestBody AddFavoriteRo param) {
         favoriteService.favorite(principal, param);
         return Result.success();

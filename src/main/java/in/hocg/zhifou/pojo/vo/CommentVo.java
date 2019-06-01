@@ -40,10 +40,10 @@ public class CommentVo {
     private Long parentId;
     
     @ApiModelProperty(value = "评论者", required = true)
-    private UserVo commenter;
+    private UserSummaryVo commenter;
     
     @ApiModelProperty(value = "被评论者")
-    private UserVo pCommenter;
+    private UserSummaryVo pCommenter;
     
     @ApiModelProperty(value = "子评论条数")
     private Long commentCount;

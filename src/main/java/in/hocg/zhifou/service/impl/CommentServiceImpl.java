@@ -10,7 +10,7 @@ import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.mapper.CommentMapper;
 import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
-import in.hocg.zhifou.pojo.vo.UserVo;
+import in.hocg.zhifou.pojo.vo.UserSummaryVo;
 import in.hocg.zhifou.service.CommentService;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.request.PageQuery;
@@ -74,7 +74,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
                 continue;
             }
             body = new CommentVo(comment);
-            body.setCommenter(new UserVo(user));
+            body.setCommenter(new UserSummaryVo(user));
             
             body.setCommentCount(countByRootId(comment.getId()));
             result.add(body);
@@ -116,7 +116,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             }
             
             body = new CommentVo(comment);
-            body.setCommenter(new UserVo(user));
+            body.setCommenter(new UserSummaryVo(user));
             
             // 填充父评论
             Long parentId = comment.getParentId();
@@ -125,7 +125,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
                 if (Objects.nonNull(pComment)) {
                     User pCommenter = userService.getById(pComment.getUserId());
                     if (Objects.nonNull(pCommenter)) {
-                        body.setPCommenter(new UserVo(pCommenter));
+                        body.setPCommenter(new UserSummaryVo(pCommenter));
                     }
                 }
             }

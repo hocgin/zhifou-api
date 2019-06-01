@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel("取消收藏")
 public class UnFavoriteRo {
     
-    @ApiModelProperty(value = "文章 ID", required = true)
+    @ApiModelProperty(value = "文章业务 ID", required = true)
     @NotNull(message = "请选择要取消收藏的文章")
-    private Long postId;
+    private String v;
 }

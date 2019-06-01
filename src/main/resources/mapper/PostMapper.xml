@@ -6,7 +6,7 @@
         ${alias}.*
     </sql>
 
-    <select id="search" resultType="in.hocg.zhifou.pojo.vo.SearchPostVo">
+    <select id="search" resultType="in.hocg.zhifou.pojo.vo.PostSummaryVo">
         SELECT
         <include refid="columns">
             <property name="alias" value="tp"/>
