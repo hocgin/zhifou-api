@@ -24,7 +24,7 @@ public class TimelinePostVo {
     private List<PostSummaryVo> posts = Collections.emptyList();
     
     @ApiModelProperty(value = "是否有下一页", required = true)
-    private boolean hasNextPage = false;
+    private Boolean hasNextPage = false;
     
     @ApiModelProperty(value = "这一页的时间", required = true)
     private LocalDate date;

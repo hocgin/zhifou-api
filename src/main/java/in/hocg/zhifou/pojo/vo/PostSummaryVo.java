@@ -46,10 +46,10 @@ public class PostSummaryVo {
     private Long liked;
     
     @ApiModelProperty(value = "当前用户是否喜欢", required = true)
-    private boolean isLiked;
+    private Boolean isLiked;
     
     @ApiModelProperty(value = "当前用户是否收藏", required = true)
-    private boolean isFavorites = false;
+    private Boolean isFavorites = false;
     
     @ApiModelProperty(value = "点击数", required = true)
     private Long pageviews;

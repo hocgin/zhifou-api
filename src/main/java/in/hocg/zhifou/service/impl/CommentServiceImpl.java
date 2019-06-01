@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Comment;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.mapper.CommentMapper;
+import in.hocg.zhifou.mapping.CommentMapping;
 import in.hocg.zhifou.pojo.ro.AddCommentRo;
 import in.hocg.zhifou.pojo.vo.CommentVo;
 import in.hocg.zhifou.pojo.vo.UserSummaryVo;
@@ -73,7 +74,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             if (Objects.isNull(user)) {
                 continue;
             }
-            body = new CommentVo(comment);
+            body = CommentMapping.INSTANCE.toCommentVo(comment);
             body.setCommenter(new UserSummaryVo(user));
             
             body.setCommentCount(countByRootId(comment.getId()));
@@ -115,7 +116,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
                 continue;
             }
             
-            body = new CommentVo(comment);
+            body = CommentMapping.INSTANCE.toCommentVo(comment);
             body.setCommenter(new UserSummaryVo(user));
             
             // 填充父评论

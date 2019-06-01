@@ -11,10 +11,14 @@ import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.mapper.PostMapper;
+import in.hocg.zhifou.mapping.PostMapping;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
 import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
-import in.hocg.zhifou.pojo.vo.*;
+import in.hocg.zhifou.pojo.vo.PostDetailVo;
+import in.hocg.zhifou.pojo.vo.PostSummaryVo;
+import in.hocg.zhifou.pojo.vo.TimelinePostVo;
+import in.hocg.zhifou.pojo.vo.UserSummaryVo;
 import in.hocg.zhifou.service.ClassifyService;
 import in.hocg.zhifou.service.FavoriteService;
 import in.hocg.zhifou.service.PostService;
@@ -25,7 +29,6 @@ import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.Vid;
 import in.hocg.zhifou.util.lang.StringKit;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,8 +119,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             return null;
         }
         
-        PostDetailVo result = new PostDetailVo();
-        BeanUtils.copyProperties(post, result);
+        PostDetailVo result = PostMapping.INSTANCE.toPostDetailVo(post);
         
         // 作者
         User author = userService.getById(post.getAuthorId());
@@ -166,8 +168,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         if (Objects.isNull(post)) {
             return null;
         }
-        PostSummaryVo result = new PostSummaryVo();
-        BeanUtils.copyProperties(post, result);
+        PostSummaryVo result = PostMapping.INSTANCE.toPostSummaryVo(post);
         
         // 作者
         User author = userService.getById(post.getAuthorId());
@@ -210,7 +211,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         // 关联用户信息
         if (Objects.nonNull(userId)) {
             boolean alreadyFavorite = favoriteService.alreadyFavorite(userId, post.getId());
-            result.setFavorites(alreadyFavorite);
+            result.setIsFavorites(alreadyFavorite);
         }
         return result;
     }

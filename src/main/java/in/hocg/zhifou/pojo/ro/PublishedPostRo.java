@@ -1,10 +1,10 @@
 package in.hocg.zhifou.pojo.ro;
 
 import in.hocg.zhifou.domain.Post;
+import in.hocg.zhifou.mapping.PostMapping;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,9 +20,7 @@ import javax.validation.constraints.NotNull;
 public class PublishedPostRo {
     
     public Post asPost() {
-        Post result = new Post();
-        BeanUtils.copyProperties(this, result);
-        return result;
+        return PostMapping.INSTANCE.fromPublishedPostRo(this);
     }
     
     @ApiModelProperty(value = "标题图", required = true)

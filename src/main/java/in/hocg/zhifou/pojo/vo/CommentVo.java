@@ -1,12 +1,10 @@
 package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.zhifou.domain.Comment;
 import in.hocg.zhifou.support.base.json.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 
@@ -19,10 +17,6 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("评论信息")
 public class CommentVo {
-    
-    public CommentVo(Comment comment) {
-        BeanUtils.copyProperties(comment, this);
-    }
     
     @ApiModelProperty(value = "ID", required = true)
     private Long id;

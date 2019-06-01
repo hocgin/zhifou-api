@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import in.hocg.zhifou.domain.Banner;
 import in.hocg.zhifou.mapper.BannerMapper;
+import in.hocg.zhifou.mapping.BannerMapping;
 import in.hocg.zhifou.pojo.vo.BannerVo;
 import in.hocg.zhifou.service.BannerService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,10 +27,8 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
     public List<BannerVo> getAll() {
         LambdaQueryWrapper<Banner> queryWrapper = new LambdaQueryWrapper<>();
         List<Banner> result = baseMapper.selectList(queryWrapper);
-        return result.stream().map(banner -> {
-            BannerVo entity = new BannerVo();
-            BeanUtils.copyProperties(banner, entity);
-            return entity;
-        }).collect(Collectors.toList());
+        return result.stream()
+                .map(BannerMapping.INSTANCE::toBannerVo)
+                .collect(Collectors.toList());
     }
 }
