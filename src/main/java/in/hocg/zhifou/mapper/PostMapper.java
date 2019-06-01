@@ -33,10 +33,17 @@ public interface PostMapper extends BaseMapper<Post> {
     List<Post> findAllByCreatedDay(@Param("day") LocalDate day);
     
     /**
-     * 查询是否有某天创建的文章
+     * 按指定索引下标返回时间
+     * @param n
+     * @return
+     */
+    LocalDate findTimelineByCursor(@Param("n") int n);
+    
+    /**
+     * 查询是否有某天之前创建的文章
      *
      * @param day
      * @return
      */
-    boolean hasPostByCreatedDay(@Param("day") LocalDate day);
+    boolean existsPostByLtCreatedDay(@Param("day") LocalDate day);
 }

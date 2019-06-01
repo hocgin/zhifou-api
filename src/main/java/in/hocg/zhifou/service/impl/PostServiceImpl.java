@@ -13,12 +13,8 @@ import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.mapper.PostMapper;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
-import in.hocg.zhifou.pojo.vo.TimelinePostVo;
 import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
-import in.hocg.zhifou.pojo.vo.DetailPostVo;
-import in.hocg.zhifou.pojo.vo.PostDetailVo;
-import in.hocg.zhifou.pojo.vo.SearchPostVo;
-import in.hocg.zhifou.pojo.vo.UserVo;
+import in.hocg.zhifou.pojo.vo.*;
 import in.hocg.zhifou.service.ClassifyService;
 import in.hocg.zhifou.service.FavoriteService;
 import in.hocg.zhifou.service.PostService;
@@ -242,7 +238,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     public TimelinePostVo findPostsByTimeline(Principal principal, TimelineQueryPostRo query) {
         
         Integer cursor = query.getCursor();
-        LocalDate localDate = LocalDate.now().minusDays(cursor);
+        LocalDate localDate = baseMapper.findTimelineByCursor(cursor);
         List<DetailPostVo> posts = baseMapper.findAllByCreatedDay(localDate)
                 .stream()
                 .map((post) -> {
@@ -293,7 +289,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                 })
                 .collect(Collectors.toList());
     
-        boolean hasData = baseMapper.hasPostByCreatedDay(localDate.minusDays(1));
+        boolean hasData = baseMapper.existsPostByLtCreatedDay(localDate);
     
         return new TimelinePostVo()
                 .setDate(localDate)

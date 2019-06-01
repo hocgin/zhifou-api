@@ -28,12 +28,19 @@
         </where>
     </select>
 
-    <select id="hasPostByCreatedDay" resultType="java.lang.Boolean">
+    <select id="findTimelineByCursor" resultType="java.time.LocalDate">
+        SELECT p.created_at FROM t_post p
+        GROUP BY p.created_at
+        ORDER BY p.created_at DESC
+        LIMIT #{n},1
+    </select>
+
+    <select id="existsPostByLtCreatedDay" resultType="java.lang.Boolean">
         SELECT EXISTS(SELECT 1
         FROM t_post tp
         <where>
             <![CDATA[
-                TO_DAYS(created_at) = TO_DAYS(#{day})
+                TO_DAYS(created_at) < TO_DAYS(#{day})
             ]]>
         </where>)
     </select>
