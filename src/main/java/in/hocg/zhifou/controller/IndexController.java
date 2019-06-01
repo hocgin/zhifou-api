@@ -31,4 +31,10 @@ public class IndexController {
         indexService.sendVerifyCode(param);
         return Result.success();
     }
+    
+    @PostMapping("upload")
+    @ApiOperation(value = "上传文件")
+    public Result uploadFile() {
+        return Result.success();
+    }
 }

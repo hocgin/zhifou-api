@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/**").permitAll()
                 
-                // 针对 fetch 对跨域请求发送 OPTIONS 请求的处理
+                // 针对 get 对跨域请求发送 OPTIONS 请求的处理
 //                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 //                .antMatchers(HttpMethod.GET, "/error").permitAll()
 //

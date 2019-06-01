@@ -38,6 +38,19 @@ mybatis-plus:
   global-config:
     banner: false
 
+###########################
+#        AliYun OSS 开发参数(目前仅支持阿里云)
+# https://www.aliyun.com/product/oss?spm=5176.8142029.388261.574.e9396d3eKg8j7h
+###########################
+oss:
+  enabled: true
+  type: aliyun
+  ali-yun:
+    bucket-name: <bucket-name/>
+    endpoint: <endpoint/>
+    secret-access: <secret-access/>
+    access-key: <access-key/>
+
 security:
   token:
     filter:
