@@ -46,8 +46,7 @@ public class OssAutoConfiguration {
      * @param aliYunOss
      * @return
      */
-    @ConditionalOnMissingBean
-    OssService aliYunOss(OssProperties.AliYunOss aliYunOss) {
+    private OssService aliYunOss(OssProperties.AliYunOss aliYunOss) {
         OSSClient ossClient = new OSSClient(aliYunOss.getEndpoint(),
                 aliYunOss.getAccessKey(),
                 aliYunOss.getSecretAccess());
