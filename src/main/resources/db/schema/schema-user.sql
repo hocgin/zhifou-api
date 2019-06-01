@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`
 (
-  id           BIGINT AUTO_INCREMENT
+  id           INT(11) AUTO_INCREMENT
     PRIMARY KEY,
   password     VARCHAR(255) NULL
   COMMENT '密码',
@@ -24,9 +24,9 @@ CREATE TABLE `t_user`
 DROP TABLE IF EXISTS `t_favorite`;
 CREATE TABLE `t_favorite`
 (
-  id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-  user_id    BIGINT      NOT NULL,
-  post_id    BIGINT      NOT NULL,
+  id         INT(11) AUTO_INCREMENT PRIMARY KEY,
+  user_id    INT(11)     NOT NULL,
+  post_id    INT(11)     NOT NULL,
   created_at DATETIME(6) NOT NULL
 )
   ENGINE = InnoDB
