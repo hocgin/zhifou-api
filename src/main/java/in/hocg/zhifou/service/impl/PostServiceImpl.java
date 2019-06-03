@@ -103,10 +103,12 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
                     return postTagRef;
                 }).collect(Collectors.toSet()));
         
-        // 发表评论
+        // TODO: 发表评论 - 暂未处理，因为评论可能会变更为申请制度
 //        if (Strings.isNotBlank(param.getFirstComment())) {
 //            commentService.comment(principal, );
 //        }
+        
+        // TODO: 定时发布，考虑延迟加入，还是使用时间进行限制
     
     }
     
