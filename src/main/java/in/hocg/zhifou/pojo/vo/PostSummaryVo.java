@@ -1,6 +1,7 @@
 package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.zhifou.domain.Tag;
 import in.hocg.zhifou.support.base.json.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,17 +28,14 @@ public class PostSummaryVo {
     @ApiModelProperty(value = "文章路径", required = true)
     private String uri;
     
-    @ApiModelProperty(value = "标签")
-    private Collection<String> tags;
+    @ApiModelProperty(value = "标题图", required = true)
+    private String thumb;
     
-    @ApiModelProperty(value = "轮播图", required = true)
-    private Collection<String> banner;
+    @ApiModelProperty(value = "标签")
+    private Collection<Tag> tags;
     
     @ApiModelProperty(value = "简介", required = true)
-    private String desc;
-    
-    @ApiModelProperty(value = "类别", required = true)
-    private String classify;
+    private String summary;
     
     @ApiModelProperty(value = "作者", required = true)
     private UserSummaryVo author;

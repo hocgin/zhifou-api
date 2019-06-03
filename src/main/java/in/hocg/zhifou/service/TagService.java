@@ -20,4 +20,6 @@ public interface TagService extends IService<Tag> {
      * @return
      */
     List<Tag> search(SearchTagRo ro);
+    
+    List<Tag> findByPostId(Long postId);
 }

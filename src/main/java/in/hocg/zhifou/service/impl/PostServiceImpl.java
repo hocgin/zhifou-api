@@ -5,10 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import in.hocg.zhifou.domain.Classify;
-import in.hocg.zhifou.domain.Post;
-import in.hocg.zhifou.domain.User;
+import com.sun.xml.internal.rngom.util.Uri;
+import in.hocg.zhifou.domain.*;
+import in.hocg.zhifou.manager.ConfigManager;
 import in.hocg.zhifou.manager.RedisManager;
 import in.hocg.zhifou.mapper.PostMapper;
 import in.hocg.zhifou.mapping.PostMapping;
@@ -19,15 +18,11 @@ import in.hocg.zhifou.pojo.vo.PostDetailVo;
 import in.hocg.zhifou.pojo.vo.PostSummaryVo;
 import in.hocg.zhifou.pojo.vo.TimelinePostVo;
 import in.hocg.zhifou.pojo.vo.UserSummaryVo;
-import in.hocg.zhifou.service.ClassifyService;
-import in.hocg.zhifou.service.FavoriteService;
-import in.hocg.zhifou.service.PostService;
-import in.hocg.zhifou.service.UserService;
+import in.hocg.zhifou.service.*;
 import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.mybatis.MybatisPlusKit;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.Vid;
-import in.hocg.zhifou.util.lang.StringKit;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -51,21 +46,68 @@ import java.util.stream.Collectors;
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         implements PostService {
     private final UserService userService;
-    private final ClassifyService classifyService;
-    private final RedisManager redisService;
+    private final GalleryService galleryService;
+    private final WebsiteService websiteService;
+    private final TagService tagService;
+    private final PostTagRefService postTagRefService;
     private final FavoriteService favoriteService;
+    private final CommentService commentService;
+    
+    private final RedisManager redisService;
+    private final ConfigManager configManager;
     
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void published(PublishedPostRo param, Principal principal) {
         String username = principal.getName();
         User user = userService.findByUsername(username);
-        if (Objects.isNull(user)) {
-            throw ApiException.newInstance("请先进行登陆");
-        }
-        Post post = param.asPost();
-        post.setAuthorId(user.getId());
+        
+        // 保存文章
+        Post post = PostMapping.INSTANCE.fromPublishedPostRo(param);
+        post.setCreator(user.getId());
         baseMapper.insert(post);
+        
+        // 批量保存图片
+        List<String> galleries = param.getGalleries();
+        if (!galleries.isEmpty()) {
+            galleryService.saveBatch(galleries.stream()
+                    .map((image) -> {
+                        Gallery gallery = new Gallery();
+                        gallery.setImage(image);
+                        gallery.setPostId(post.getId());
+                        return gallery;
+                    }).collect(Collectors.toSet()));
+        }
+        
+        // 批量保存站点
+        List<String> websites = param.getWebsite();
+        if (!websites.isEmpty()) {
+            websiteService.saveBatch(websites.stream()
+                    .map((url) -> {
+                        Website website = new Website();
+                        website.setWebsite(url);
+                        website.setPostId(post.getId());
+                        return website;
+                    }).collect(Collectors.toSet()));
+        }
+        
+        // 批量保存标签
+        postTagRefService.saveBatch(param.getTags().stream()
+                .map((id) -> {
+                    if (Objects.isNull(tagService.getById(id))) {
+                        throw ApiException.newInstance("选择的标签不存在");
+                    }
+                    PostTagRef postTagRef = new PostTagRef();
+                    postTagRef.setTagId(id);
+                    postTagRef.setPostId(post.getId());
+                    return postTagRef;
+                }).collect(Collectors.toSet()));
+        
+        // 发表评论
+//        if (Strings.isNotBlank(param.getFirstComment())) {
+//            commentService.comment(principal, );
+//        }
+    
     }
     
     @Override
@@ -107,10 +149,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             throw ApiException.newInstance("文章不存在");
         }
         
-        String username = principal.getName();
-        User user = userService.findByUsername(username);
+        Long uid = null;
+        if (Objects.nonNull(principal)) {
+            String username = principal.getName();
+            User user = userService.findByUsername(username);
+            uid = user.getId();
+        }
         
-        return fillPostDetail(user.getId(), post);
+        return fillPostDetail(uid, post);
     }
     
     @Override
@@ -122,7 +168,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         PostDetailVo result = PostMapping.INSTANCE.toPostDetailVo(post);
         
         // 作者
-        User author = userService.getById(post.getAuthorId());
+        User author = userService.getById(post.getCreator());
         if (Objects.nonNull(author)) {
             result.setAuthor(new UserSummaryVo(author));
         }
@@ -130,29 +176,28 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         // 浏览量
         result.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
         
-        // 类别
-        Classify classify = classifyService.getById(post.getClassifyId());
-        if (Objects.nonNull(classify)) {
-            result.setClassify(classify.getName());
-        }
-        
         String vid = Vid.encode(post.getId());
         result.setV(vid);
         
         // 设置相对路径
         result.setUri(String.format("/post?v=%s", vid));
+    
+        // 图片地址
+        post.setThumb(Uri.resolve(configManager.getImageServer(), post.getThumb()));
         
         // 标签
-        String tags = post.getTags();
-        if (Objects.nonNull(tags)) {
-            result.setTags(Sets.newHashSet(tags.split(",")));
-        }
+        List<Tag> tags = tagService.findByPostId(post.getId());
+        result.setTags(tags);
         
         // 图片
-        String banner = post.getBanner();
-        if (Objects.nonNull(banner)) {
-            result.setBanner(Sets.newHashSet(banner.split(",")));
-        }
+        List<Gallery> gallery = galleryService.findByPostId(post.getId());
+        result.setGalleries(gallery.stream()
+                .map((item)-> Uri.resolve(configManager.getImageServer(), item.getImage()))
+                .collect(Collectors.toSet()));
+        
+        // 关联网址
+        List<Website> websites = websiteService.findByPostId(post.getId());
+        result.setWebsites(websites);
         
         // 关联用户详情
         if (Objects.nonNull(userId)) {
@@ -171,23 +216,16 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         PostSummaryVo result = PostMapping.INSTANCE.toPostSummaryVo(post);
         
         // 作者
-        User author = userService.getById(post.getAuthorId());
+        User author = userService.getById(post.getCreator());
         if (Objects.nonNull(author)) {
             result.setAuthor(new UserSummaryVo(author));
         }
+    
+        // 图片地址
+        result.setThumb(Uri.resolve(configManager.getImageServer(), post.getThumb()));
         
         // 浏览量
         result.setPageviews(redisService.getPageviewsCount(String.valueOf(post.getId())));
-        
-        // 类别
-        Classify classify = classifyService.getById(post.getClassifyId());
-        if (Objects.nonNull(classify)) {
-            result.setClassify(classify.getName());
-        }
-        
-        // 文章简介
-        String content = post.getContent();
-        result.setDesc(StringKit.desc(content, 255));
         
         // 业务ID
         String vid = Vid.encode(post.getId());
@@ -197,16 +235,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         result.setUri(String.format("/post?v=%s", vid));
         
         // 标签
-        String tags = post.getTags();
-        if (Objects.nonNull(tags)) {
-            result.setTags(Sets.newHashSet(tags.split(",")));
-        }
-        
-        // 图片
-        String banner = post.getBanner();
-        if (Objects.nonNull(banner)) {
-            result.setBanner(Sets.newHashSet(banner.split(",")));
-        }
+        List<Tag> tags = tagService.findByPostId(post.getId());
+        result.setTags(tags);
         
         // 关联用户信息
         if (Objects.nonNull(userId)) {

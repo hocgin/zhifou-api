@@ -29,4 +29,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
         queryWrapper.like(Objects.nonNull(keyword), Tag::getName, keyword);
         return baseMapper.selectList(queryWrapper);
     }
+    
+    @Override
+    public List<Tag> findByPostId(Long postId) {
+        return baseMapper.findByPostId(postId);
+    }
 }

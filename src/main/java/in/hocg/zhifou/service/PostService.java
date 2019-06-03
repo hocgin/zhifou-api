@@ -91,4 +91,5 @@ public interface PostService extends IService<Post> {
      * @return
      */
     TimelinePostVo findPostsByTimeline(Principal principal, TimelineQueryPostRo query);
+    
 }

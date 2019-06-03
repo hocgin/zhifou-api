@@ -37,7 +37,7 @@ public class PostController {
     @NeedLogin
     @PostMapping
     @ApiOperation(value = "发布文章", notes = "需要登陆")
-    public Result<Object> published(Principal principal,
+    public Result<Void> published(Principal principal,
                                     @Validated @RequestBody PublishedPostRo param) {
         service.published(param, principal);
         return Result.success();

@@ -7,7 +7,7 @@ import in.hocg.zhifou.mapper.BannerMapper;
 import in.hocg.zhifou.mapping.BannerMapping;
 import in.hocg.zhifou.pojo.vo.BannerVo;
 import in.hocg.zhifou.service.BannerService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
         implements BannerService {
     @Override

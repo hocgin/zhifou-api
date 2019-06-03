@@ -3,7 +3,11 @@ package in.hocg.zhifou.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.zhifou.support.mybatis.DefaultModel;
-import lombok.*;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -20,52 +24,28 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @TableName("t_post")
 public class Post extends DefaultModel<Post> {
-    /**
-     * 标题图
-     */
-    @TableField("banner")
-    private String banner;
     
-    /**
-     * 标题
-     */
     @TableField("title")
+    @ApiModelProperty(value = "标题", required = true)
     private String title;
     
-    /**
-     * HTML 文本
-     */
     @TableField("content")
+    @ApiModelProperty(value = "正文", required = true)
     private String content;
     
-    /**
-     * 标签
-     * eg: xx,xx,xx
-     */
-    @TableField("tags")
-    private String tags;
+    @TableField("summary")
+    @ApiModelProperty(value = "简介", required = true)
+    private String summary;
     
-    /**
-     * 作者ID
-     */
-    @TableField("author_id")
-    private Long authorId;
+    @ApiModelProperty(value = "标题图", required = true)
+    @TableField("thumb")
+    private String thumb;
     
-    /**
-     * 类别ID
-     */
-    @TableField("classify_id")
-    private Long classifyId;
-    
-    /**
-     * 点赞数
-     */
+    @ApiModelProperty(value = "点赞数", required = true)
     @TableField("liked")
     private Long liked = 0L;
     
-    /**
-     * 是否允许评论
-     */
+    @ApiModelProperty(value = "是否允许评论", required = true)
     @TableField("allow_commend")
-    private boolean allowCommend = true;
+    private Boolean allowCommend = true;
 }

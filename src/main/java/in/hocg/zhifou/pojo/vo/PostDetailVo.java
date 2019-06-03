@@ -1,6 +1,8 @@
 package in.hocg.zhifou.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.zhifou.domain.Tag;
+import in.hocg.zhifou.domain.Website;
 import in.hocg.zhifou.support.base.json.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,11 +20,9 @@ import java.util.Collection;
 @Data
 @ApiModel("文章详细信息")
 public class PostDetailVo {
+    
     @ApiModelProperty(value = "业务ID", required = true)
     private String v;
-    
-    @ApiModelProperty(value = "ID", required = true)
-    private Long id;
     
     @ApiModelProperty(value = "标题", required = true)
     private String title;
@@ -30,17 +30,23 @@ public class PostDetailVo {
     @ApiModelProperty(value = "文章路径", required = true)
     private String uri;
     
+    @ApiModelProperty(value = "标题图", required = true)
+    private String thumb;
+    
+    @ApiModelProperty(value = "关联网址", required = true)
+    private Collection<Website> websites;
+    
     @ApiModelProperty(value = "标签")
-    private Collection<String> tags;
+    private Collection<Tag> tags;
     
     @ApiModelProperty(value = "轮播图", required = true)
-    private Collection<String> banner;
+    private Collection<String> galleries;
+    
+    @ApiModelProperty(value = "简介", required = true)
+    private String summary;
     
     @ApiModelProperty(value = "文章内容", required = true)
     private String content;
-    
-    @ApiModelProperty(value = "类别", required = true)
-    private String classify;
     
     @ApiModelProperty(value = "作者", required = true)
     private UserSummaryVo author;
