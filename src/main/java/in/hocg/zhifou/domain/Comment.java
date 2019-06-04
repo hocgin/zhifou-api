@@ -3,6 +3,7 @@ package in.hocg.zhifou.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.zhifou.support.mybatis.DefaultModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,30 +25,19 @@ import lombok.experimental.Accessors;
 @TableName("t_comment")
 public class Comment extends DefaultModel<Comment> {
     
-    /**
-     * 评论内容
-     */
     @TableField("content")
+    @ApiModelProperty("评论内容")
     private String content;
-    /**
-     * 评论目标 唯一标识
-     * - 用字符串替代, 全局唯一标识来自于分配
-     */
+    
+    @ApiModelProperty("评论目标 唯一标识, 全局唯一标识来自于分配")
     @TableField("target_id")
     private String targetId;
-    /**
-     * 评论者
-     */
-    @TableField("user_id")
-    private Long userId;
-    /**
-     * 根评论
-     */
+    
+    @ApiModelProperty("根评论 ID")
     @TableField("root_id")
     private Long rootId;
-    /**
-     * 父评论
-     */
+
+    @ApiModelProperty("父评论 ID")
     @TableField("parent_id")
     private Long parentId;
     

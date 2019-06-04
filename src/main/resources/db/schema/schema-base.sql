@@ -76,8 +76,6 @@ CREATE TABLE `t_comment`
   COMMENT '根评论ID',
   target_id    varchar(255) not null
   COMMENT '评论目标',
-  user_id      INT(11)      not null
-  COMMENT '评论者ID',
 
   `created_at` DATETIME(6)  NOT NULL
   COMMENT '创建时间',

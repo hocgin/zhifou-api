@@ -50,9 +50,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             throw ApiException.newInstance("请先进行登陆");
         }
         
-        Comment comment = param.asComment();
+        Comment comment = CommentMapping.INSTANCE.fromAddCommentRo(param);
         comment.setTargetId(targetId);
-        comment.setUserId(user.getId());
+        comment.setCreator(user.getId());
         baseMapper.insert(comment);
     }
     
@@ -70,7 +70,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         
         // 填充信息
         for (Comment comment : records) {
-            user = userService.getById(comment.getUserId());
+            user = userService.getById(comment.getCreator());
             if (Objects.isNull(user)) {
                 continue;
             }
@@ -111,7 +111,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         
         // 填充信息
         for (Comment comment : comments) {
-            user = userService.getById(comment.getUserId());
+            user = userService.getById(comment.getCreator());
             if (Objects.isNull(user)) {
                 continue;
             }
@@ -124,7 +124,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             if (!Objects.equals(parentId, rootId)) {
                 Comment pComment = baseMapper.selectById(parentId);
                 if (Objects.nonNull(pComment)) {
-                    User pCommenter = userService.getById(pComment.getUserId());
+                    User pCommenter = userService.getById(pComment.getCreator());
                     if (Objects.nonNull(pCommenter)) {
                         body.setPCommenter(new UserSummaryVo(pCommenter));
                     }

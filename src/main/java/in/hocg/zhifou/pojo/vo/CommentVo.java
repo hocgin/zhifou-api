@@ -25,7 +25,7 @@ public class CommentVo {
     private String content;
     
     @ApiModelProperty(value = "被评论目标", required = true)
-    private Long targetId;
+    private String targetId;
     
     @ApiModelProperty(value = "根级评论ID")
     private Long rootId;

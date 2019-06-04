@@ -1,6 +1,5 @@
 package in.hocg.zhifou.pojo.ro;
 
-import in.hocg.zhifou.domain.Comment;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,14 +15,6 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @ApiModel("评论")
 public class AddCommentRo {
-    
-    public Comment asComment() {
-        Comment entity = new Comment();
-        entity.setRootId(rootId);
-        entity.setParentId(parentId);
-        entity.setContent(content);
-        return entity;
-    }
     
     @ApiModelProperty(value = "根评论ID", required = true)
     private Long rootId;
