@@ -157,6 +157,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             uid = user.getId();
         }
         
+        // 增加浏览量
+        redisService.increasePageviews(Long.toString(id));
+        
         return fillPostDetail(uid, post);
     }
     
@@ -199,7 +202,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         // 关联网址
         List<Website> websites = websiteService.findByPostId(post.getId());
         result.setWebsites(websites);
-        
+    
+        // 浏览量
+        long count = redisService.getPageviewsCount(Long.toString(post.getId()));
+        result.setPageviews(count);
+    
         // 关联用户详情
         if (Objects.nonNull(userId)) {
             boolean alreadyFavorite = favoriteService.alreadyFavorite(userId, post.getId());
@@ -238,6 +245,10 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         // 标签
         List<Tag> tags = tagService.findByPostId(post.getId());
         result.setTags(tags);
+    
+        // 浏览量
+        long count = redisService.getPageviewsCount(Long.toString(post.getId()));
+        result.setPageviews(count);
         
         // 关联用户信息
         if (Objects.nonNull(userId)) {
