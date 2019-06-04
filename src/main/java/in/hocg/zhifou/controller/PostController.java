@@ -1,6 +1,7 @@
 package in.hocg.zhifou.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
 import in.hocg.zhifou.pojo.ro.SearchPostRo;
 import in.hocg.zhifou.pojo.ro.TimelineQueryPostRo;
@@ -38,7 +39,7 @@ public class PostController {
     @PostMapping
     @ApiOperation(value = "发布文章", notes = "需要登陆")
     public Result<Void> published(Principal principal,
-                                    @Validated @RequestBody PublishedPostRo param) {
+                                  @Validated @RequestBody PublishedPostRo param) {
         service.published(param, principal);
         return Result.success();
     }
@@ -46,7 +47,7 @@ public class PostController {
     @PostMapping("_paging")
     @ApiOperation(value = "分页文章")
     public Result<IPage<PostSummaryVo>> paging(Principal principal,
-                                              @RequestBody PageQuery<Void> query) {
+                                               @RequestBody PageQuery<Void> query) {
         IPage<PostSummaryVo> result = service.paging(principal, query);
         return Result.success(result);
     }
@@ -54,8 +55,16 @@ public class PostController {
     @PostMapping("_timeline")
     @ApiOperation(value = "按时间线获取文章")
     public Result<TimelinePostVo> timeline(Principal principal,
-                                               @RequestBody TimelineQueryPostRo query) {
+                                           @RequestBody TimelineQueryPostRo query) {
         TimelinePostVo result = service.findPostsByTimeline(principal, query);
+        return Result.success(result);
+    }
+    
+    @PostMapping("_timeline2")
+    @ApiOperation(value = "按时间线获取文章-新")
+    public Result<Page<List<TimelinePostVo>>> timeline2(Principal principal,
+                                                        @RequestBody PageQuery<Void> query) {
+        Page<List<TimelinePostVo>> result = service.pagingByTimeline(principal, query);
         return Result.success(result);
     }
     

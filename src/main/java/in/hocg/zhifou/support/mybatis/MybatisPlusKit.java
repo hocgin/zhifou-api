@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  */
 public class MybatisPlusKit {
     
-    public static <M> Page newPage(IPage<M> iPage) {
-        return new Page<M>(iPage.getCurrent(), iPage.getSize(), iPage.getTotal(), iPage.isSearchCount());
+    public static Page newPage(IPage iPage) {
+        return new Page(iPage.getCurrent(), iPage.getSize(), iPage.getTotal(), iPage.isSearchCount());
     }
 }

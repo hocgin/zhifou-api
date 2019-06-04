@@ -1,6 +1,7 @@
 package in.hocg.zhifou.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import in.hocg.zhifou.domain.Post;
 import in.hocg.zhifou.pojo.ro.PublishedPostRo;
@@ -13,7 +14,6 @@ import in.hocg.zhifou.support.base.request.PageQuery;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by hocgin on 2019/5/22.
@@ -81,8 +81,7 @@ public interface PostService extends IService<Post> {
      * @param query
      * @return
      */
-    @Deprecated
-    Map<Integer, List<PostSummaryVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query);
+    Page<List<TimelinePostVo>> pagingByTimeline(Principal principal, PageQuery<Void> query);
     
     /**
      * 按时间线来获取文章

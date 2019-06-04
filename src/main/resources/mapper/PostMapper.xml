@@ -26,13 +26,38 @@
                 TO_DAYS(created_at) = TO_DAYS(#{day})
             ]]>
         </where>
+        ORDER BY created_at DESC
+    </select>
+
+
+    <select id="findAllByCreatedDays" resultType="in.hocg.zhifou.domain.Post">
+        SELECT
+        <include refid="columns">
+            <property name="alias" value="tp"/>
+        </include>
+        FROM t_post tp
+        <where>
+            TO_DAYS(created_at) IN
+            <foreach item="item" index="index" collection="days" open="(" separator="," close=")">
+                TO_DAYS(#{item})
+            </foreach>
+        </where>
+        ORDER BY created_at DESC
     </select>
 
     <select id="findTimelineByCursor" resultType="java.time.LocalDate">
-        SELECT p.created_at FROM t_post p
+        SELECT p.created_at
+        FROM t_post p
         GROUP BY p.created_at
         ORDER BY p.created_at DESC
         LIMIT #{n},1
+    </select>
+
+    <select id="selectPageLocalDate" resultType="java.time.LocalDate">
+        SELECT p.created_at
+        FROM t_post p
+        GROUP BY p.created_at
+        ORDER BY p.created_at DESC
     </select>
 
     <select id="existsPostByLtCreatedDay" resultType="java.lang.Boolean">

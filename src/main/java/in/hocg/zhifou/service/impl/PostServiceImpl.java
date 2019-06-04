@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import com.sun.xml.internal.rngom.util.Uri;
 import in.hocg.zhifou.domain.*;
 import in.hocg.zhifou.manager.ConfigManager;
@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -109,7 +108,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
 //        }
         
         // TODO: 定时发布，考虑延迟加入，还是使用时间进行限制
-    
+        
     }
     
     @Override
@@ -183,7 +182,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         
         // 设置相对路径
         result.setUri(String.format("/post?v=%s", vid));
-    
+        
         // 图片地址
         post.setThumb(Uri.resolve(configManager.getImageServer(), post.getThumb()));
         
@@ -194,7 +193,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         // 图片
         List<Gallery> gallery = galleryService.findByPostId(post.getId());
         result.setGalleries(gallery.stream()
-                .map((item)-> Uri.resolve(configManager.getImageServer(), item.getImage()))
+                .map((item) -> Uri.resolve(configManager.getImageServer(), item.getImage()))
                 .collect(Collectors.toSet()));
         
         // 关联网址
@@ -222,7 +221,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         if (Objects.nonNull(author)) {
             result.setAuthor(new UserSummaryVo(author));
         }
-    
+        
         // 图片地址
         result.setThumb(Uri.resolve(configManager.getImageServer(), post.getThumb()));
         
@@ -249,7 +248,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     }
     
     @Override
-    public Map<Integer, List<PostSummaryVo>> findAllByTimeline(Principal principal, TimelineQueryPostRo query) {
+    public Page<List<TimelinePostVo>> pagingByTimeline(Principal principal,
+                                                       PageQuery<Void> query) {
+        IPage<LocalDate> localDateResult = baseMapper.selectPageLocalDate(query.page());
+        
+        Page newPage = MybatisPlusKit.newPage(localDateResult);
+        
+        List<TimelinePostVo> newArrayList = Lists.newArrayList();
+        
         User user;
         Long userId = null;
         if (Objects.nonNull(principal)) {
@@ -257,22 +263,26 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             user = userService.findByUsername(username);
             userId = user.getId();
         }
-        Long finalUserId = userId;
         
-        Map<Integer, List<PostSummaryVo>> result = Maps.newHashMap();
-        List<PostSummaryVo> item;
-        for (Integer i = 0; i <= query.getCursor(); i++) {
-            item = baseMapper.findAllByCreatedDay(LocalDate.now().minusDays(i))
+        for (LocalDate localDate : localDateResult.getRecords()) {
+            Long finalUserId = userId;
+            List<PostSummaryVo> posts = baseMapper.findAllByCreatedDay(localDate)
                     .stream()
                     .map((post) -> fillPostSummary(finalUserId, post))
                     .collect(Collectors.toList());
-            result.put(i, item);
+            boolean hasData = baseMapper.existsPostByLtCreatedDay(localDate);
+            newArrayList.add(new TimelinePostVo()
+                    .setDate(localDate)
+                    .setHasNextPage(hasData)
+                    .setPosts(posts));
         }
-        return result;
+        
+        return newPage.setRecords(newArrayList);
     }
     
     @Override
-    public TimelinePostVo findPostsByTimeline(Principal principal, TimelineQueryPostRo query) {
+    public TimelinePostVo findPostsByTimeline(Principal principal,
+                                              TimelineQueryPostRo query) {
         User user;
         Long userId = null;
         if (Objects.nonNull(principal)) {

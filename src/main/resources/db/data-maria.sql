@@ -11,6 +11,14 @@ INSERT INTO `db_test`.`t_tag` (`name`, `created_at`, `creator`, `updated_at`, `u
 -- POST
 INSERT INTO `db_test`.`t_post` (`title`, `summary`, `thumb`, `content`, `allow_commend`, `liked`, `created_at`, `creator`, `updated_at`, `updater`, `deleted_at`, `deleter`)
 VALUES ('标题', '简介', 'df3371aaa96fbb3ccd41e83d4557a758.jpg', '正文', 0x30, 0, '2019-06-03 13:53:28.748000', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `db_test`.`t_post` (`title`, `summary`, `thumb`, `content`, `allow_commend`, `liked`, `created_at`, `creator`, `updated_at`, `updater`, `deleted_at`, `deleter`)
+VALUES ('标题', '简介', 'df3371aaa96fbb3ccd41e83d4557a758.jpg', '正文', 0x30, 0, '2019-06-02 13:53:28.748000', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `db_test`.`t_post` (`title`, `summary`, `thumb`, `content`, `allow_commend`, `liked`, `created_at`, `creator`, `updated_at`, `updater`, `deleted_at`, `deleter`)
+VALUES ('标题', '简介', 'df3371aaa96fbb3ccd41e83d4557a758.jpg', '正文', 0x30, 0, '2019-06-01 13:53:28.748000', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `db_test`.`t_post` (`title`, `summary`, `thumb`, `content`, `allow_commend`, `liked`, `created_at`, `creator`, `updated_at`, `updater`, `deleted_at`, `deleter`)
+VALUES ('标题', '简介', 'df3371aaa96fbb3ccd41e83d4557a758.jpg', '正文', 0x30, 0, '2019-05-03 13:53:28.748000', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `db_test`.`t_post` (`title`, `summary`, `thumb`, `content`, `allow_commend`, `liked`, `created_at`, `creator`, `updated_at`, `updater`, `deleted_at`, `deleter`)
+VALUES ('标题', '简介', 'df3371aaa96fbb3ccd41e83d4557a758.jpg', '正文', 0x30, 0, '2019-05-04 13:53:28.748000', 1, NULL, NULL, NULL, NULL);
 
 -- Post-Tag
 INSERT INTO `db_test`.`t_post_tag_ref`(post_id, tag_id) VALUES (1, 1);
