@@ -52,16 +52,17 @@ public class PostController {
         return Result.success(result);
     }
     
-    @PostMapping("_timeline")
+    @PostMapping("_timeline2")
     @ApiOperation(value = "按时间线获取文章")
+    @Deprecated
     public Result<TimelinePostVo> timeline(Principal principal,
                                            @RequestBody TimelineQueryPostRo query) {
         TimelinePostVo result = service.findPostsByTimeline(principal, query);
         return Result.success(result);
     }
     
-    @PostMapping("_timeline2")
-    @ApiOperation(value = "按时间线获取文章-新")
+    @PostMapping("_timeline")
+    @ApiOperation(value = "按时间线获取文章")
     public Result<Page<List<TimelinePostVo>>> timeline2(Principal principal,
                                                         @RequestBody PageQuery<Void> query) {
         Page<List<TimelinePostVo>> result = service.pagingByTimeline(principal, query);
