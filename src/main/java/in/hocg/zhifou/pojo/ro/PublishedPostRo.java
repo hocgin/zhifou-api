@@ -1,12 +1,12 @@
 package in.hocg.zhifou.pojo.ro;
 
-import com.google.common.cache.LoadingCache;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -51,6 +51,6 @@ public class PublishedPostRo {
     private Boolean isSchedule = Boolean.FALSE;
     
     @ApiModelProperty(value = "定时发布时间")
-    private LoadingCache scheduleDatetime;
+    private LocalDateTime scheduleDatetime;
     
 }
