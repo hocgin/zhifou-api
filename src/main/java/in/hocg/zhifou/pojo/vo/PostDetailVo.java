@@ -52,7 +52,7 @@ public class PostDetailVo {
     private UserSummaryVo author;
     
     @ApiModelProperty(value = "喜欢数量", required = true)
-    private Long liked;
+    private Long likeCount = 0L;
     
     @ApiModelProperty(value = "当前用户是否喜欢", required = true)
     private Boolean isLiked = false;

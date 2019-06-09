@@ -5,6 +5,7 @@ import in.hocg.zhifou.pojo.vo.TokenVo;
 import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.pojo.ro.SignInRo;
 import in.hocg.zhifou.pojo.ro.SignUpRo;
+import in.hocg.zhifou.pojo.vo.UserSummaryVo;
 
 import java.security.Principal;
 
@@ -29,7 +30,7 @@ public interface UserService extends IService<User> {
      * @param principal
      * @return
      */
-    User getCurrentUserInfo(Principal principal);
+    UserSummaryVo getCurrentUserInfo(Principal principal);
     
     /**
      * 注册

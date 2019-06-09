@@ -9,6 +9,7 @@ import in.hocg.zhifou.mapper.UserMapper;
 import in.hocg.zhifou.pojo.ro.SignInRo;
 import in.hocg.zhifou.pojo.ro.SignUpRo;
 import in.hocg.zhifou.pojo.vo.TokenVo;
+import in.hocg.zhifou.pojo.vo.UserSummaryVo;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.util.Env;
 import in.hocg.zhifou.util.ApiException;
@@ -57,7 +58,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
     
     @Override
-    public User getCurrentUserInfo(Principal principal) {
+    public UserSummaryVo getCurrentUserInfo(Principal principal) {
         String username = principal.getName();
         User user = findByUsername(username);
         if (Objects.isNull(user)) {
@@ -66,7 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         
         // 屏蔽密码
         user.setPassword(null);
-        return user;
+        return new UserSummaryVo(user);
     }
     
     @Override

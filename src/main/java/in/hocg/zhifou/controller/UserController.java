@@ -1,9 +1,9 @@
 package in.hocg.zhifou.controller;
 
-import in.hocg.zhifou.domain.User;
 import in.hocg.zhifou.pojo.ro.SignInRo;
 import in.hocg.zhifou.pojo.ro.SignUpRo;
 import in.hocg.zhifou.pojo.vo.TokenVo;
+import in.hocg.zhifou.pojo.vo.UserSummaryVo;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.security.NeedLogin;
 import in.hocg.zhifou.util.http.Result;
@@ -34,8 +34,8 @@ public class UserController {
     @NeedLogin
     @GetMapping
     @ApiOperation(value = "获取用户信息", notes = "需要登陆")
-    public Result<User> getUserInfo(Principal principal) {
-        User user = userService.getCurrentUserInfo(principal);
+    public Result<UserSummaryVo> getCurrentUserInfo(Principal principal) {
+        UserSummaryVo user = userService.getCurrentUserInfo(principal);
         return Result.success(user);
     }
     
