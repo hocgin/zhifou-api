@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="in.hocg.zhifou.mapper.PostBrowsingLogMapper">
+
+    <select id="isBrowsingPost" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1
+        FROM t_post_browsing_log tpbl
+        <where>
+            user_id = #{user_id}
+            AND post_id = #{post_id}
+        </where>)
+    </select>
+</mapper>

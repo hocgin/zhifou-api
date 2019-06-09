@@ -26,6 +26,7 @@ import java.util.Objects;
  */
 @Service
 @AllArgsConstructor
+@Deprecated
 public class O0IndexService {
     private final ProjectProperties properties;
     private final ProjectService projectService;

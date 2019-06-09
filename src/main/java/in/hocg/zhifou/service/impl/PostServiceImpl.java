@@ -51,6 +51,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     private final PostTagRefService postTagRefService;
     private final FavoriteService favoriteService;
     private final CommentService commentService;
+    private final PostBrowsingLogService postBrowsingLogService;
     
     private final RedisManager redisService;
     private final ConfigManager configManager;
@@ -155,6 +156,12 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
             String username = principal.getName();
             User user = userService.findByUsername(username);
             uid = user.getId();
+            
+            // 用户文章浏览记录
+            PostBrowsingLog entity = new PostBrowsingLog();
+            entity.setPostId(id);
+            entity.setUserId(uid);
+            postBrowsingLogService.save(entity);
         }
         
         // 增加浏览量
@@ -209,8 +216,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
     
         // 关联用户详情
         if (Objects.nonNull(userId)) {
+            
+            // 设置收藏状态
             boolean alreadyFavorite = favoriteService.alreadyFavorite(userId, post.getId());
             result.setIsFavorites(alreadyFavorite);
+            
+            // 设置浏览浏览状态
+            boolean isBrowsingPost = postBrowsingLogService.isBrowsingPost(userId, post.getId());
+            result.setIsBrowsing(isBrowsingPost);
         }
         
         return result;
@@ -254,6 +267,10 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         if (Objects.nonNull(userId)) {
             boolean alreadyFavorite = favoriteService.alreadyFavorite(userId, post.getId());
             result.setIsFavorites(alreadyFavorite);
+    
+            // 设置浏览浏览状态
+            boolean isBrowsingPost = postBrowsingLogService.isBrowsingPost(userId, post.getId());
+            result.setIsBrowsing(isBrowsingPost);
         }
         return result;
     }

@@ -57,6 +57,9 @@ public class PostDetailVo {
     @ApiModelProperty(value = "当前用户是否喜欢", required = true)
     private Boolean isLiked = false;
     
+    @ApiModelProperty(value = "当前用户是否已经浏览", required = true)
+    private Boolean isBrowsing = false;
+    
     @ApiModelProperty(value = "当前用户是否收藏", required = true)
     private Boolean isFavorites = false;
     
