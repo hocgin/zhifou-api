@@ -3,10 +3,9 @@ package in.hocg.zhifou.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.zhifou.support.mybatis.DefaultModel;
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -17,11 +16,10 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@ApiModel("分类表")
 @TableName("t_classify")
+@Deprecated
 public class Classify extends DefaultModel<Classify> {
     
     /**

@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class Gallery extends SuperModel<Gallery> {
     
     @TableField("post_id")
-    @ApiModelProperty("关联文章 ID")
+    @ApiModelProperty(value = "关联文章 ID", required = true)
     private Long postId;
     
     @TableField("image")

@@ -3,6 +3,7 @@ package in.hocg.zhifou.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.zhifou.support.mybatis.DefaultModel;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @TableName("t_tag")
+@ApiModel("标签表")
 public class Tag extends DefaultModel<Favorite> {
     
     @TableField("name")

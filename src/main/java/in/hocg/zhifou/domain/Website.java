@@ -25,14 +25,14 @@ import java.time.LocalDateTime;
 public class Website extends SuperModel<Website> {
     
     @TableField("post_id")
-    @ApiModelProperty("关联文章 ID")
+    @ApiModelProperty(value = "关联文章 ID", required = true)
     private Long postId;
     
     @TableField("website")
-    @ApiModelProperty("网址")
+    @ApiModelProperty(value = "网址", required = true)
     private String website;
     
     @TableField("created_at")
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty(value = "创建时间", required = true)
     private LocalDateTime createdAt = LocalDateTime.now();
 }
