@@ -6,7 +6,8 @@ import in.hocg.zhifou.mapper.ClassifyMapper;
 import in.hocg.zhifou.pojo.ro.SearchClassifyRo;
 import in.hocg.zhifou.pojo.vo.SearchClassifyVo;
 import in.hocg.zhifou.service.ClassifyService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify>
         implements ClassifyService {
     

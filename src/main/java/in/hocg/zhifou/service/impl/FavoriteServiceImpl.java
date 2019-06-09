@@ -13,7 +13,7 @@ import in.hocg.zhifou.service.PostService;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.Vid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +29,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor(onConstructor_ = {@Lazy})
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite>
         implements FavoriteService {
     private final UserService userService;

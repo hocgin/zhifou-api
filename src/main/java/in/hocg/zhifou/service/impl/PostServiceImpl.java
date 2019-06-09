@@ -23,7 +23,7 @@ import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.mybatis.MybatisPlusKit;
 import in.hocg.zhifou.util.ApiException;
 import in.hocg.zhifou.util.Vid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor(onConstructor_ = {@Lazy})
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
         implements PostService {
     private final UserService userService;

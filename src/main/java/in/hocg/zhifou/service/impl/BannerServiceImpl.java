@@ -8,6 +8,7 @@ import in.hocg.zhifou.mapping.BannerMapping;
 import in.hocg.zhifou.pojo.vo.BannerVo;
 import in.hocg.zhifou.service.BannerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
         implements BannerService {
     @Override

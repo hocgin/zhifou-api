@@ -1,21 +1,21 @@
 package in.hocg.zhifou.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import in.hocg.zhifou.domain.PostTagRef;
-import in.hocg.zhifou.mapper.PostTagRefMapper;
-import in.hocg.zhifou.service.PostTagRefService;
+import in.hocg.zhifou.domain.PostBrowsingLog;
+import in.hocg.zhifou.mapper.PostBrowsingLogMapper;
+import in.hocg.zhifou.service.PostBrowsingLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by hocgin on 2019/5/22.
+ * Created by hocgin on 2019/6/9.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
-public class PostTagRefServiceImpl extends ServiceImpl<PostTagRefMapper, PostTagRef>
-        implements PostTagRefService {
+public class PostBrowsingLogServiceImpl extends ServiceImpl<PostBrowsingLogMapper, PostBrowsingLog>
+        implements PostBrowsingLogService {
 }

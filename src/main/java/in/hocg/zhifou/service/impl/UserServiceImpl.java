@@ -12,7 +12,8 @@ import in.hocg.zhifou.pojo.vo.TokenVo;
 import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.util.Env;
 import in.hocg.zhifou.util.ApiException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,7 +33,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
     private final AuthenticationManager authenticationManager;

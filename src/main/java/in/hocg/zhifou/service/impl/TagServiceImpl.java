@@ -7,6 +7,7 @@ import in.hocg.zhifou.mapper.TagMapper;
 import in.hocg.zhifou.pojo.ro.SearchTagRo;
 import in.hocg.zhifou.service.TagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
         implements TagService {
     @Override

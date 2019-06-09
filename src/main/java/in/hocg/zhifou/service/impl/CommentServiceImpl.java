@@ -17,7 +17,8 @@ import in.hocg.zhifou.service.UserService;
 import in.hocg.zhifou.support.base.request.PageQuery;
 import in.hocg.zhifou.support.mybatis.MybatisPlusKit;
 import in.hocg.zhifou.util.ApiException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -33,7 +34,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         implements CommentService {
     

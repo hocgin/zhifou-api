@@ -6,6 +6,7 @@ import in.hocg.zhifou.domain.Gallery;
 import in.hocg.zhifou.mapper.GalleryMapper;
 import in.hocg.zhifou.service.GalleryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author hocgin
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         implements GalleryService {
     @Override
